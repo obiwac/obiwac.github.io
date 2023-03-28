@@ -1,2 +1,3 @@
 # obiwac.github.io
-Static website about myself ;)
+
+Super simple static website about myself ;)
