@@ -5,6 +5,11 @@
 
 extern crate maud;
 use maud::{html, Markup, DOCTYPE};
+use rocket::fs::FileServer;
+
+macro_rules! relative {
+	($path: expr) => (concat!(env!("CARGO_MANIFEST_DIR"), $path))
+}
 
 fn wrap(content: Markup) -> Markup {
 	html! {
@@ -29,7 +34,12 @@ fn wrap(content: Markup) -> Markup {
 			// TODO keywords, google-site-verification, apple-touch-startup-image
 
 			title { "Aymeric Wibo" }
-			link rel="stylesheet" type="text/css" href="/style.css";
+
+			// link rel="stylesheet" type="text/css" href="/public/main.css";
+
+			style {
+				(include_str!(relative!("/static/main.css")))
+			}
 		}
 
 		body {
@@ -48,5 +58,8 @@ fn index() -> Markup {
 #[launch]
 fn rocket() -> _ {
 	let rocket = rocket::build();
-	rocket.mount("/", routes![index])
+
+	rocket
+		.mount("/", routes![index])
+		.mount("/public", FileServer::from(relative!("/static")))
 }
