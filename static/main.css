@@ -56,12 +56,85 @@ body {
 	font-size: 22px;
 	font-display: optional;
 	font-family: "Montserrat", sans-serif;
-	overflow-y: hidden;
 }
 
 h1 {
 	color: var(--title-colour);
-	font-size: 70px;
+	font-size: 90px;
 	font-display: optional;
 	font-family: "Montserrat", sans-serif;
+}
+
+strong {
+	/* text-shadow: rgba(255, 0, 191, 0.534) 0 0 16px; */
+	background: var(--gradient);
+	-webkit-background-clip: text;
+	background-clip: text;
+	-webkit-text-fill-color: transparent;
+	font-weight: bold;
+}
+
+code {
+	border-radius: 8px;
+	background-color: var(--code-background);
+}
+
+a {
+	text-decoration: none;
+	color: var(--text-colour);
+}
+
+.link {
+	background: var(--gradient);
+	background-clip: none;
+	color: var(--background-colour);
+	font-weight: bold;
+	border-radius: 3px;
+}
+
+.link:hover {
+	/* transitions for gradients annoyingly aren't supported in most browsers */
+	background: var(--text-colour);
+}
+
+.container {
+	max-width: 700px;
+	margin: auto;
+	padding: 32px;
+}
+
+.socials {
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+	padding-block: 32px;
+	padding-inline: 8px;
+	column-gap: 24px;
+	row-gap: 12px;
+}
+
+.social {
+	padding: 4px;
+	display: flex;
+	align-items: center;
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+.social:hover {
+	background: var(--text-colour);
+	color: var(--background-colour);
+}
+
+.social p {
+	font-weight: bold;
+	background: none;
+	color: inherit;
+	margin: 0;
+}
+
+.social svg {
+	margin-right: 16px;
+	width: 32px;
+	color: inherit;
 }

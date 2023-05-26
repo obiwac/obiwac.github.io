@@ -11,6 +11,10 @@ macro_rules! relative {
 	($path: expr) => (concat!(env!("CARGO_MANIFEST_DIR"), $path))
 }
 
+macro_rules! include_static {
+	($path: expr) => (PreEscaped(include_str!(relative!($path))))
+}
+
 fn base(content: Markup) -> Markup {
 	html! {
 		(DOCTYPE)
@@ -38,7 +42,7 @@ fn base(content: Markup) -> Markup {
 			// link rel="stylesheet" type="text/css" href="/public/main.css";
 
 			style {
-				(PreEscaped(include_str!(relative!("/static/main.css"))))
+				(include_static!("/static/main.css"))
 			}
 		}
 
@@ -51,7 +55,45 @@ fn base(content: Markup) -> Markup {
 #[get("/")]
 fn index() -> Markup {
 	base(html! {
-		h1 { "Aymeric Wibo" }
+		.container {
+			h1 { "Hey! 👋" }
+			p {
+				"My name is "
+				strong { "Aymeric Wibo" }
+				", a Belgian open source software fanatic! My current main projects are "
+				a.link href="/aquabsd" { "aquaBSD" }
+				", which is an OS forked from FreeBSD geared towards general users, and a "
+				a.link href="/mcpy" { "video tutorial series" }
+				" on 3D graphics programming in Python."
+			}
+			p { "Here are my socials:" }
+			.socials {
+				a.social href="https://www.linkedin.com/in/awibo" {
+					(include_static!("/static/icons/linkedin.svg"))
+					p { "awibo" }
+				}
+				a.social href="https://www.github.com/obiwac" {
+					(include_static!("/static/icons/gh.svg"))
+					p { "@obiwac" }
+				}
+				a.social href="mailto:obiwac@gmail.com" {
+					(include_static!("/static/icons/email.svg"))
+					p { "obiwac@gmail.com" }
+				}
+				a.social href="mailto:obiwac@freebsd.org" {
+					(include_static!("/static/icons/fbsd.svg"))
+					p { "obiwac@freebsd.org" }
+				}
+				a.social href="https://youtube.com/obiwac" {
+					(include_static!("/static/icons/youtube.svg"))
+					p { "obiwac" }
+				}
+				a.social href="https://discord.com/users/305047157197504522" {
+					(include_static!("/static/icons/discord.svg"))
+					p { "obiwac#7599" }
+				}
+			}
+		}
 	})
 }
 
