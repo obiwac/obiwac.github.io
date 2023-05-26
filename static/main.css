@@ -98,10 +98,70 @@ a {
 }
 
 .container {
-	max-width: 700px;
+	max-width: 950px;
 	margin: auto;
 	padding: 32px;
 }
+
+/* things */
+
+.things {
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+	padding-block: 32px;
+	padding-inline: 4px;
+	row-gap: 12px;
+}
+
+.thing {
+	max-width: 280px;
+	margin: 16px;
+}
+
+.thing p {
+	margin-inline: 16px;
+	margin-block: 32px;
+
+	/* text-align: justify; */
+	font-size: 18px;
+}
+
+.labeled-img {
+	max-width: 100%;
+	position: relative;
+}
+
+.labeled-img div {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	height: 70%;
+	background: linear-gradient(to bottom, transparent, black);
+	border-radius: var(--border-radius);
+}
+
+.labeled-img div h2 {
+	color: white;
+	position: absolute;
+	bottom: 0;
+	margin-inline: 32px;
+	word-break: break-all;
+}
+
+.labeled-img img {
+	aspect-ratio: 8 / 5;
+	object-fit: cover;
+	width: 100%;
+	border-radius: var(--border-radius);
+}
+
+iframe {
+	border: none;
+	width: 100%;
+}
+
+/* socials */
 
 .socials {
 	display: flex;
