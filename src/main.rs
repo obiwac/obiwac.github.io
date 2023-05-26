@@ -4,14 +4,14 @@
 #[macro_use] extern crate rocket;
 
 extern crate maud;
-use maud::{html, Markup, DOCTYPE};
+use maud::{html, Markup, DOCTYPE, PreEscaped};
 use rocket::fs::FileServer;
 
 macro_rules! relative {
 	($path: expr) => (concat!(env!("CARGO_MANIFEST_DIR"), $path))
 }
 
-fn wrap(content: Markup) -> Markup {
+fn base(content: Markup) -> Markup {
 	html! {
 		(DOCTYPE)
 
@@ -22,7 +22,7 @@ fn wrap(content: Markup) -> Markup {
 			meta name="robots" content="index,follow";
 			meta name="theme-color" content="#000000";
 
-			link rel="icon" type="image/png" href="/icon.png";
+			link rel="icon" type="image/png" href="https://avatars.githubusercontent.com/u/81159434?s=400&u=52b722ee2247446fdb89cd4aa43d416a0ad97e14&v=4";
 			link rel="manifest" href="manifest.json";
 
 			// Apple PWA stuff
@@ -38,7 +38,7 @@ fn wrap(content: Markup) -> Markup {
 			// link rel="stylesheet" type="text/css" href="/public/main.css";
 
 			style {
-				(include_str!(relative!("/static/main.css")))
+				(PreEscaped(include_str!(relative!("/static/main.css"))))
 			}
 		}
 
@@ -50,8 +50,8 @@ fn wrap(content: Markup) -> Markup {
 
 #[get("/")]
 fn index() -> Markup {
-	wrap(html! {
-		h1 { "Header" }
+	base(html! {
+		h1 { "Aymeric Wibo" }
 	})
 }
 
