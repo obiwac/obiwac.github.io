@@ -1,0 +1,10 @@
+[package]
+name = "obiwac-website"
+version = "0.1.0"
+
+[[bin]]
+name = "obiwac-website"
+path = "src/main.rs"
+
+[dependencies]
+rocket = "0.5.0-rc.3"
