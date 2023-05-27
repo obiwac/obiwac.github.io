@@ -299,7 +299,7 @@ a {
 /* explanation pages */
 
 .explanation-container {
-	padding: 64px;
+	padding: 32px;
 	gap: 64px;
 	display: flex;
 	flex-wrap: wrap;
@@ -317,9 +317,24 @@ a {
 
 .exhibit {
 	width: 800px;
+	aspect-ratio: 8 / 5;
 }
 
 .exhibit iframe {
 	border-radius: var(--border-radius);
-	aspect-ratio: 8 / 5;
+	height: 100%;
+}
+
+@media screen and (max-width: 768px) {
+	.explanation-container {
+		padding-bottom: 0;
+	}
+
+	.exhibit {
+		min-width: 100vw;
+	}
+
+	.exhibit iframe {
+		border-radius: 0;
+	}
 }
