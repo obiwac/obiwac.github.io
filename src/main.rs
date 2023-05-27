@@ -181,6 +181,16 @@ fn index() -> Markup {
 					"Extremely basic X11 compositing window manager written in C with Xlib and OpenGL."
 				}))
 			}
+			p {
+				"This page was made possible thanks to "
+				a.link href="https://rocket.rs" { "Rocket.rs" }
+				" and "
+				a.link href="https://maud.lambda.xyz" { "Maud" }
+				"! Fun fact: this site's source doesn't have a single line of the godforsaken language known as HTML in it. It does have some JS on some pages though (not this one), so count that as an L if you want."
+			}
+			.socials {
+				(social("Source code", "https://github.com/obiwac/obiwac.github.io", include_static!("/icons/gh.svg")))
+			}
 		}
 	})
 }
