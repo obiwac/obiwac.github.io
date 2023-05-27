@@ -179,7 +179,7 @@ fn explanation_page(title: &'static str, descr: Markup, exhibit: Markup) -> Mark
 fn gdpr() -> Markup {
 	explanation_page("GDPR", html! {
 		p {
-			"Interactive (try it out here on the right - don't worry, we don't use cookies 😉) GDPR presentation my friend "
+			"Interactive (try it out right here - don't worry, we don't use cookies 😉) GDPR presentation my friend "
 			a.link href="https://novation.dev" { "Noa" }
 			" and I made in English class in highschool. As such, some parts may be written in French, as this was an English class in "
 			a.link href="https://en.wikipedia.org/wiki/Wallonia" { "Wallonia" }

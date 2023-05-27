@@ -299,15 +299,16 @@ a {
 /* explanation pages */
 
 .explanation-container {
+	padding: 64px;
+	gap: 64px;
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: space-around;
 	align-items: center;
 	max-width: 1600px;
-	margin-inline: auto;
 	min-height: 100vh;
 	min-height: 100svh;
-	margin-block: 0;
+	box-sizing: border-box; /* so that min-height includes padding */
 }
 
 .explanation {
