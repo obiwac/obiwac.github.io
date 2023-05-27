@@ -112,7 +112,7 @@ fn index() -> Markup {
 				}))
 
 				(thing("MCPY", "/mcpy", true, "https://github.com/obiwac/python-minecraft-clone/blob/master/eyecandy/creeper.png?raw=true", html! {
-					"Minecraft clone written in Python. Video tutorial series on 3D graphics programming."
+					"Video tutorial series on 3D graphics programming, where I write a Minecraft clone in Python."
 				}))
 
 				(thing("BFM", "/bfm", true, "https://github.com/obiwac/bfm/raw/main/images/naive.gif", html! {
@@ -159,7 +159,7 @@ fn index() -> Markup {
 	})
 }
 
-// GDPR
+// explanation pages
 
 fn explanation_page(title: &'static str, descr: Markup, exhibit: Markup) -> Markup {
 	base(html! {
@@ -172,6 +172,34 @@ fn explanation_page(title: &'static str, descr: Markup, exhibit: Markup) -> Mark
 				(exhibit)
 			}
 		}
+	})
+}
+
+#[get("/mcpy")]
+fn mcpy() -> Markup {
+	explanation_page("MCPY", html! {
+		p { "Video tutorial series on 3D graphics programming, where I write a Minecraft clone in Python." }
+		p {
+			"This page has an interactive demo (of episode 11) made in WebGL based on MCPY by "
+			a.link href="https://github.com/drakeerv/" { "@drakeerv" }
+			" - it takes a little while to load (because JS is slow), but once it's loaded, you can click on it and move around like the real thing!"
+		}
+		p {
+			"The "
+			code { "community/" }
+			" directory on the GitHub repo (mostly maintained by "
+			a.link href="https://github.com/jukitsu/" { "@jukitsu" }
+			" and "
+			a.link href="https://github.com/drakeerv/" { "@drakeerv" }
+			") implements other cool features, such as lighting, smooth shading, and (soon) mobs!"
+		}
+		.socials {
+			(social("Playlist", "https://www.youtube.com/watch?v=fWkbIOna6RA&list=PL6_bLxRDFzoKjaa3qCGkwR5L_ouSreaVP", include_static!("/static/icons/youtube.svg")))
+			(social("Source code", "https://github.com/obiwac/python-minecraft-clone", include_static!("/static/icons/gh.svg")))
+			(social("Full demo", "https://drakeerv.github.io/js-minecraft-clone/", include_static!("/static/icons/link.svg")))
+		}
+	}, html! {
+		iframe src="https://drakeerv.github.io/js-minecraft-clone/episodes/episode-11/index.html";
 	})
 }
 
@@ -204,6 +232,6 @@ fn rocket() -> _ {
 	let rocket = rocket::build();
 
 	rocket
-		.mount("/", routes![index, gdpr])
+		.mount("/", routes![index, mcpy, gdpr])
 		.mount("/public", FileServer::from(relative!("/static")))
 }
