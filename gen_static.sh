@@ -22,4 +22,3 @@ for route in $ROUTES; do
 done
 
 kill $(jobs -p)
-git push origin $(git subtree split --prefix static):gh-pages -f
