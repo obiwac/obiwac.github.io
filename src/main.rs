@@ -134,7 +134,7 @@ fn index() -> Markup {
 					"Video tutorial series on 3D graphics programming, where I write a Minecraft clone in Python."
 				}))
 
-				(thing("BFM", "/bfm", false, "https://github.com/obiwac/bfm/raw/main/images/naive.gif", html! {
+				(thing("BFM", "https://github.com/obiwac/bfm", false, "https://github.com/obiwac/bfm/raw/main/images/naive.gif", html! {
 					"Big F'ing Matrix. FEM/FEA C library ("
 					code { "libbfm" }
 					") with Python bindings ("
@@ -144,7 +144,7 @@ fn index() -> Markup {
 					" and I made this for LEPL1110."
 				}))
 
-				(thing("KARWa '23", "/karwa", false, "https://github.com/karwa-org/karwa2023/blob/main/logo.png?raw=true", html! {
+				(thing("KARWa '23", "https://www.linkedin.com/posts/louvain-li-nux_algo-algorithmes-programmingcontest-activity-7054432800577306624-CR6L?utm_source=share&utm_medium=member_desktop", false, "https://github.com/karwa-org/karwa2023/blob/main/logo.png?raw=true", html! {
 					"Francophone algorithmics contest. Jointly organized by Louvain-li-Nux (in Louvain-la-Neuve) and CPUMons (in Mons)."
 				}))
 
