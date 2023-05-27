@@ -9,3 +9,13 @@ To start the webserver, run:
 ```console
 cargo run
 ```
+
+To export a static site, run:
+
+```console
+sh gen_static.sh
+```
+
+It's a bit of a hacky script, so you may have to run it a couple times before it works.
+
+That's all folks!

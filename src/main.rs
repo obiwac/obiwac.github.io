@@ -12,7 +12,7 @@ macro_rules! relative {
 }
 
 macro_rules! include_static {
-	($path: expr) => (PreEscaped(include_str!(relative!($path))))
+	($path: expr) => (PreEscaped(include_str!(relative!(concat!("/public", $path)))))
 }
 
 fn base(content: Markup) -> Markup {
@@ -42,7 +42,7 @@ fn base(content: Markup) -> Markup {
 			// link rel="stylesheet" type="text/css" href="/public/main.css";
 
 			style {
-				(include_static!("/static/main.css"))
+				(include_static!("/main.css"))
 			}
 		}
 
@@ -82,14 +82,14 @@ fn thing(title: &'static str, link: &'static str, magic: bool, img_src: &'static
 					div {
 						h2 { (title) }
 						@if magic {
-							(include_static!("/static/icons/magic.svg"))
+							(include_static!("/icons/magic.svg"))
 						}
 					}
 				}
 			}
 			p { (descr) }
 			a.learn-more href=(link) {
-				(include_static!("/static/icons/arrow.svg"))
+				(include_static!("/icons/arrow.svg"))
 				p { "Learn more" }
 			}
 		}
@@ -121,7 +121,7 @@ fn index() -> Markup {
 			p {
 				"Here are some of my projects - those which have a "
 				span.inline-svg {
-					(include_static!("/static/icons/magic.svg"))
+					(include_static!("/icons/magic.svg"))
 				}
 				" next to their name are interactive experiences:"
 			}
@@ -173,12 +173,12 @@ fn index() -> Markup {
 				}))
 			}
 			.socials {
-				(social("awibo", "https://www.linkedin.com/in/awibo", include_static!("/static/icons/linkedin.svg")))
-				(social("@obiwac", "https://www.github.com/obiwac", include_static!("/static/icons/gh.svg")))
-				(social("obiwac@gmail.com", "mailto:obiwac@gmail.com", include_static!("/static/icons/email.svg")))
-				(social("obiwac@freebsd.org", "mailto:obiwac@freebsd.org", include_static!("/static/icons/fbsd.svg")))
-				(social("obiwac", "https://youtube.com/obiwac", include_static!("/static/icons/youtube.svg")))
-				(social("obiwac#7599", "https://discord.com/users/305047157197504522", include_static!("/static/icons/discord.svg")))
+				(social("awibo", "https://www.linkedin.com/in/awibo", include_static!("/icons/linkedin.svg")))
+				(social("@obiwac", "https://www.github.com/obiwac", include_static!("/icons/gh.svg")))
+				(social("obiwac@gmail.com", "mailto:obiwac@gmail.com", include_static!("/icons/email.svg")))
+				(social("obiwac@freebsd.org", "mailto:obiwac@freebsd.org", include_static!("/icons/fbsd.svg")))
+				(social("obiwac", "https://youtube.com/obiwac", include_static!("/icons/youtube.svg")))
+				(social("obiwac#7599", "https://discord.com/users/305047157197504522", include_static!("/icons/discord.svg")))
 			}
 		}
 	})
@@ -219,12 +219,12 @@ fn mcpy() -> Markup {
 			") implements other cool features, such as lighting, smooth shading, and (soon) mobs!"
 		}
 		.socials {
-			(social("Playlist", "https://www.youtube.com/watch?v=fWkbIOna6RA&list=PL6_bLxRDFzoKjaa3qCGkwR5L_ouSreaVP", include_static!("/static/icons/youtube.svg")))
-			(social("Source code", "https://github.com/obiwac/python-minecraft-clone", include_static!("/static/icons/gh.svg")))
-			(social("Full demo", "https://drakeerv.github.io/js-minecraft-clone/", include_static!("/static/icons/link.svg")))
+			(social("Playlist", "https://www.youtube.com/watch?v=fWkbIOna6RA&list=PL6_bLxRDFzoKjaa3qCGkwR5L_ouSreaVP", include_static!("/icons/youtube.svg")))
+			(social("Source code", "https://github.com/obiwac/python-minecraft-clone", include_static!("/icons/gh.svg")))
+			(social("Full demo", "https://drakeerv.github.io/js-minecraft-clone/", include_static!("/icons/link.svg")))
 		}
 	}, html! {
-		iframe src="https://drakeerv.github.io/js-minecraft-clone/episodes/episode-11/index.html";
+		iframe src="https://drakeerv.github.io/js-minecraft-clone/episodes/episode-11/index.html" loading="lazy";
 	})
 }
 
@@ -245,9 +245,9 @@ fn moodle() -> Markup {
 		}
 		p { "We'll host it soon (it uses Flask so we can't host it statically 😢), but in the meantime, please enjoy our proprietary VirtualRanch™ technology." }
 		.socials {
-			(social("Source code", "https://github.com/novati0n/moodle", include_static!("/static/icons/gh.svg")))
+			(social("Source code", "https://github.com/novati0n/moodle", include_static!("/icons/gh.svg")))
 			// TODO host full version!
-			// (social("Full version", "https://novation.dev/GDPR-presentation", include_static!("/static/icons/link.svg")))
+			// (social("Full version", "https://novation.dev/GDPR-presentation", include_static!("/icons/link.svg")))
 		}
 	}, html! {
 		// settings (because we're not attached to a full webapp anymore)
@@ -267,8 +267,8 @@ fn moodle() -> Markup {
 
 		// shaders
 
-		script id="vert-shader" type="x-shader/x-vertex" { (include_static!("/static/moodle/vert.glsl")) }
-		script id="frag-shader" type="x-shader/x-fragment" { (include_static!("/static/moodle/frag.glsl")) }
+		script id="vert-shader" type="x-shader/x-vertex" { (include_static!("/moodle/vert.glsl")) }
+		script id="frag-shader" type="x-shader/x-fragment" { (include_static!("/moodle/frag.glsl")) }
 
 		// models
 
@@ -302,8 +302,8 @@ fn gdpr() -> Markup {
 			" ❤️"
 		}
 		.socials {
-			(social("Source code", "https://github.com/novati0n/gdpr-presentation", include_static!("/static/icons/gh.svg")))
-			(social("Full version", "https://novation.dev/GDPR-presentation", include_static!("/static/icons/link.svg")))
+			(social("Source code", "https://github.com/novati0n/gdpr-presentation", include_static!("//icons/gh.svg")))
+			(social("Full version", "https://novation.dev/GDPR-presentation", include_static!("/icons/link.svg")))
 		}
 	}, html! {
 		iframe src="https://novation.dev/GDPR-presentation";
@@ -318,5 +318,5 @@ fn rocket() -> _ {
 
 	rocket
 		.mount("/", routes![index, mcpy, moodle, gdpr])
-		.mount("/public", FileServer::from(relative!("/static")))
+		.mount("/public", FileServer::from(relative!("/public")))
 }
