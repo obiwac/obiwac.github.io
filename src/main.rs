@@ -109,14 +109,23 @@ fn social(handle: &'static str, link: &'static str, icon: PreEscaped<&str>) -> M
 fn index() -> Markup {
 	base(html! {
 		.container {
-			h1 { "Hey! 👋" }
+			center {
+				h1 { "Hey! 👋" }
+			}
+			.socials {
+				(social("awibo", "https://www.linkedin.com/in/awibo", include_static!("/icons/linkedin.svg")))
+				(social("@obiwac", "https://www.github.com/obiwac", include_static!("/icons/gh.svg")))
+				(social("obiwac@gmail.com", "mailto:obiwac@gmail.com", include_static!("/icons/email.svg")))
+				(social("obiwac@freebsd.org", "mailto:obiwac@freebsd.org", include_static!("/icons/fbsd.svg")))
+				(social("obiwac", "https://youtube.com/obiwac", include_static!("/icons/youtube.svg")))
+				(social("obiwac#7599", "https://discord.com/users/305047157197504522", include_static!("/icons/discord.svg")))
+			}
 			p {
 				"My name is "
 				strong { "Aymeric Wibo" }
-				", AKA "
+				" (AKA "
 				strong { "obiwac" }
-				". I'm a Belgian open-source enthusiast who likes dogs and beer 🍺 "
-				"My socials are at the bottom of this page if you'd like to contact me!"
+				"). I'm a Belgian open-source enthusiast who likes dogs and beer 🍺 "
 			}
 			p {
 				"Here are some of my projects - those which have a "
@@ -171,14 +180,6 @@ fn index() -> Markup {
 				(thing("x-compositing-wm", "https://github.com/obiwac/x-compositing-wm", false, "https://github.com/obiwac/x-compositing-wm/raw/main/pics/screenshot1.png", html! {
 					"Extremely basic X11 compositing window manager written in C with Xlib and OpenGL."
 				}))
-			}
-			.socials {
-				(social("awibo", "https://www.linkedin.com/in/awibo", include_static!("/icons/linkedin.svg")))
-				(social("@obiwac", "https://www.github.com/obiwac", include_static!("/icons/gh.svg")))
-				(social("obiwac@gmail.com", "mailto:obiwac@gmail.com", include_static!("/icons/email.svg")))
-				(social("obiwac@freebsd.org", "mailto:obiwac@freebsd.org", include_static!("/icons/fbsd.svg")))
-				(social("obiwac", "https://youtube.com/obiwac", include_static!("/icons/youtube.svg")))
-				(social("obiwac#7599", "https://discord.com/users/305047157197504522", include_static!("/icons/discord.svg")))
 			}
 		}
 	})
