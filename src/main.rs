@@ -125,10 +125,7 @@ fn index() -> Markup {
 				strong { "Aymeric Wibo" }
 				" (AKA "
 				strong { "obiwac" }
-				"). I'm a Belgian open-source enthusiast who likes dogs and beer 🍺 "
-			}
-			p {
-				"Here are some of my projects - those which have a "
+				"). I'm a Belgian open-source enthusiast who likes dogs and beer 🍺 Here are some of my projects - those which have a "
 				span.inline-svg {
 					(include_static!("/icons/magic.svg"))
 				}
