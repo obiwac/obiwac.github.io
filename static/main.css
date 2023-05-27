@@ -306,6 +306,7 @@ a {
 	justify-content: space-around;
 	align-items: center;
 	max-width: 1600px;
+	margin-inline: auto;
 	min-height: 100vh;
 	min-height: 100svh;
 	box-sizing: border-box; /* so that min-height includes padding */
