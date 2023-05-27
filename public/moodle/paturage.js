@@ -340,7 +340,7 @@ class Cow {
 		// then, draw it
 
 		let model_matrix = new Matrix()
-		let scale = 0.1 + this.age / 100
+		let scale = 0.2 + this.age / 100
 
 		model_matrix.translate(...this.pos)
 		model_matrix.rotate(this.rot, 0, 1, 0)
@@ -352,14 +352,18 @@ class Cow {
 		// we also need to set the shadow uniform depending on the height of the cow (higher means smaller shadow)
 		// yeah this is a bit of a hacky way to do shadows, but it works okay!
 
-		gl.uniform1f(render_state.shadow_uniform, Math.max(1 - this.pos[1] / this.jump_height * scale, 0.01))
-		gl.enable(gl.BLEND)
+		gl.uniform1f(render_state.shadow_uniform, Math.max(1 - this.pos[1] / this.jump_height * scale, 0.1))
 
-		model_matrix.translate(0, (-this.pos[1] + ++render_state.shadow_layer / 10000) / scale, 0)
+		gl.enable(gl.BLEND)
+		gl.disable(gl.DEPTH_TEST)
+
+		model_matrix.translate(0, (-this.pos[1] + 0.05) / scale, 0)
 		this.shadow.draw(gl, render_state, model_matrix)
 
 		gl.uniform1f(render_state.shadow_uniform, -1)
+
 		gl.disable(gl.BLEND)
+		gl.enable(gl.DEPTH_TEST)
 	}
 }
 
@@ -504,7 +508,7 @@ class Paturage {
 		}
 
 		let proj_matrix = new Matrix()
-		proj_matrix.perspective(this.fov, this.y_res / this.x_res, 0.1, 500)
+		proj_matrix.perspective(this.fov, this.y_res / this.x_res, 2, 20)
 
 		let view_matrix = new Matrix()
 
@@ -515,8 +519,6 @@ class Paturage {
 		vp_matrix.multiply(proj_matrix)
 
 		// actually render
-
-		this.render_state.shadow_layer = 0
 
 		this.gl.clearColor(0.0, 0.0, 0.0, 0.0)
 		this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT)

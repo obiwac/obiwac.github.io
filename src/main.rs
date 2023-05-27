@@ -266,9 +266,9 @@ fn moodle() -> Markup {
 				var cow_speed = 2
 
 				var data = {
-					"Holstein": 60,
-					"Jersey": 10,
-					"Blanc Bleu Belge": 20,
+					"Holstein": 20,
+					"Jersey": 5,
+					"Blanc Bleu Belge": 10,
 				}
 			"#))
 		}
