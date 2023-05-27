@@ -52,6 +52,25 @@ fn base(content: Markup) -> Markup {
 	}
 }
 
+// these are separate components, so I can easily update links
+
+enum Person {
+	Noa, Alexis, Alex, Drakeerv, Juk, Brichant
+}
+
+fn person(person: Person) -> Markup {
+	html! {
+		@match person {
+			Person::Noa => a.link href="https://novation.dev" { "Noa" },
+			Person::Alexis => a.link href="https://github.com/alexisloic21" { "Alexis" },
+			Person::Alex => a.link href="https://github.com/alleyezoncode" { "Alex" },
+			Person::Drakeerv => a.link href="https://github.com/drakeerv" { "@drakeerv" },
+			Person::Juk => a.link href="https://github.com/jukitsu" { "@jukitsu" },
+			Person::Brichant => a.link href="http://brichant.eu" { "Monsieur Brichant" },
+		}
+	}
+}
+
 // homepage
 
 fn thing(title: &'static str, link: &'static str, magic: bool, img_src: &'static str, descr: Markup) -> Markup {
@@ -107,7 +126,7 @@ fn index() -> Markup {
 				" next to their name are interactive experiences:"
 			}
 			.things {
-				(thing("aquaBSD", "/aquabsd", false, "https://user-images.githubusercontent.com/11079650/155240444-53454627-84f0-4a52-81aa-9eb60f8770e8.png", html! {
+				(thing("aquaBSD", "https://github.com/inobulles/aquabsd/releases", false, "https://user-images.githubusercontent.com/11079650/155240444-53454627-84f0-4a52-81aa-9eb60f8770e8.png", html! {
 					"OS forked from FreeBSD geared towards general users. Includes a full DE, app distribution system, and network device sharing."
 				}))
 
@@ -115,28 +134,34 @@ fn index() -> Markup {
 					"Video tutorial series on 3D graphics programming, where I write a Minecraft clone in Python."
 				}))
 
-				(thing("BFM", "/bfm", true, "https://github.com/obiwac/bfm/raw/main/images/naive.gif", html! {
+				(thing("BFM", "/bfm", false, "https://github.com/obiwac/bfm/raw/main/images/naive.gif", html! {
 					"Big F'ing Matrix. FEM/FEA C library ("
 					code { "libbfm" }
 					") with Python bindings ("
 					code { "pybfm" }
-					") for use as an educational tool. Alex and I made this for LEPL1110."
+					") for use as an educational tool. "
+					(person(Person::Alex))
+					" and I made this for LEPL1110."
 				}))
 
 				(thing("KARWa '23", "/karwa", false, "https://github.com/karwa-org/karwa2023/blob/main/logo.png?raw=true", html! {
 					"Francophone algorithmics contest. Jointly organized by Louvain-li-Nux (in Louvain-la-Neuve) and CPUMons (in Mons)."
 				}))
 
-				(thing("MOOdle", "/moodle", true, "https://github.com/NovAti0n/MOOdle/raw/main/eyecandy/paturage.png", html! {
+				(thing("MOOdle", "/moodle", true, "/moodle", html! {
 					"Advanced cow visualization tool."
 				}))
 
 				(thing("GDPR", "/gdpr", true, "https://github.com/NovAti0n/GDPR-presentation/raw/main/screenshot.png", html! {
-					"Interactive GDPR presentation Noa and I made in English class in highschool."
+					"Interactive GDPR presentation "
+					(person(Person::Noa))
+					" and I made in English class in highschool."
 				}))
 
 				(thing("LLN '23", "https://github.com/obiwac/lln-gamejam-2023", false, "https://github.com/obiwac/lln-gamejam-2023/raw/main/eyecandy/obamatriangle.jpg", html! {
-					"Submission for the 2023 Louvain-li-Nux gamejam. AKA Alexis and I's first foray into Vulkan and Rust. AKA Obamatriangle."
+					"Submission for the 2023 Louvain-li-Nux gamejam. AKA "
+					(person(Person::Alexis))
+					" and I's first foray into Vulkan and Rust. AKA Obamatriangle."
 				}))
 
 				(thing("LLN '22", "https://github.com/obiwac/lln-gamejam-2022", false, "https://github.com/obiwac/lln-gamejam-2022/raw/main/eyecandy/volcano-look.png", html! {
@@ -181,16 +206,16 @@ fn mcpy() -> Markup {
 		p { "Video tutorial series on 3D graphics programming, where I write a Minecraft clone in Python." }
 		p {
 			"This page has an interactive demo (of episode 11) made in WebGL based on MCPY by "
-			a.link href="https://github.com/drakeerv/" { "@drakeerv" }
+			(person(Person::Drakeerv))
 			" - it takes a little while to load (because JS is slow), but once it's loaded, you can click on it and move around like the real thing!"
 		}
 		p {
 			"The "
 			code { "community/" }
 			" directory on the GitHub repo (mostly maintained by "
-			a.link href="https://github.com/jukitsu/" { "@jukitsu" }
+			(person(Person::Juk))
 			" and "
-			a.link href="https://github.com/drakeerv/" { "@drakeerv" }
+			(person(Person::Drakeerv))
 			") implements other cool features, such as lighting, smooth shading, and (soon) mobs!"
 		}
 		.socials {
@@ -208,14 +233,18 @@ fn gdpr() -> Markup {
 	explanation_page("GDPR", html! {
 		p {
 			"Interactive (try it out right here - don't worry, we don't use cookies 😉) GDPR presentation my friend "
-			a.link href="https://novation.dev" { "Noa" }
+			(person(Person::Noa))
 			" and I made in English class in highschool. As such, some parts may be written in French, as this was an English class in "
 			a.link href="https://en.wikipedia.org/wiki/Wallonia" { "Wallonia" }
 			"."
 		}
 		p { "There used to be a (extremely poorly secured 😄) database system to record quiz/survey answers, but that's now offline." }
 		p { "Also, the code is very not pretty. We wrote this in like 2 days, certainly not with the intention of further maintaining it." }
-		p { "In memorandum Monsieur Brichant ❤️" }
+		p {
+			"In memorandum "
+			(person(Person::Brichant))
+			" ❤️"
+		}
 		.socials {
 			(social("Source code", "https://github.com/novati0n/gdpr-presentation", include_static!("/static/icons/gh.svg")))
 			(social("Full version", "https://novation.dev/GDPR-presentation", include_static!("/static/icons/link.svg")))
