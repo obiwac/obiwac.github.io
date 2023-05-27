@@ -202,7 +202,7 @@ fn explanation_page(title: &'static str, descr: Markup, exhibit: Markup) -> Mark
 
 #[get("/mcpy")]
 fn mcpy() -> Markup {
-	explanation_page("MCPY", html! {
+	explanation_page("MCPY ⛏️", html! {
 		p { "Video tutorial series on 3D graphics programming, where I write a Minecraft clone in Python." }
 		p {
 			"This page has an interactive demo (of episode 11) made in WebGL based on MCPY by "
@@ -228,9 +228,65 @@ fn mcpy() -> Markup {
 	})
 }
 
+#[get("/moodle")]
+fn moodle() -> Markup {
+	explanation_page("MOOdle 🐮", html! {
+		p {
+			"Advanced cow visualization tool. This was originally made with my friends "
+			(person(Person::Noa))
+			" and "
+			(person(Person::Alexis))
+			" for a university course."
+		}
+		p {
+			"Notice the subtle and difficult to understand play on words on the popular learning platform "
+			a.link href="https://moodle.org/" { "Moodle" }
+			"."
+		}
+		p { "We'll host it soon (it uses Flask so we can't host it statically 😢), but in the meantime, please enjoy our proprietary VirtualRanch™ technology." }
+		.socials {
+			(social("Source code", "https://github.com/novati0n/moodle", include_static!("/static/icons/gh.svg")))
+			// TODO host full version!
+			// (social("Full version", "https://novation.dev/GDPR-presentation", include_static!("/static/icons/link.svg")))
+		}
+	}, html! {
+		// settings (because we're not attached to a full webapp anymore)
+
+		script {
+			(PreEscaped(r#"
+				var invert_gravity = false
+				var cow_speed = 0.1
+
+				var data = {
+					"Holstein": 60,
+					"Jersey": 10,
+					"Blanc Bleu Belge": 20,
+				}
+			"#))
+		}
+
+		// shaders
+
+		script id="vert-shader" type="x-shader/x-vertex" { (include_static!("/static/moodle/vert.glsl")) }
+		script id="frag-shader" type="x-shader/x-fragment" { (include_static!("/static/moodle/frag.glsl")) }
+
+		// models
+
+		script src="/public/moodle/models/paturage.js" defer {}
+		script src="/public/moodle/models/holstein.js" defer {}
+		script src="/public/moodle/models/jersey.js" defer {}
+		script src="/public/moodle/models/bbb.js" defer {}
+
+		// actual paturage
+
+		canvas width="800px" height="500px" id="paturage" onclick="paturage.click()" {}
+		script src="/public/moodle/paturage.js" defer {}
+	})
+}
+
 #[get("/gdpr")]
 fn gdpr() -> Markup {
-	explanation_page("GDPR", html! {
+	explanation_page("GDPR 🤓", html! {
 		p {
 			"Interactive (try it out right here - don't worry, we don't use cookies 😉) GDPR presentation my friend "
 			(person(Person::Noa))
@@ -261,6 +317,6 @@ fn rocket() -> _ {
 	let rocket = rocket::build();
 
 	rocket
-		.mount("/", routes![index, mcpy, gdpr])
+		.mount("/", routes![index, mcpy, moodle, gdpr])
 		.mount("/public", FileServer::from(relative!("/static")))
 }
