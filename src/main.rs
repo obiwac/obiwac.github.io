@@ -52,6 +52,8 @@ fn base(content: Markup) -> Markup {
 	}
 }
 
+// homepage
+
 fn thing(title: &'static str, link: &'static str, img_src: &'static str, descr: Markup) -> Markup {
 	html! {
 		.thing {
@@ -89,11 +91,10 @@ fn index() -> Markup {
 				strong { "Aymeric Wibo" }
 				", AKA "
 				strong { "obiwac" }
-				"."
-				br;
-				"I'm a Belgian open-source enthusiast who likes dogs and beer 🍺"
+				". I'm a Belgian open-source enthusiast who likes dogs and beer 🍺 "
+				"My socials are at the bottom of this page if you'd like to contact me!"
 			}
-			p { "Here are a few of my projects:" }
+			p { "Here are some of my projects:" }
 			.things {
 				(thing("aquaBSD", "/aquabsd", "https://user-images.githubusercontent.com/11079650/155240444-53454627-84f0-4a52-81aa-9eb60f8770e8.png", html! {
 					"OS forked from FreeBSD geared towards general users. Includes a full DE, app distribution system, and network device sharing."
@@ -147,11 +148,51 @@ fn index() -> Markup {
 	})
 }
 
+// GDPR
+
+fn explanation_page(title: &'static str, descr: Markup, exhibit: Markup) -> Markup {
+	base(html! {
+		.explanation-container {
+			.explanation {
+				h1 { (title) }
+				(descr)
+			}
+			.exhibit {
+				(exhibit)
+			}
+		}
+	})
+}
+
+#[get("/gdpr")]
+fn gdpr() -> Markup {
+	explanation_page("GDPR", html! {
+		p {
+			"Interactive (try it out here on the right!) GDPR presentation my friend "
+			a.link href="https://novation.dev" { "Noa" }
+			" and I made in English class in highschool. As such, some parts may be written in French, as this was an English class in "
+			a.link href="https://en.wikipedia.org/wiki/Wallonia" { "Wallonia" }
+			"."
+		}
+		p { "There used to be a (extremely poorly secured 😄) database system to record quiz/survey answers, but that's now offline." }
+		p { "Also, the code is very not pretty. We wrote this in like 2 days, certainly not with the intention of further maintaining it." }
+		p { "In memorandum Monsieur Brichant ❤️" }
+		.socials {
+			(social("Source code", "https://github.com/novati0n/gdpr-presentation", include_static!("/static/icons/gh.svg")))
+			(social("Full version", "https://novation.dev/GDPR-presentation", include_static!("/static/icons/link.svg")))
+		}
+	}, html! {
+		iframe src="https://novation.dev/GDPR-presentation";
+	})
+}
+
+// server stuff
+
 #[launch]
 fn rocket() -> _ {
 	let rocket = rocket::build();
 
 	rocket
-		.mount("/", routes![index])
+		.mount("/", routes![index, gdpr])
 		.mount("/public", FileServer::from(relative!("/static")))
 }
