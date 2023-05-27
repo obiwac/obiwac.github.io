@@ -82,6 +82,17 @@ code {
 	background-color: var(--code-background);
 }
 
+.inline-svg svg {
+	width: 24px;
+	margin: 4px;
+	margin-bottom: -4px;
+}
+
+iframe {
+	border: none;
+	width: 100%;
+}
+
 a {
 	text-decoration: none;
 	color: var(--text-colour);
@@ -175,11 +186,21 @@ a {
 	border-radius: var(--border-radius);
 }
 
-.labeled-img div h2 {
-	color: white;
+.labeled-img div {
 	position: absolute;
 	bottom: 0;
+	display: flex;
+	align-items: center;
+}
+
+.labeled-img div div h2 {
+	color: white;
 	margin-inline: 32px;
+}
+
+.labeled-img div div svg {
+	width: 24px;
+	margin-left: -16px;
 }
 
 .labeled-img img {
@@ -187,11 +208,6 @@ a {
 	object-fit: cover;
 	width: 100%;
 	border-radius: var(--border-radius);
-}
-
-iframe {
-	border: none;
-	width: 100%;
 }
 
 .learn-more {

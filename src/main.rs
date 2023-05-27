@@ -54,13 +54,18 @@ fn base(content: Markup) -> Markup {
 
 // homepage
 
-fn thing(title: &'static str, link: &'static str, img_src: &'static str, descr: Markup) -> Markup {
+fn thing(title: &'static str, link: &'static str, magic: bool, img_src: &'static str, descr: Markup) -> Markup {
 	html! {
 		.thing {
 			.labeled-img {
 				img src=(img_src);
 				div {
-					h2 { (title) }
+					div {
+						h2 { (title) }
+						@if magic {
+							(include_static!("/static/icons/magic.svg"))
+						}
+					}
 				}
 			}
 			p { (descr) }
@@ -94,17 +99,23 @@ fn index() -> Markup {
 				". I'm a Belgian open-source enthusiast who likes dogs and beer 🍺 "
 				"My socials are at the bottom of this page if you'd like to contact me!"
 			}
-			p { "Here are some of my projects:" }
+			p {
+				"Here are some of my projects - those which have a "
+				span.inline-svg {
+					(include_static!("/static/icons/magic.svg"))
+				}
+				" next to their name are interactive experiences:"
+			}
 			.things {
-				(thing("aquaBSD", "/aquabsd", "https://user-images.githubusercontent.com/11079650/155240444-53454627-84f0-4a52-81aa-9eb60f8770e8.png", html! {
+				(thing("aquaBSD", "/aquabsd", false, "https://user-images.githubusercontent.com/11079650/155240444-53454627-84f0-4a52-81aa-9eb60f8770e8.png", html! {
 					"OS forked from FreeBSD geared towards general users. Includes a full DE, app distribution system, and network device sharing."
 				}))
 
-				(thing("MCPY", "/mcpy", "https://github.com/obiwac/python-minecraft-clone/blob/master/eyecandy/creeper.png?raw=true", html! {
+				(thing("MCPY", "/mcpy", true, "https://github.com/obiwac/python-minecraft-clone/blob/master/eyecandy/creeper.png?raw=true", html! {
 					"Minecraft clone written in Python. Video tutorial series on 3D graphics programming."
 				}))
 
-				(thing("BFM", "/bfm", "https://github.com/obiwac/bfm/raw/main/images/naive.gif", html! {
+				(thing("BFM", "/bfm", true, "https://github.com/obiwac/bfm/raw/main/images/naive.gif", html! {
 					"Big F'ing Matrix. FEM/FEA C library ("
 					code { "libbfm" }
 					") with Python bindings ("
@@ -112,27 +123,27 @@ fn index() -> Markup {
 					") for use as an educational tool. Alex and I made this for LEPL1110."
 				}))
 
-				(thing("KARWa '23", "/karwa", "https://github.com/karwa-org/karwa2023/blob/main/logo.png?raw=true", html! {
+				(thing("KARWa '23", "/karwa", false, "https://github.com/karwa-org/karwa2023/blob/main/logo.png?raw=true", html! {
 					"Francophone algorithmics contest. Jointly organized by Louvain-li-Nux (in Louvain-la-Neuve) and CPUMons (in Mons)."
 				}))
 
-				(thing("MOOdle", "/moodle", "https://github.com/NovAti0n/MOOdle/raw/main/eyecandy/paturage.png", html! {
+				(thing("MOOdle", "/moodle", true, "https://github.com/NovAti0n/MOOdle/raw/main/eyecandy/paturage.png", html! {
 					"Advanced cow visualization tool."
 				}))
 
-				(thing("GDPR", "/gdpr", "https://github.com/NovAti0n/GDPR-presentation/raw/main/screenshot.png", html! {
+				(thing("GDPR", "/gdpr", true, "https://github.com/NovAti0n/GDPR-presentation/raw/main/screenshot.png", html! {
 					"Interactive GDPR presentation Noa and I made in English class in highschool."
 				}))
 
-				(thing("LLN '23", "https://github.com/obiwac/lln-gamejam-2023", "https://github.com/obiwac/lln-gamejam-2023/raw/main/eyecandy/obamatriangle.jpg", html! {
+				(thing("LLN '23", "https://github.com/obiwac/lln-gamejam-2023", false, "https://github.com/obiwac/lln-gamejam-2023/raw/main/eyecandy/obamatriangle.jpg", html! {
 					"Submission for the 2023 Louvain-li-Nux gamejam. AKA Alexis and I's first foray into Vulkan and Rust. AKA Obamatriangle."
 				}))
 
-				(thing("LLN '22", "https://github.com/obiwac/lln-gamejam-2022", "https://github.com/obiwac/lln-gamejam-2022/raw/main/eyecandy/volcano-look.png", html! {
+				(thing("LLN '22", "https://github.com/obiwac/lln-gamejam-2022", false, "https://github.com/obiwac/lln-gamejam-2022/raw/main/eyecandy/volcano-look.png", html! {
 					"Submission for the 2022 Louvain-li-Nux gamejam. Pure C11. Pure X11. Pure 7/11."
 				}))
 
-				(thing("x-compositing-wm", "https://github.com/obiwac/x-compositing-wm", "https://github.com/obiwac/x-compositing-wm/raw/main/pics/screenshot1.png", html! {
+				(thing("x-compositing-wm", "https://github.com/obiwac/x-compositing-wm", false, "https://github.com/obiwac/x-compositing-wm/raw/main/pics/screenshot1.png", html! {
 					"Extremely basic X11 compositing window manager written in C with Xlib and OpenGL."
 				}))
 			}
@@ -168,7 +179,7 @@ fn explanation_page(title: &'static str, descr: Markup, exhibit: Markup) -> Mark
 fn gdpr() -> Markup {
 	explanation_page("GDPR", html! {
 		p {
-			"Interactive (try it out here on the right!) GDPR presentation my friend "
+			"Interactive (try it out here on the right - don't worry, we don't use cookies 😉) GDPR presentation my friend "
 			a.link href="https://novation.dev" { "Noa" }
 			" and I made in English class in highschool. As such, some parts may be written in French, as this was an English class in "
 			a.link href="https://en.wikipedia.org/wiki/Wallonia" { "Wallonia" }
