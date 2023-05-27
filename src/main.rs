@@ -255,7 +255,7 @@ fn moodle() -> Markup {
 		script {
 			(PreEscaped(r#"
 				var invert_gravity = false
-				var cow_speed = 0.1
+				var cow_speed = 2
 
 				var data = {
 					"Holstein": 60,
