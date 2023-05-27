@@ -1,0 +1,429 @@
+<!DOCTYPE html><head><meta charset="UTF-8"><meta name="description" content="Personal website for Aymeric Wibo"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="index,follow"><meta name="theme-color" content="#000000"><link rel="icon" type="image/png" href="https://avatars.githubusercontent.com/u/81159434?s=400&amp;u=52b722ee2247446fdb89cd4aa43d416a0ad97e14&amp;v=4"><link rel="manifest" href="manifest.json"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="De Bird"><title>Aymeric Wibo</title><style>@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap');
+
+:root {
+	--gradient: -webkit-linear-gradient(50deg, rgb(126, 119, 255), rgb(255, 34, 137));
+	--background-colour: #ffffff;
+	--title-colour: #000000;
+	--text-colour: #000000;
+	--article-colour: #ffffff;
+	--accent-colour: #4385f5;
+	--muted-colour: #555555;
+	--shadow-colour: rgba(183, 0, 255, 0.487);
+	--border-radius: 12px;
+	--blur-radius: 0px;
+	--navbar-colour: #fffc;
+	--navbar-shadow: rgba(183, 0, 255, 0.1) 0 8px 32px;
+	--code-background: #ddd;
+}
+
+.dark {
+	visibility: hidden;
+}
+
+@media (prefers-color-scheme: light) {
+	/* leave it as default */
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		--gradient: -webkit-linear-gradient(50deg, rgb(255, 79, 79), rgb(255, 52, 221));
+		--background-colour: #000000;
+		--title-colour: #ffffff;
+		--text-colour: #dddddd;
+		--article-colour: #00000033;
+		--accent-colour: #98beff;
+		--muted-colour: #999999;
+		--shadow-colour: #ff00cc29;
+		--blur-radius: 96px;
+		--navbar-colour: #000a;
+		--navbar-shadow: rgba(183, 0, 255, 0.05) 0 8px 32px;
+		--code-background: #111;
+	}
+
+	.dark {
+		visibility: visible;
+	}
+
+	.light {
+		visibility: hidden;
+	}
+}
+
+body {
+	background-color: var(--background-colour);
+	color: var(--text-colour);
+	margin: 0;
+
+	font-size: 22px;
+	font-display: optional;
+	font-family: "Montserrat", sans-serif;
+	word-break: break-word;
+}
+
+h1 {
+	color: var(--title-colour);
+	font-size: 90px;
+	font-display: optional;
+	font-family: "Montserrat", sans-serif;
+	margin-top: 16px;
+}
+
+strong {
+	/* text-shadow: rgba(255, 0, 191, 0.534) 0 0 16px; */
+	background: var(--gradient);
+	-webkit-background-clip: text;
+	background-clip: text;
+	-webkit-text-fill-color: transparent;
+	font-weight: bold;
+}
+
+code {
+	border-radius: 8px;
+	background-color: var(--code-background);
+}
+
+.inline-svg svg {
+	width: 24px;
+	margin: 4px;
+	margin-bottom: -4px;
+}
+
+iframe {
+	border: none;
+	width: 100%;
+}
+
+a {
+	text-decoration: none;
+	color: var(--text-colour);
+}
+
+.link {
+	background: var(--gradient);
+	background-clip: none;
+	color: var(--background-colour);
+	font-weight: bold;
+	border-radius: 3px;
+}
+
+.link:hover {
+	/* transitions for gradients annoyingly aren't supported in most browsers */
+	background: var(--text-colour);
+}
+
+.container {
+	max-width: 950px;
+	margin: auto;
+	padding: 32px;
+}
+
+/* things */
+
+.things {
+	display: flex;
+	justify-content: space-around;
+	align-items: start;
+	flex-wrap: wrap;
+	padding-block: 32px;
+	padding-inline: 4px;
+	row-gap: 12px;
+}
+
+.thing {
+	max-width: 280px;
+	margin: 16px;
+	border-radius: var(--border-radius);
+	transition: transform 0.1s ease-in-out, background 0.1s ease-in-out;
+}
+
+@media screen and (max-width: 1024px) {
+	.thing {
+		max-width: 308px;
+	}
+}
+
+@media screen and (max-width: 768px) {
+	.thing {
+		max-width: 100%;
+	}
+}
+
+@media screen and (max-width: 480px) {
+	.things {
+		padding-inline: 0;
+	}
+
+	.thing {
+		margin-inline: 0;
+	}
+}
+
+.thing p {
+	margin-inline: 16px;
+	margin-top: 32px;
+	margin-bottom: 16px;
+
+	/* text-align: justify; */
+	font-size: 18px;
+}
+
+.thing:hover {
+	background: var(--code-background);
+	transform: scale(105%);
+}
+
+.labeled-img {
+	max-width: 100%;
+	position: relative;
+}
+
+.labeled-img div {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	height: 70%;
+	background: linear-gradient(to bottom, transparent, black);
+	border-radius: var(--border-radius);
+}
+
+.labeled-img div {
+	position: absolute;
+	bottom: 0;
+	display: flex;
+	align-items: center;
+}
+
+.labeled-img div div h2 {
+	color: white;
+	margin-inline: 32px;
+}
+
+.labeled-img div div svg {
+	width: 24px;
+	margin-left: -16px;
+}
+
+.labeled-img img {
+	aspect-ratio: 8 / 5;
+	object-fit: cover;
+	width: 100%;
+	border-radius: var(--border-radius);
+}
+
+.learn-more {
+	margin-inline: 16px;
+	margin-bottom: 16px;
+	padding: 4px;
+	display: flex;
+	align-items: center;
+	border-radius: 4px;
+	cursor: pointer;
+	transition: background 0.1s ease-in-out;
+}
+
+.learn-more p {
+	background: none;
+	margin: 0;
+}
+
+.learn-more svg {
+	margin-right: 16px;
+	width: 24px;
+}
+
+.learn-more:hover {
+	background: var(--text-colour);
+}
+
+.learn-more p, .learn-more svg {
+	font-weight: lighter;
+	color: var(--muted-colour);
+	transition: color 0.1s ease-in-out;
+}
+
+.thing:hover .learn-more p, .thing:hover .learn-more svg {
+	font-weight: bold;
+	color: var(--text-colour);
+}
+
+.learn-more:hover p, .learn-more:hover svg {
+	color: var(--background-colour) !important;
+}
+
+/* socials */
+
+.socials {
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+	padding-block: 32px;
+	padding-inline: 8px;
+	column-gap: 24px;
+	row-gap: 12px;
+}
+
+.social {
+	padding: 4px;
+	display: flex;
+	align-items: center;
+	border-radius: 4px;
+	cursor: pointer;
+	transition: background 0.1s ease-in-out;
+}
+
+.social:hover {
+	background: var(--text-colour);
+	color: var(--background-colour);
+}
+
+.social p {
+	font-weight: bold;
+	background: none;
+	margin: 0;
+}
+
+.social svg {
+	margin-right: 16px;
+	width: 32px;
+}
+
+.social p, .social svg {
+	color: var(--text-colour);
+	transition: color 0.1s ease-in-out;
+}
+
+.social:hover p, .social:hover svg {
+	color: var(--background-colour);
+}
+
+/* explanation pages */
+
+.explanation-container {
+	padding: 32px;
+	gap: 64px;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-around;
+	align-items: center;
+	max-width: 1600px;
+	margin-inline: auto;
+	min-height: 100vh;
+	min-height: 100svh;
+	box-sizing: border-box; /* so that min-height includes padding */
+}
+
+.explanation {
+	max-width: 500px;
+}
+
+.exhibit {
+	width: 800px;
+	aspect-ratio: 8 / 5;
+}
+
+.exhibit iframe {
+	border-radius: var(--border-radius);
+	height: 100%;
+}
+
+.exhibit canvas {
+	border-radius: var(--border-radius);
+	cursor: pointer;
+	width: 100%;
+	height: 100%;
+}
+
+@media screen and (max-width: 768px) {
+	.explanation-container {
+		padding-bottom: 0;
+	}
+
+	.exhibit {
+		min-width: 100vw;
+	}
+
+	.exhibit iframe, .exhibit canvas {
+		border-radius: 0;
+	}
+}
+</style></head><body><div class="explanation-container"><div class="explanation"><h1>MOOdle 🐮</h1><p>Advanced cow visualization tool. This was originally made with my friends <a class="link" href="https://novation.dev">Noa</a> and <a class="link" href="https://github.com/alexisloic21">Alexis</a> for a university course.</p><p>Notice the subtle and difficult to understand play on words on the popular learning platform <a class="link" href="https://moodle.org/">Moodle</a>.</p><p>We'll host it soon (it uses Flask so we can't host it statically 😢), but in the meantime, please enjoy our proprietary VirtualRanch™ technology.</p><div class="socials"><a class="social" href="https://github.com/novati0n/moodle"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path fill="currentColor" d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+<p>Source code</p></a></div></div><div class="exhibit"><script>
+				var invert_gravity = false
+				var cow_speed = 2
+
+				var data = {
+					"Holstein": 60,
+					"Jersey": 10,
+					"Blanc Bleu Belge": 20,
+				}
+			</script><script id="vert-shader" type="x-shader/x-vertex">#version 300 es
+
+precision mediump float;
+
+layout(location = 0) in vec3 a_pos;
+layout(location = 1) in vec2 a_tex_coord;
+layout(location = 2) in vec3 a_normal;
+
+uniform mat4 u_model;
+uniform mat4 u_vp;
+
+out vec3 pos;
+out vec2 tex_coord;
+out vec3 normal;
+
+out vec4 world_pos;
+out float shading;
+
+void main(void) {
+	tex_coord = a_tex_coord;
+	normal = a_normal;
+
+	pos = a_pos;
+	world_pos = u_model * vec4(a_pos, 1.0);
+
+	gl_Position = u_vp * world_pos;
+
+	// lighting
+
+	vec3 adjusted_normal = (vec4(normal, 1.0) * u_model).xyz;
+	vec3 sunlight = vec3(-1.0, 0.0, 1.0);
+
+	vec3 normalized_normal = normalize(adjusted_normal);
+	vec3 normalized_sunlight = normalize(sunlight);
+
+	float product = dot(normalized_normal, normalized_sunlight);
+
+	shading = 1.0 - 0.6 * abs(product);
+}
+</script><script id="frag-shader" type="x-shader/x-fragment">#version 300 es
+
+precision mediump float;
+precision lowp int;
+
+uniform sampler2D u_sampler;
+uniform float u_shadow;
+
+in vec3 pos;
+in vec2 tex_coord;
+in vec3 normal;
+
+in vec4 world_pos;
+in float shading;
+
+out vec4 frag_colour;
+
+void main(void) {
+	vec4 texel = texture(u_sampler, tex_coord.ts);
+
+	if (u_shadow > 0.0) {
+		frag_colour = vec4(0.0, 0.0, 0.0, u_shadow - texel.r);
+	}
+
+	else {
+		float dist = dot(world_pos.xz, world_pos.xz);
+		float fade = 1.0 - dist / 25.0;
+
+		frag_colour = texel * fade * vec4(vec3(shading), 1.0); // * vec4(normal, 1.0);
+	}
+}
+</script><script src="/public/moodle/models/paturage.js" defer></script><script src="/public/moodle/models/holstein.js" defer></script><script src="/public/moodle/models/jersey.js" defer></script><script src="/public/moodle/models/bbb.js" defer></script><canvas width="800px" height="500px" id="paturage" onclick="paturage.click()"></canvas><script src="/public/moodle/paturage.js" defer></script></div></div></body>
