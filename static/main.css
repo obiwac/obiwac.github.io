@@ -63,6 +63,7 @@ h1 {
 	font-size: 90px;
 	font-display: optional;
 	font-family: "Montserrat", sans-serif;
+	margin-top: 16px;
 }
 
 strong {
@@ -107,7 +108,7 @@ a {
 
 .things {
 	display: flex;
-	justify-content: center;
+	justify-content: space-around;
 	align-items: start;
 	flex-wrap: wrap;
 	padding-block: 32px;
@@ -120,6 +121,28 @@ a {
 	margin: 16px;
 	border-radius: var(--border-radius);
 	transition: transform 0.1s ease-in-out, background 0.1s ease-in-out;
+}
+
+@media screen and (max-width: 1024px) {
+	.thing {
+		max-width: 308px;
+	}
+}
+
+@media screen and (max-width: 768px) {
+	.thing {
+		max-width: 100%;
+	}
+}
+
+@media screen and (max-width: 480px) {
+	.things {
+		padding-inline: 0;
+	}
+
+	.thing {
+		margin-inline: 0;
+	}
 }
 
 .thing p {
@@ -178,12 +201,12 @@ iframe {
 	align-items: center;
 	border-radius: 4px;
 	cursor: pointer;
+	transition: background 0.1s ease-in-out;
 }
 
 .learn-more p {
 	background: none;
 	margin: 0;
-	transition: background 0.1s ease-in-out;
 }
 
 .learn-more svg {
