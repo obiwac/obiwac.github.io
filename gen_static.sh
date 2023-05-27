@@ -11,6 +11,7 @@ END
 
 rm -rf static
 cp -r public static
+cp CNAME static/CNAME
 
 cargo run &
 sleep 1 # XXX should be enough, lol
