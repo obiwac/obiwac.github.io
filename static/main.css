@@ -108,6 +108,7 @@ a {
 .things {
 	display: flex;
 	justify-content: center;
+	align-items: start;
 	flex-wrap: wrap;
 	padding-block: 32px;
 	padding-inline: 4px;
@@ -117,14 +118,22 @@ a {
 .thing {
 	max-width: 280px;
 	margin: 16px;
+	border-radius: var(--border-radius);
+	transition: transform 0.1s ease-in-out, background 0.1s ease-in-out;
 }
 
 .thing p {
 	margin-inline: 16px;
-	margin-block: 32px;
+	margin-top: 32px;
+	margin-bottom: 16px;
 
 	/* text-align: justify; */
 	font-size: 18px;
+}
+
+.thing:hover {
+	background: var(--code-background);
+	transform: scale(105%);
 }
 
 .labeled-img {
@@ -161,6 +170,46 @@ iframe {
 	width: 100%;
 }
 
+.learn-more {
+	margin-inline: 16px;
+	margin-bottom: 16px;
+	padding: 4px;
+	display: flex;
+	align-items: center;
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+.learn-more p {
+	background: none;
+	margin: 0;
+	transition: background 0.1s ease-in-out;
+}
+
+.learn-more svg {
+	margin-right: 16px;
+	width: 24px;
+}
+
+.learn-more:hover {
+	background: var(--text-colour);
+}
+
+.learn-more p, .learn-more svg {
+	font-weight: lighter;
+	color: var(--muted-colour);
+	transition: color 0.1s ease-in-out;
+}
+
+.thing:hover .learn-more p, .thing:hover .learn-more svg {
+	font-weight: bold;
+	color: var(--text-colour);
+}
+
+.learn-more:hover p, .learn-more:hover svg {
+	color: var(--background-colour) !important;
+}
+
 /* socials */
 
 .socials {
@@ -179,6 +228,7 @@ iframe {
 	align-items: center;
 	border-radius: 4px;
 	cursor: pointer;
+	transition: background 0.1s ease-in-out;
 }
 
 .social:hover {
@@ -189,12 +239,19 @@ iframe {
 .social p {
 	font-weight: bold;
 	background: none;
-	color: inherit;
 	margin: 0;
 }
 
 .social svg {
 	margin-right: 16px;
 	width: 32px;
-	color: inherit;
+}
+
+.social p, .social svg {
+	color: var(--text-colour);
+	transition: color 0.1s ease-in-out;
+}
+
+.social:hover p, .social:hover svg {
+	color: var(--background-colour);
 }

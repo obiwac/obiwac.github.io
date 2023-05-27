@@ -52,7 +52,7 @@ fn base(content: Markup) -> Markup {
 	}
 }
 
-fn thing(title: &'static str, img_src: &'static str, descr: Markup) -> Markup {
+fn thing(title: &'static str, link: &'static str, img_src: &'static str, descr: Markup) -> Markup {
 	html! {
 		.thing {
 			.labeled-img {
@@ -62,6 +62,10 @@ fn thing(title: &'static str, img_src: &'static str, descr: Markup) -> Markup {
 				}
 			}
 			p { (descr) }
+			a.learn-more href=(link) {
+				(include_static!("/static/icons/arrow.svg"))
+				p { "Learn more" }
+			}
 		}
 	}
 }
@@ -91,19 +95,15 @@ fn index() -> Markup {
 			}
 			p { "Here are a few of my projects:" }
 			.things {
-				(thing("aquaBSD", "https://user-images.githubusercontent.com/11079650/155240444-53454627-84f0-4a52-81aa-9eb60f8770e8.png", html! {
-					"OS forked from FreeBSD geared towards general users."
+				(thing("aquaBSD", "/aquabsd", "https://user-images.githubusercontent.com/11079650/155240444-53454627-84f0-4a52-81aa-9eb60f8770e8.png", html! {
+					"OS forked from FreeBSD geared towards general users. Includes a full DE, app distribution system, and network device sharing."
 				}))
 
-				(thing("MCPY", "https://github.com/obiwac/python-minecraft-clone/blob/master/eyecandy/creeper.png?raw=true", html! {
+				(thing("MCPY", "/mcpy", "https://github.com/obiwac/python-minecraft-clone/blob/master/eyecandy/creeper.png?raw=true", html! {
 					"Minecraft clone written in Python. Video tutorial series on 3D graphics programming."
 				}))
 
-				(thing("KARWa '23", "https://github.com/karwa-org/karwa2023/blob/main/logo.png?raw=true", html! {
-					"Francophone algorithmics contest. Jointly organized by Louvain-li-Nux (in Louvain-la-Neuve) and CPUMons (in Mons)."
-				}))
-
-				(thing("BFM", "https://github.com/obiwac/bfm/raw/main/images/naive.gif", html! {
+				(thing("BFM", "/bfm", "https://github.com/obiwac/bfm/raw/main/images/naive.gif", html! {
 					"Big F'ing Matrix. FEM/FEA C library ("
 					code { "libbfm" }
 					") with Python bindings ("
@@ -111,24 +111,28 @@ fn index() -> Markup {
 					") for use as an educational tool. Alex and I made this for LEPL1110."
 				}))
 
-				(thing("LLN '23", "https://github.com/obiwac/lln-gamejam-2023/raw/main/eyecandy/obamatriangle.jpg", html! {
-					"Submission for the 2023 Louvain-li-Nux gamejam. AKA Alexis and I's first foray into Vulkan and Rust. AKA Obamatriangle."
+				(thing("KARWa '23", "/karwa", "https://github.com/karwa-org/karwa2023/blob/main/logo.png?raw=true", html! {
+					"Francophone algorithmics contest. Jointly organized by Louvain-li-Nux (in Louvain-la-Neuve) and CPUMons (in Mons)."
 				}))
 
-				(thing("LLN '22", "https://github.com/obiwac/lln-gamejam-2022/raw/main/eyecandy/volcano-look.png", html! {
-					"Submission for the 2022 Louvain-li-Nux gamejam. Pure C11. Pure X11. Pure 7/11."
-				}))
-
-				(thing("x-compositing-wm", "https://github.com/obiwac/x-compositing-wm/raw/main/pics/screenshot1.png", html! {
-					"Extremely basic X11 compositing window manager written in C with Xlib and OpenGL."
-				}))
-
-				(thing("MOOdle", "https://github.com/NovAti0n/MOOdle/raw/main/eyecandy/paturage.png", html! {
+				(thing("MOOdle", "/moodle", "https://github.com/NovAti0n/MOOdle/raw/main/eyecandy/paturage.png", html! {
 					"Advanced cow visualization tool."
 				}))
 
-				(thing("GDPR", "https://github.com/NovAti0n/GDPR-presentation/raw/main/screenshot.png", html! {
+				(thing("GDPR", "/gdpr", "https://github.com/NovAti0n/GDPR-presentation/raw/main/screenshot.png", html! {
 					"Interactive GDPR presentation Noa and I made in English class in highschool."
+				}))
+
+				(thing("LLN '23", "https://github.com/obiwac/lln-gamejam-2023", "https://github.com/obiwac/lln-gamejam-2023/raw/main/eyecandy/obamatriangle.jpg", html! {
+					"Submission for the 2023 Louvain-li-Nux gamejam. AKA Alexis and I's first foray into Vulkan and Rust. AKA Obamatriangle."
+				}))
+
+				(thing("LLN '22", "https://github.com/obiwac/lln-gamejam-2022", "https://github.com/obiwac/lln-gamejam-2022/raw/main/eyecandy/volcano-look.png", html! {
+					"Submission for the 2022 Louvain-li-Nux gamejam. Pure C11. Pure X11. Pure 7/11."
+				}))
+
+				(thing("x-compositing-wm", "https://github.com/obiwac/x-compositing-wm", "https://github.com/obiwac/x-compositing-wm/raw/main/pics/screenshot1.png", html! {
+					"Extremely basic X11 compositing window manager written in C with Xlib and OpenGL."
 				}))
 			}
 			.socials {
