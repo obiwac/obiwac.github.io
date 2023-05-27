@@ -148,7 +148,7 @@ fn index() -> Markup {
 					"Francophone algorithmics contest. Jointly organized by Louvain-li-Nux (in Louvain-la-Neuve) and CPUMons (in Mons)."
 				}))
 
-				(thing("MOOdle", "/moodle", true, "/moodle", html! {
+				(thing("MOOdle", "/moodle", true, "https://github.com/NovAti0n/MOOdle/raw/main/eyecandy/paturage.png", html! {
 					"Advanced cow visualization tool."
 				}))
 
