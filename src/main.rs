@@ -66,6 +66,15 @@ fn thing(title: &'static str, img_src: &'static str, descr: Markup) -> Markup {
 	}
 }
 
+fn social(handle: &'static str, link: &'static str, icon: PreEscaped<&str>) -> Markup {
+	html! {
+		a.social href=(link) {
+			(icon)
+			p { (handle) }
+		}
+	}
+}
+
 #[get("/")]
 fn index() -> Markup {
 	base(html! {
@@ -123,30 +132,12 @@ fn index() -> Markup {
 				}))
 			}
 			.socials {
-				a.social href="https://www.linkedin.com/in/awibo" {
-					(include_static!("/static/icons/linkedin.svg"))
-					p { "awibo" }
-				}
-				a.social href="https://www.github.com/obiwac" {
-					(include_static!("/static/icons/gh.svg"))
-					p { "@obiwac" }
-				}
-				a.social href="mailto:obiwac@gmail.com" {
-					(include_static!("/static/icons/email.svg"))
-					p { "obiwac@gmail.com" }
-				}
-				a.social href="mailto:obiwac@freebsd.org" {
-					(include_static!("/static/icons/fbsd.svg"))
-					p { "obiwac@freebsd.org" }
-				}
-				a.social href="https://youtube.com/obiwac" {
-					(include_static!("/static/icons/youtube.svg"))
-					p { "obiwac" }
-				}
-				a.social href="https://discord.com/users/305047157197504522" {
-					(include_static!("/static/icons/discord.svg"))
-					p { "obiwac#7599" }
-				}
+				(social("awibo", "https://www.linkedin.com/in/awibo", include_static!("/static/icons/linkedin.svg")))
+				(social("@obiwac", "https://www.github.com/obiwac", include_static!("/static/icons/gh.svg")))
+				(social("obiwac@gmail.com", "mailto:obiwac@gmail.com", include_static!("/static/icons/email.svg")))
+				(social("obiwac@freebsd.org", "mailto:obiwac@freebsd.org", include_static!("/static/icons/fbsd.svg")))
+				(social("obiwac", "https://youtube.com/obiwac", include_static!("/static/icons/youtube.svg")))
+				(social("obiwac#7599", "https://discord.com/users/305047157197504522", include_static!("/static/icons/discord.svg")))
 			}
 		}
 	})
