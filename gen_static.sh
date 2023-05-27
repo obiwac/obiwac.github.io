@@ -10,7 +10,8 @@ END
 )
 
 rm -rf static
-cp -r public static
+mkdir -p static
+cp -r public static/public
 cp CNAME static/CNAME
 
 cargo run &
