@@ -19,35 +19,37 @@ fn base(content: Markup) -> Markup {
 	html! {
 		(DOCTYPE)
 
-		head {
-			meta charset="UTF-8"; // must be in the first 1024 bytes of the document
-			meta name="description" content="Personal website for Aymeric Wibo"; // can't be longer than 275 characters as per Google's 2017 limit on the SERP
-			meta name="viewport" content="width=device-width,initial-scale=1";
-			meta name="robots" content="index,follow";
-			meta name="theme-color" content="#000000";
+		html lang="en" {
+			head {
+				meta charset="UTF-8"; // must be in the first 1024 bytes of the document
+				meta name="description" content="Personal website for Aymeric Wibo"; // can't be longer than 275 characters as per Google's 2017 limit on the SERP
+				meta name="viewport" content="width=device-width,initial-scale=1";
+				meta name="robots" content="index,follow";
+				meta name="theme-color" content="#000000";
 
-			link rel="icon" type="image/png" href="https://avatars.githubusercontent.com/u/81159434?s=400&u=52b722ee2247446fdb89cd4aa43d416a0ad97e14&v=4";
-			link rel="manifest" href="manifest.json";
+				link rel="icon" type="image/png" href="/public/icons/me.png";
+				link rel="manifest" href="manifest.json";
 
-			// Apple PWA stuff
+				// Apple PWA stuff
 
-			meta name="apple-mobile-web-app-capable" content="yes";
-			meta name="apple-mobile-web-app-status-bar-style" content="black-translucent";
-			meta name="apple-mobile-web-app-title" content="De Bird";
+				meta name="apple-mobile-web-app-capable" content="yes";
+				meta name="apple-mobile-web-app-status-bar-style" content="black-translucent";
+				meta name="apple-mobile-web-app-title" content="Aymeric Wibo";
 
-			// TODO keywords, google-site-verification, apple-touch-startup-image
+				// TODO keywords, google-site-verification, apple-touch-startup-image
 
-			title { "Aymeric Wibo" }
+				title { "Aymeric Wibo" }
 
-			// link rel="stylesheet" type="text/css" href="/public/main.css";
+				// link rel="stylesheet" type="text/css" href="/public/main.css";
 
-			style {
-				(include_static!("/main.css"))
+				style {
+					(include_static!("/main.css"))
+				}
 			}
-		}
 
-		body {
-			(content)
+			body {
+				(content)
+			}
 		}
 	}
 }
