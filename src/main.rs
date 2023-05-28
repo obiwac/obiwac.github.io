@@ -300,14 +300,16 @@ fn gdpr() -> Markup {
 			(person(Person::Noa))
 			" and I made in English class in highschool. As such, some parts may be written in French, as this was an English class in "
 			a.link href="https://en.wikipedia.org/wiki/Wallonia" { "Wallonia" }
-			"."
+			" 🇧🇪"
 		}
 		p { "There used to be a (extremely poorly secured 😄) database system to record quiz/survey answers, but that's now offline." }
 		p { "Also, the code is very not pretty. We wrote this in like 2 days, certainly not with the intention of further maintaining it." }
 		p {
 			"In memorandum "
 			(person(Person::Brichant))
-			" ❤️"
+			" (don't press "
+			code { "Ctrl+Alt+B" }
+			") ❤️"
 		}
 		.socials {
 			(social("Source code", "https://github.com/novati0n/gdpr-presentation", include_static!("//icons/gh.svg")))
