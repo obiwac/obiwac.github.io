@@ -55,7 +55,7 @@ fn base(content: Markup) -> Markup {
 // these are separate components, so I can easily update links
 
 enum Person {
-	Noa, Alexis, Alex, Drakeerv, Juk, Brichant
+	Noa, Alexis, Alex, Drakeerv, Juk, Brichant, Aless
 }
 
 fn person(person: Person) -> Markup {
@@ -67,6 +67,7 @@ fn person(person: Person) -> Markup {
 			Person::Drakeerv => a.link href="https://github.com/drakeerv" { "@drakeerv" },
 			Person::Juk => a.link href="https://github.com/jukitsu" { "@jukitsu" },
 			Person::Brichant => a.link href="http://brichant.eu" { "Monsieur Brichant" },
+			Person::Aless => a.link href="https://github.com/akialess" { "Aless" },
 		}
 	}
 }
@@ -167,6 +168,8 @@ fn index() -> Markup {
 				(thing("LLN '23", "https://github.com/obiwac/lln-gamejam-2023", false, "/public/thumbnails/lln23.png", html! {
 					"Submission for the 2023 Louvain-li-Nux gamejam. AKA "
 					(person(Person::Alexis))
+					" and "
+					(person(Person::Aless))
 					" and I's first foray into Vulkan and Rust. AKA Obamatriangle."
 				}))
 
