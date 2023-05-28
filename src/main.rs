@@ -280,8 +280,8 @@ fn moodle() -> Markup {
 
 		// shaders
 
-		script id="vert-shader" type="x-shader/x-vertex" { (include_static!("/moodle/vert.glsl")) }
-		script id="frag-shader" type="x-shader/x-fragment" { (include_static!("/moodle/frag.glsl")) }
+		script #vert-shader type="x-shader/x-vertex" { (include_static!("/moodle/vert.glsl")) }
+		script #frag-shader type="x-shader/x-fragment" { (include_static!("/moodle/frag.glsl")) }
 
 		// models
 
@@ -292,7 +292,7 @@ fn moodle() -> Markup {
 
 		// actual paturage
 
-		canvas width="800px" height="500px" id="paturage" onclick="paturage.click()" {}
+		canvas #paturage width="800px" height="500px" onclick="paturage.click()" {}
 		script src="/public/moodle/paturage.js" defer {}
 	})
 }
