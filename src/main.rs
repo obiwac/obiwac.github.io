@@ -247,7 +247,7 @@ fn mcpy() -> Markup {
 			(social("Full demo", "https://drakeerv.github.io/js-minecraft-clone/", include_static!("/icons/link.svg")))
 		}
 	}, html! {
-		iframe src="https://drakeerv.github.io/js-minecraft-clone/episodes/episode-11/index.html" loading="lazy";
+		iframe title="Drakeerv's port of MCPY to the browser" src="https://drakeerv.github.io/js-minecraft-clone/episodes/episode-11/index.html" loading="lazy";
 	})
 }
 
@@ -305,7 +305,7 @@ fn moodle() -> Markup {
 
 		// actual paturage
 
-		canvas #paturage width="800px" height="500px" onclick="paturage.click()" {}
+		canvas #paturage title="A herd of cows having the time of their lives... in captivity" width="800px" height="500px" onclick="paturage.click()" {}
 		script src="/public/moodle/paturage.js" defer {}
 	})
 }
@@ -334,7 +334,7 @@ fn gdpr() -> Markup {
 			(social("Full version", "https://novation.dev/GDPR-presentation", include_static!("/icons/link.svg")))
 		}
 	}, html! {
-		iframe src="https://novation.dev/GDPR-presentation";
+		iframe title="The GDPR presentation in question" src="https://novation.dev/GDPR-presentation" loading="lazy";
 	})
 }
 
