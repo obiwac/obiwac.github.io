@@ -189,7 +189,7 @@ fn index() -> Markup {
 					"Submission for the 2022 Louvain-li-Nux gamejam. Pure C11. Pure X11. Pure 7/11."
 				}))
 
-				(thing("x-compositing-wm", "https://github.com/obiwac/x-compositing-wm", false, "/public/thumbnails/x.png", html! {
+				(thing("Compositing WM", "https://github.com/obiwac/x-compositing-wm", false, "/public/thumbnails/x.png", html! {
 					"Extremely basic X11 compositing window manager written in C with Xlib and OpenGL."
 				}))
 			}
