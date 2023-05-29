@@ -2,17 +2,27 @@
 #![feature(decl_macro)]
 
 #[macro_use] extern crate rocket;
-
 extern crate maud;
+extern crate css_minify;
+
 use maud::{html, Markup, DOCTYPE, PreEscaped};
 use rocket::fs::FileServer;
+use css_minify::optimizations::{Minifier, Level};
 
 macro_rules! relative {
 	($path: expr) => (concat!(env!("CARGO_MANIFEST_DIR"), $path))
 }
 
+macro_rules! include_static_safe {
+	($path: expr) => (include_str!(relative!(concat!("/public", $path))))
+}
+
 macro_rules! include_static {
-	($path: expr) => (PreEscaped(include_str!(relative!(concat!("/public", $path)))))
+	($path: expr) => (PreEscaped(include_static_safe!($path)))
+}
+
+macro_rules! include_css {
+	($path: expr) => (PreEscaped(Minifier::default().minify(include_static_safe!($path), Level::Three).unwrap()))
 }
 
 fn base(content: Markup) -> Markup {
@@ -43,7 +53,7 @@ fn base(content: Markup) -> Markup {
 				// link rel="stylesheet" type="text/css" href="/public/main.css";
 
 				style {
-					(include_static!("/main.css"))
+					(include_css!("/main.css"))
 				}
 			}
 
