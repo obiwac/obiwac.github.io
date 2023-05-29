@@ -249,18 +249,21 @@ fn moodle() -> Markup {
 			(person(Person::Noa))
 			" and "
 			(person(Person::Alexis))
-			" for a university course."
+			" for a university course, using our proprietary VirtualRanch™ technology."
 		}
 		p {
 			"Notice the subtle and difficult to understand play on words on the popular learning platform "
 			a.link href="https://moodle.org/" { "Moodle" }
 			"."
 		}
-		p { "We'll host it soon (it uses Flask so we can't host it statically 😢), but in the meantime, please enjoy our proprietary VirtualRanch™ technology." }
+		p {
+			"You can try out the full version by clicking the link. "
+			strong { "Content warning" }
+			": French. Sensitive viewers are advised to look away."
+		}
 		.socials {
 			(social("Source code", "https://github.com/novati0n/moodle", include_static!("/icons/gh.svg")))
-			// TODO host full version!
-			// (social("Full version", "https://novation.dev/GDPR-presentation", include_static!("/icons/link.svg")))
+			(social("Full version", "https://moodle.novation.dev", include_static!("/icons/link.svg")))
 		}
 	}, html! {
 		// settings (because we're not attached to a full webapp anymore)
