@@ -337,7 +337,7 @@ class Cow {
 		// create a model matrix for rendering cow depending on its position/age/rotation
 
 		this.model_matrix = new Matrix()
-		this.scale = 0.1 + this.age / 100
+		this.scale = 0.2 + this.age / 100
 
 		this.model_matrix.translate(...this.pos)
 		this.model_matrix.rotate(this.rot, 0, 1, 0)
