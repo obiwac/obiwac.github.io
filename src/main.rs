@@ -35,6 +35,7 @@ fn base(schema: &str, content: Markup) -> Markup {
 				meta name="description" content="Personal website for Aymeric Wibo"; // can't be longer than 275 characters as per Google's 2017 limit on the SERP
 				meta name="viewport" content="width=device-width,initial-scale=1";
 				meta name="robots" content="index,follow";
+				meta name="google-site-verification" content="fAAF9QVbOi5rD1tThBbfzVtfhyAFbl4iN2LR42G67TI";
 				meta name="theme-color" content="#000000";
 
 				link rel="icon" type="image/png" href="/public/icons/me.png";
@@ -46,7 +47,7 @@ fn base(schema: &str, content: Markup) -> Markup {
 				meta name="apple-mobile-web-app-status-bar-style" content="black-translucent";
 				meta name="apple-mobile-web-app-title" content="Aymeric Wibo";
 
-				// TODO keywords, google-site-verification, apple-touch-startup-image
+				// TODO keywords, apple-touch-startup-image
 
 				title { "Aymeric Wibo" }
 				script type="application/ld+json" { (PreEscaped(schema)) }

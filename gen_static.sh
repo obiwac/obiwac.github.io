@@ -15,7 +15,7 @@ cp -r public static/public
 cp CNAME static/CNAME
 
 cargo run &
-sleep 1 # XXX should be enough, lol
+sleep 2 # XXX should be enough, lol
 
 for route in $ROUTES; do
 	mkdir -p static$route
