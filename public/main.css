@@ -78,7 +78,7 @@ a {
 	border-radius: 3px;
 }
 
-.link:hover {
+.link:hover, .link:focus {
 	/* transitions for gradients annoyingly aren't supported in most browsers */
 	background: var(--text-colour);
 }
@@ -139,7 +139,7 @@ a {
 	font-size: 18px;
 }
 
-.thing:hover {
+.thing:hover, .thing:focus-within {
 	background: var(--code-background);
 	transform: scale(105%);
 }
@@ -150,7 +150,7 @@ a {
 	transition: transform 0.1s ease-in-out;
 }
 
-.thing:hover .labeled-img {
+.thing:hover .labeled-img, .thing:focus-within .labeled-img {
 	transform: scale(105%);
 }
 
@@ -209,7 +209,7 @@ a {
 	width: 24px;
 }
 
-.learn-more:hover {
+.learn-more:hover, .learn-more:focus {
 	background: var(--text-colour);
 }
 
@@ -219,12 +219,16 @@ a {
 	transition: color 0.1s ease-in-out;
 }
 
-.thing:hover .learn-more p, .thing:hover .learn-more svg {
+.thing:hover .learn-more p, .thing:hover .learn-more svg,
+.thing:focus-within .learn-more p, .thing:focus-within .learn-more svg
+{
 	font-weight: bold;
 	color: var(--text-colour);
 }
 
-.learn-more:hover p, .learn-more:hover svg {
+.learn-more:hover p, .learn-more:hover svg,
+.learn-more:focus-within p, .learn-more:focus-within svg
+{
 	color: var(--background-colour) !important;
 }
 
@@ -249,7 +253,7 @@ a {
 	transition: background 0.1s ease-in-out;
 }
 
-.social:hover {
+.social:hover, .social:focus {
 	background: var(--text-colour);
 	color: var(--background-colour);
 }
@@ -270,7 +274,9 @@ a {
 	transition: color 0.1s ease-in-out;
 }
 
-.social:hover p, .social:hover svg {
+.social:hover p, .social:hover svg,
+.social:focus p, .social:focus svg
+{
 	color: var(--background-colour);
 }
 
