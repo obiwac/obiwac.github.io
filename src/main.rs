@@ -87,10 +87,12 @@ fn person(person: Person) -> Markup {
 // homepage
 
 fn thing(title: &'static str, link: &'static str, magic: bool, img_src: &'static str, descr: Markup) -> Markup {
+	let alt: &str = &(title.to_owned() + " thumbnail");
+
 	html! {
 		.thing {
 			.labeled-img {
-				img src=(img_src);
+				img alt=(alt) src=(img_src);
 				div {
 					div {
 						h2 { (title) }
