@@ -236,10 +236,14 @@ fn explanation_page(title: &'static str, img_src: &'static str, descr: Markup, e
 	base(&schema, html! {
 		.explanation-container {
 			.explanation #article {
-				h1 { (title) }
-				(descr)
+				header role="banner" {
+					h1 { (title) }
+				}
+				main role="main" {
+					(descr)
+				}
 			}
-			.exhibit {
+			aside.exhibit {
 				(exhibit)
 			}
 		}
