@@ -25,7 +25,7 @@ macro_rules! include_css {
 	($path: expr) => (PreEscaped(Minifier::default().minify(include_static_safe!($path), Level::Three).unwrap()))
 }
 
-fn base(content: Markup) -> Markup {
+fn base(schema: PreEscaped<&str>, content: Markup) -> Markup {
 	html! {
 		(DOCTYPE)
 
@@ -49,6 +49,7 @@ fn base(content: Markup) -> Markup {
 				// TODO keywords, google-site-verification, apple-touch-startup-image
 
 				title { "Aymeric Wibo" }
+				script type="application/ld+json" { (schema) }
 
 				// link rel="stylesheet" type="text/css" href="/public/main.css";
 
@@ -122,7 +123,7 @@ fn social(handle: &'static str, link: &'static str, icon: PreEscaped<&str>) -> M
 
 #[get("/")]
 fn index() -> Markup {
-	base(html! {
+	base(include_static!("/schema/me.json"), html! {
 		.container {
 			center {
 				h1 { "Hey! 👋" }
@@ -212,7 +213,7 @@ fn index() -> Markup {
 // explanation pages
 
 fn explanation_page(title: &'static str, descr: Markup, exhibit: Markup) -> Markup {
-	base(html! {
+	base(PreEscaped(""), html! {
 		.explanation-container {
 			.explanation {
 				h1 { (title) }

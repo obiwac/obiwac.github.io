@@ -1,0 +1,19 @@
+{
+	"@context": "http://schema.org",
+	"@type": "Person",
+	"familyName": "Wibo",
+	"givenName": "Aymeric",
+	"alumniOf": "https://uclouvain.be/fr/facultes/epl",
+	"image": "https://obiw.ac/public/icons/me.png",
+	"gender": "http://schema.org/Male",
+	"sameAs": [
+		"https://www.linkedin.com/in/awibo",
+		"https://youtube.com/obiwac",
+		"https://www.github.com/obiwac"
+	],
+	"email": "obiwac@gmail.com",
+	"url": "https://obiw.ac",
+	"nationality": "Belgian",
+	"birthDate": "2004-06-15",
+	"birthPlace": "London, UK"
+}
