@@ -13,19 +13,19 @@ macro_rules! relative {
 	($path: expr) => (concat!(env!("CARGO_MANIFEST_DIR"), $path))
 }
 
-macro_rules! include_static_safe {
+macro_rules! include_static {
 	($path: expr) => (include_str!(relative!(concat!("/public", $path))))
 }
 
-macro_rules! include_static {
-	($path: expr) => (PreEscaped(include_static_safe!($path)))
+macro_rules! include_static_unsafe {
+	($path: expr) => (PreEscaped(include_static!($path)))
 }
 
 macro_rules! include_css {
-	($path: expr) => (PreEscaped(Minifier::default().minify(include_static_safe!($path), Level::Three).unwrap()))
+	($path: expr) => (PreEscaped(Minifier::default().minify(include_static!($path), Level::Three).unwrap()))
 }
 
-fn base(schema: PreEscaped<&str>, content: Markup) -> Markup {
+fn base(schema: &str, content: Markup) -> Markup {
 	html! {
 		(DOCTYPE)
 
@@ -49,7 +49,7 @@ fn base(schema: PreEscaped<&str>, content: Markup) -> Markup {
 				// TODO keywords, google-site-verification, apple-touch-startup-image
 
 				title { "Aymeric Wibo" }
-				script type="application/ld+json" { (schema) }
+				script type="application/ld+json" { (PreEscaped(schema)) }
 
 				// link rel="stylesheet" type="text/css" href="/public/main.css";
 
@@ -98,14 +98,14 @@ fn thing(title: &'static str, link: &'static str, magic: bool, img_src: &'static
 					div {
 						h2 { (title) }
 						@if magic {
-							(include_static!("/icons/magic.svg"))
+							(include_static_unsafe!("/icons/magic.svg"))
 						}
 					}
 				}
 			}
 			p { (descr) }
 			a.learn-more href=(link) {
-				(include_static!("/icons/arrow.svg"))
+				(include_static_unsafe!("/icons/arrow.svg"))
 				p { "Learn more" }
 			}
 		}
@@ -121,6 +121,10 @@ fn social(handle: &'static str, link: &'static str, icon: PreEscaped<&str>) -> M
 	}
 }
 
+const MCPY_IMG_SRC: &str = "/public/thumbnails/mcpy.png";
+const MOODLE_IMG_SRC: &str = "/public/thumbnails/moodle.png";
+const GDPR_IMG_SRC: &str = "/public/thumbnails/gdpr.png";
+
 #[get("/")]
 fn index() -> Markup {
 	base(include_static!("/schema/me.json"), html! {
@@ -129,12 +133,12 @@ fn index() -> Markup {
 				h1 { "Hey! 👋" }
 			}
 			.socials {
-				(social("awibo", "https://www.linkedin.com/in/awibo", include_static!("/icons/linkedin.svg")))
-				(social("@obiwac", "https://www.github.com/obiwac", include_static!("/icons/gh.svg")))
-				(social("obiwac@gmail.com", "mailto:obiwac@gmail.com", include_static!("/icons/email.svg")))
-				(social("obiwac@freebsd.org", "mailto:obiwac@freebsd.org", include_static!("/icons/fbsd.svg")))
-				(social("obiwac", "https://youtube.com/obiwac", include_static!("/icons/youtube.svg")))
-				(social("obiwac#7599", "https://discord.com/users/305047157197504522", include_static!("/icons/discord.svg")))
+				(social("awibo", "https://www.linkedin.com/in/awibo", include_static_unsafe!("/icons/linkedin.svg")))
+				(social("@obiwac", "https://www.github.com/obiwac", include_static_unsafe!("/icons/gh.svg")))
+				(social("obiwac@gmail.com", "mailto:obiwac@gmail.com", include_static_unsafe!("/icons/email.svg")))
+				(social("obiwac@freebsd.org", "mailto:obiwac@freebsd.org", include_static_unsafe!("/icons/fbsd.svg")))
+				(social("obiwac", "https://youtube.com/obiwac", include_static_unsafe!("/icons/youtube.svg")))
+				(social("obiwac#7599", "https://discord.com/users/305047157197504522", include_static_unsafe!("/icons/discord.svg")))
 			}
 			p {
 				"My name is "
@@ -143,7 +147,7 @@ fn index() -> Markup {
 				strong { "obiwac" }
 				", no relation to Obi-Wan). I'm a Belgian open-source enthusiast who likes dogs and beer 🍺 Here are some of my projects - those which have a "
 				span.inline-svg {
-					(include_static!("/icons/magic.svg"))
+					(include_static_unsafe!("/icons/magic.svg"))
 				}
 				" next to their name are interactive experiences:"
 			}
@@ -152,7 +156,7 @@ fn index() -> Markup {
 					"OS forked from FreeBSD geared towards general users. Includes a full DE, app distribution system, and network device sharing."
 				}))
 
-				(thing("MCPY", "/mcpy", true, "/public/thumbnails/mcpy.png", html! {
+				(thing("MCPY", "/mcpy", true, MCPY_IMG_SRC, html! {
 					"Video tutorial series on 3D graphics programming with OpenGL, where I write a Minecraft clone in Python."
 				}))
 
@@ -170,11 +174,11 @@ fn index() -> Markup {
 					"Francophone algorithmics contest. Jointly organized by Louvain-li-Nux (in Louvain-la-Neuve) and CPUMons (in Mons)."
 				}))
 
-				(thing("MOOdle", "/moodle", true, "/public/thumbnails/moodle.png", html! {
+				(thing("MOOdle", "/moodle", true, MOODLE_IMG_SRC, html! {
 					"Advanced cow visualization tool."
 				}))
 
-				(thing("GDPR", "/gdpr", true, "/public/thumbnails/gdpr.png", html! {
+				(thing("GDPR", "/gdpr", true, GDPR_IMG_SRC, html! {
 					"Interactive GDPR presentation "
 					(person(Person::Noa))
 					" and I made in English class in highschool."
@@ -204,7 +208,7 @@ fn index() -> Markup {
 				"! Fun fact: this site's source doesn't have a single line of the godforsaken language known as HTML in it. It does have some JS on some pages though (not this one), so count that as an L if you want."
 			}
 			.socials {
-				(social("Source code", "https://github.com/obiwac/obiwac.github.io", include_static!("/icons/gh.svg")))
+				(social("Source code", "https://github.com/obiwac/obiwac.github.io", include_static_unsafe!("/icons/gh.svg")))
 			}
 		}
 	})
@@ -212,10 +216,19 @@ fn index() -> Markup {
 
 // explanation pages
 
-fn explanation_page(title: &'static str, descr: Markup, exhibit: Markup) -> Markup {
-	base(PreEscaped(""), html! {
+fn explanation_page(title: &'static str, img_src: &'static str, descr: Markup, exhibit: Markup) -> Markup {
+	let schema = format!(r#"{{
+		"@context": "http://schema.org",
+		"@type": "Article",
+		"@id": "{{#}}article",
+		"name": "{}",
+		"author": "Aymeric Wibo",
+		"image": "{}"
+	}}"#, title, img_src);
+
+	base(&schema, html! {
 		.explanation-container {
-			.explanation {
+			.explanation #article {
 				h1 { (title) }
 				(descr)
 			}
@@ -228,7 +241,7 @@ fn explanation_page(title: &'static str, descr: Markup, exhibit: Markup) -> Mark
 
 #[get("/mcpy")]
 fn mcpy() -> Markup {
-	explanation_page("MCPY ⛏️", html! {
+	explanation_page("MCPY ⛏️", MCPY_IMG_SRC, html! {
 		p { "Video tutorial series on 3D graphics programming, where I write a Minecraft clone in Python." }
 		p {
 			"This page has an interactive demo (of episode 11) made in WebGL based on MCPY by "
@@ -245,9 +258,9 @@ fn mcpy() -> Markup {
 			") implements other cool features, such as lighting, smooth shading, and (soon) mobs!"
 		}
 		.socials {
-			(social("Playlist", "https://www.youtube.com/watch?v=fWkbIOna6RA&list=PL6_bLxRDFzoKjaa3qCGkwR5L_ouSreaVP", include_static!("/icons/youtube.svg")))
-			(social("Source code", "https://github.com/obiwac/python-minecraft-clone", include_static!("/icons/gh.svg")))
-			(social("Full demo", "https://drakeerv.github.io/js-minecraft-clone/", include_static!("/icons/link.svg")))
+			(social("Playlist", "https://www.youtube.com/watch?v=fWkbIOna6RA&list=PL6_bLxRDFzoKjaa3qCGkwR5L_ouSreaVP", include_static_unsafe!("/icons/youtube.svg")))
+			(social("Source code", "https://github.com/obiwac/python-minecraft-clone", include_static_unsafe!("/icons/gh.svg")))
+			(social("Full demo", "https://drakeerv.github.io/js-minecraft-clone/", include_static_unsafe!("/icons/link.svg")))
 		}
 	}, html! {
 		iframe title="Drakeerv's port of MCPY to the browser" src="https://drakeerv.github.io/js-minecraft-clone/episodes/episode-11/index.html" loading="lazy";
@@ -256,7 +269,7 @@ fn mcpy() -> Markup {
 
 #[get("/moodle")]
 fn moodle() -> Markup {
-	explanation_page("MOOdle 🐮", html! {
+	explanation_page("MOOdle 🐮", MOODLE_IMG_SRC, html! {
 		p {
 			"Advanced cow visualization tool. This was originally made with my friends "
 			(person(Person::Noa))
@@ -275,8 +288,8 @@ fn moodle() -> Markup {
 			": French. Sensitive viewers are advised to look away."
 		}
 		.socials {
-			(social("Source code", "https://github.com/novati0n/moodle", include_static!("/icons/gh.svg")))
-			(social("Full version", "https://moodle.novation.dev", include_static!("/icons/link.svg")))
+			(social("Source code", "https://github.com/novati0n/moodle", include_static_unsafe!("/icons/gh.svg")))
+			(social("Full version", "https://moodle.novation.dev", include_static_unsafe!("/icons/link.svg")))
 		}
 	}, html! {
 		// settings (because we're not attached to a full webapp anymore)
@@ -296,8 +309,8 @@ fn moodle() -> Markup {
 
 		// shaders
 
-		script #vert-shader type="x-shader/x-vertex" { (include_static!("/moodle/vert.glsl")) }
-		script #frag-shader type="x-shader/x-fragment" { (include_static!("/moodle/frag.glsl")) }
+		script #vert-shader type="x-shader/x-vertex" { (include_static_unsafe!("/moodle/vert.glsl")) }
+		script #frag-shader type="x-shader/x-fragment" { (include_static_unsafe!("/moodle/frag.glsl")) }
 
 		// models
 
@@ -315,7 +328,7 @@ fn moodle() -> Markup {
 
 #[get("/gdpr")]
 fn gdpr() -> Markup {
-	explanation_page("GDPR 🤓", html! {
+	explanation_page("GDPR 🤓", GDPR_IMG_SRC, html! {
 		p {
 			"Interactive (try it out right here - don't worry, we don't use cookies 😉) GDPR presentation my friend "
 			(person(Person::Noa))
@@ -333,8 +346,8 @@ fn gdpr() -> Markup {
 			") ❤️"
 		}
 		.socials {
-			(social("Source code", "https://github.com/novati0n/gdpr-presentation", include_static!("//icons/gh.svg")))
-			(social("Full version", "https://novation.dev/GDPR-presentation", include_static!("/icons/link.svg")))
+			(social("Source code", "https://github.com/novati0n/gdpr-presentation", include_static_unsafe!("//icons/gh.svg")))
+			(social("Full version", "https://novation.dev/GDPR-presentation", include_static_unsafe!("/icons/link.svg")))
 		}
 	}, html! {
 		iframe title="The GDPR presentation in question" src="https://novation.dev/GDPR-presentation" loading="lazy";
