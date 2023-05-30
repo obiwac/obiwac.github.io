@@ -129,92 +129,86 @@ const GDPR_IMG_SRC: &str = "/public/thumbnails/gdpr.png";
 fn index() -> Markup {
 	base(include_static!("/schema/me.json"), html! {
 		.container {
-			header role="banner" {
-				center {
-					h1 { "Hey! 👋" }
-				}
-				.socials {
-					(social("awibo", "https://www.linkedin.com/in/awibo", include_static_unsafe!("/icons/linkedin.svg")))
-					(social("@obiwac", "https://www.github.com/obiwac", include_static_unsafe!("/icons/gh.svg")))
-					(social("obiwac@gmail.com", "mailto:obiwac@gmail.com", include_static_unsafe!("/icons/email.svg")))
-					(social("obiwac@freebsd.org", "mailto:obiwac@freebsd.org", include_static_unsafe!("/icons/fbsd.svg")))
-					(social("obiwac", "https://youtube.com/obiwac", include_static_unsafe!("/icons/youtube.svg")))
-					(social("obiwac#7599", "https://discord.com/users/305047157197504522", include_static_unsafe!("/icons/discord.svg")))
-				}
+			center {
+				h1 { "Hey! 👋" }
 			}
-			main role="main" {
-				p {
-					"My name is "
-					strong { "Aymeric Wibo" }
-					" (AKA "
-					strong { "obiwac" }
-					", no relation to Obi-Wan). I'm a Belgian open-source enthusiast who likes dogs and beer 🍺 Here are some of my projects - those which have a "
-					span.inline-svg {
-						(include_static_unsafe!("/icons/magic.svg"))
-					}
-					" next to their name are interactive experiences:"
-				}
-				.things {
-					(thing("aquaBSD", "https://github.com/inobulles/aquabsd/releases", false, "/public/thumbnails/aquabsd.png", html! {
-						"OS forked from FreeBSD geared towards general users. Includes a full DE, app distribution system, and network device sharing."
-					}))
-
-					(thing("MCPY", "/mcpy", true, MCPY_IMG_SRC, html! {
-						"Video tutorial series on 3D graphics programming with OpenGL, where I write a Minecraft clone in Python."
-					}))
-
-					(thing("BFM", "https://github.com/obiwac/bfm", false, "/public/thumbnails/bfm.png", html! {
-						"Big F'ing Matrix. FEM/FEA C library ("
-						code { "libbfm" }
-						") with Python bindings ("
-						code { "pybfm" }
-						") for use as an educational tool. "
-						(person(Person::Alex))
-						" and I made this for LEPL1110."
-					}))
-
-					(thing("KARWa '23", "https://www.linkedin.com/posts/louvain-li-nux_algo-algorithmes-programmingcontest-activity-7054432800577306624-CR6L?utm_source=share&utm_medium=member_desktop", false, "/public/thumbnails/karwa.png", html! {
-						"Francophone algorithmics contest. Jointly organized by Louvain-li-Nux (in Louvain-la-Neuve) and CPUMons (in Mons)."
-					}))
-
-					(thing("MOOdle", "/moodle", true, MOODLE_IMG_SRC, html! {
-						"Advanced cow visualization tool."
-					}))
-
-					(thing("GDPR", "/gdpr", true, GDPR_IMG_SRC, html! {
-						"Interactive GDPR presentation "
-						(person(Person::Noa))
-						" and I made in English class in highschool."
-					}))
-
-					(thing("LLN '23", "https://github.com/obiwac/lln-gamejam-2023", false, "/public/thumbnails/lln23.png", html! {
-						"Submission for the 2023 Louvain-li-Nux gamejam. AKA "
-						(person(Person::Alexis))
-						" and "
-						(person(Person::Aless))
-						" and I's first foray into Vulkan and Rust. AKA Obamatriangle."
-					}))
-
-					(thing("LLN '22", "https://github.com/obiwac/lln-gamejam-2022", false, "/public/thumbnails/lln22.png", html! {
-						"Submission for the 2022 Louvain-li-Nux gamejam. Pure C11. Pure X11. Pure 7/11."
-					}))
-
-					(thing("Compositing WM", "https://github.com/obiwac/x-compositing-wm", false, "/public/thumbnails/x.png", html! {
-						"Extremely basic X11 compositing window manager written in C with Xlib and OpenGL."
-					}))
-				}
+			.socials {
+				(social("awibo", "https://www.linkedin.com/in/awibo", include_static_unsafe!("/icons/linkedin.svg")))
+				(social("@obiwac", "https://www.github.com/obiwac", include_static_unsafe!("/icons/gh.svg")))
+				(social("obiwac@gmail.com", "mailto:obiwac@gmail.com", include_static_unsafe!("/icons/email.svg")))
+				(social("obiwac@freebsd.org", "mailto:obiwac@freebsd.org", include_static_unsafe!("/icons/fbsd.svg")))
+				(social("obiwac", "https://youtube.com/obiwac", include_static_unsafe!("/icons/youtube.svg")))
+				(social("obiwac#7599", "https://discord.com/users/305047157197504522", include_static_unsafe!("/icons/discord.svg")))
 			}
-			footer role="contentinfo" {
-				p {
-					"This page was made possible thanks to "
-					a.link href="https://rocket.rs" { "Rocket.rs" }
+			p {
+				"My name is "
+				strong { "Aymeric Wibo" }
+				" (AKA "
+				strong { "obiwac" }
+				", no relation to Obi-Wan). I'm a Belgian open-source enthusiast who likes dogs and beer 🍺 Here are some of my projects - those which have a "
+				span.inline-svg {
+					(include_static_unsafe!("/icons/magic.svg"))
+				}
+				" next to their name are interactive experiences:"
+			}
+			.things {
+				(thing("aquaBSD", "https://github.com/inobulles/aquabsd/releases", false, "/public/thumbnails/aquabsd.png", html! {
+					"OS forked from FreeBSD geared towards general users. Includes a full DE, app distribution system, and network device sharing."
+				}))
+
+				(thing("MCPY", "/mcpy", true, MCPY_IMG_SRC, html! {
+					"Video tutorial series on 3D graphics programming with OpenGL, where I write a Minecraft clone in Python."
+				}))
+
+				(thing("BFM", "https://github.com/obiwac/bfm", false, "/public/thumbnails/bfm.png", html! {
+					"Big F'ing Matrix. FEM/FEA C library ("
+					code { "libbfm" }
+					") with Python bindings ("
+					code { "pybfm" }
+					") for use as an educational tool. "
+					(person(Person::Alex))
+					" and I made this for LEPL1110."
+				}))
+
+				(thing("KARWa '23", "https://www.linkedin.com/posts/louvain-li-nux_algo-algorithmes-programmingcontest-activity-7054432800577306624-CR6L?utm_source=share&utm_medium=member_desktop", false, "/public/thumbnails/karwa.png", html! {
+					"Francophone algorithmics contest. Jointly organized by Louvain-li-Nux (in Louvain-la-Neuve) and CPUMons (in Mons)."
+				}))
+
+				(thing("MOOdle", "/moodle", true, MOODLE_IMG_SRC, html! {
+					"Advanced cow visualization tool."
+				}))
+
+				(thing("GDPR", "/gdpr", true, GDPR_IMG_SRC, html! {
+					"Interactive GDPR presentation "
+					(person(Person::Noa))
+					" and I made in English class in highschool."
+				}))
+
+				(thing("LLN '23", "https://github.com/obiwac/lln-gamejam-2023", false, "/public/thumbnails/lln23.png", html! {
+					"Submission for the 2023 Louvain-li-Nux gamejam. AKA "
+					(person(Person::Alexis))
 					" and "
-					a.link href="https://maud.lambda.xyz" { "Maud" }
-					"! Fun fact: this site's source doesn't have a single line of the godforsaken language known as HTML in it. It does have some JS on some pages though (not this one), so count that as an L if you want."
-				}
-				.socials {
-					(social("Source code", "https://github.com/obiwac/obiwac.github.io", include_static_unsafe!("/icons/gh.svg")))
-				}
+					(person(Person::Aless))
+					" and I's first foray into Vulkan and Rust. AKA Obamatriangle."
+				}))
+
+				(thing("LLN '22", "https://github.com/obiwac/lln-gamejam-2022", false, "/public/thumbnails/lln22.png", html! {
+					"Submission for the 2022 Louvain-li-Nux gamejam. Pure C11. Pure X11. Pure 7/11."
+				}))
+
+				(thing("Compositing WM", "https://github.com/obiwac/x-compositing-wm", false, "/public/thumbnails/x.png", html! {
+					"Extremely basic X11 compositing window manager written in C with Xlib and OpenGL."
+				}))
+			}
+			p {
+				"This page was made possible thanks to "
+				a.link href="https://rocket.rs" { "Rocket.rs" }
+				" and "
+				a.link href="https://maud.lambda.xyz" { "Maud" }
+				"! Fun fact: this site's source doesn't have a single line of the godforsaken language known as HTML in it. It does have some JS on some pages though (not this one), so count that as an L if you want."
+			}
+			.socials {
+				(social("Source code", "https://github.com/obiwac/obiwac.github.io", include_static_unsafe!("/icons/gh.svg")))
 			}
 		}
 	})
@@ -235,14 +229,10 @@ fn explanation_page(title: &'static str, img_src: &'static str, descr: Markup, e
 	base(&schema, html! {
 		.explanation-container {
 			.explanation #article {
-				header role="banner" {
-					h1 { (title) }
-				}
-				main role="main" {
-					(descr)
-				}
+				h1 { (title) }
+				(descr)
 			}
-			aside.exhibit {
+			.exhibit {
 				(exhibit)
 			}
 		}
