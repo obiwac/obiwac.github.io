@@ -136,7 +136,7 @@ fn index() -> Markup {
 				}
 				.socials {
 					(social("awibo", "https://www.linkedin.com/in/awibo", include_static_unsafe!("/icons/linkedin.svg")))
-					(social("@obiwac", "https://www.github.com/obiwac", include_static_unsafe!("/icons/gh.svg")))
+					(social("@obiwac", "https://github.com/obiwac", include_static_unsafe!("/icons/gh.svg")))
 					(social("obiwac@gmail.com", "mailto:obiwac@gmail.com", include_static_unsafe!("/icons/email.svg")))
 					(social("obiwac@freebsd.org", "mailto:obiwac@freebsd.org", include_static_unsafe!("/icons/fbsd.svg")))
 					(social("obiwac", "https://youtube.com/obiwac", include_static_unsafe!("/icons/youtube.svg")))
@@ -365,6 +365,40 @@ fn gdpr() -> Markup {
 	})
 }
 
+// upload page
+
+#[get("/upload")]
+fn upload() -> Markup {
+	// no schema here!
+
+	base("", html! {
+		.upload-container {
+			h1 { "Upload 📁" }
+			p {
+				"Simple app for uploading files to a given IP. You can select as many files as you want! "
+				"JS is needed for the IP input, unfortunately 😢"
+			}
+			input #ip type="text" placeholder="Enter IP:port here" onchange="document.getElementById('form').action = `http://${document.getElementById('ip').value}/api/upload`";
+			form #form /* action="/api/upload" method="post" enctype="multipart/form-data" */ {
+				label.file-chooser for="files" { "Click to choose files" }
+				input #files name="files" type="file" multiple;
+				input.button #button type="submit" value="Send files!";
+			}
+			br; br; br; // XXX ... whatever man, this ain't hackier than the web at least
+			p {
+				"This client expected an upload server which accepts the "
+				code { "/api/upload" }
+				" route. "
+				"Here's a super simple one I wrote:"
+				.socials {
+					(social("Source code", "https://github.com/obiwac/upload-server-rs", include_static_unsafe!("/icons/gh.svg")))
+				}
+			}
+			script { (include_static_unsafe!("/upload/index.js")) }
+		}
+	})
+}
+
 // server stuff
 
 #[launch]
@@ -372,6 +406,6 @@ fn rocket() -> _ {
 	let rocket = rocket::build();
 
 	rocket
-		.mount("/", routes![index, mcpy, moodle, gdpr])
+		.mount("/", routes![index, mcpy, moodle, gdpr, upload])
 		.mount("/public", FileServer::from(relative!("/public")))
 }
