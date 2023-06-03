@@ -378,8 +378,8 @@ fn upload() -> Markup {
 				"Simple app for uploading files to a given IP. You can select as many files as you want! "
 				"JS is needed for the IP input, unfortunately 😢"
 			}
-			input #ip type="text" placeholder="Enter IP:port here" onchange="document.getElementById('form').action = `http://${document.getElementById('ip').value}/api/upload`";
-			form #form /* action="/api/upload" method="post" enctype="multipart/form-data" */ {
+			input #ip type="text" placeholder="Enter IP:port here";
+			form #form {
 				label.file-chooser for="files" { "Click to choose files" }
 				input #files name="files" type="file" multiple;
 				input.button #button type="submit" value="Send files!";

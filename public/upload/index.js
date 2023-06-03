@@ -1,5 +1,6 @@
 const upload_form = document.getElementById("form")
 const files_input = document.getElementById("files")
+const ip_input = document.getElementById("ip")
 const button = document.getElementById("button")
 
 upload_form.onsubmit = ((e) => {
@@ -11,7 +12,8 @@ upload_form.onsubmit = ((e) => {
 	for (let file of files)
 		form_data.append("files", file)
 
-	const url = "http://localhost:4567/api/upload"
+	const ip = ip_input.value
+	const url = `http://${ip}/api/upload`
 
 	const xhr = new XMLHttpRequest()
 	xhr.open("POST", url, true)
