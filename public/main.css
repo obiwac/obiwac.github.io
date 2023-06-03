@@ -396,3 +396,10 @@ input[type="file"] {
 	transform: none;
 	opacity: 50%;
 }
+
+.button:disabled, .button[disabled] {
+	cursor: initial;
+	opacity: 50%;
+	transform: none;
+	box-shadow: none;
+}

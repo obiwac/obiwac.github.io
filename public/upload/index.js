@@ -29,11 +29,13 @@ upload_form.onsubmit = ((e) => {
 
 		const frac = (e.loaded / e.total * 100).toFixed(2)
 		button.value = `${frac}%`
+		button.disabled = true
 	}
 
 	xhr.onload = () => {
 		if (xhr.status === 200) {
 			button.value = orig_button_val
+			button.disabled = false
 			console.log(xhr.responseText)
 		}
 
