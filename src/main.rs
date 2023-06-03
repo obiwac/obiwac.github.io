@@ -378,10 +378,10 @@ fn upload() -> Markup {
 				"Simple app for uploading files to a given IP. You can select as many files as you want! "
 				"JS is needed for the IP input, unfortunately 😢"
 			}
-			input #ip type="text" placeholder="Enter IP:port here";
 			form #form {
+				input #ip type="text" placeholder="Enter IP:port here" required;
 				label.file-chooser for="files" { "Click to choose files" }
-				input #files name="files" type="file" multiple;
+				input #files name="files" type="file" multiple required;
 				input.button #button type="submit" value="Send files!";
 			}
 			br; br; br; // XXX ... whatever man, this ain't hackier than the web at least
