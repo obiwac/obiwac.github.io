@@ -376,17 +376,20 @@ fn upload() -> Markup {
 			h1 { "Upload 📁" }
 			p {
 				"Simple app for uploading files to a given IP. You can select as many files as you want! "
-				"JS is needed for the IP input, unfortunately 😢"
+				"JS is required, unfortunately 😢"
+				br; br;
+				strong { "Warning: " }
+				"Don't upload sensitive data if over HTTP!"
 			}
 			form #form {
-				input #ip type="text" placeholder="Enter IP:port here" required;
+				input #ip type="text" placeholder="Enter protocol://IP:port here" required;
 				label.file-chooser for="files" { "Click to choose files" }
 				input #files name="files" type="file" multiple required;
 				input.button #button type="submit" value="Send files!";
 			}
 			br; br; br; // XXX ... whatever man, this ain't hackier than the web at least
 			p {
-				"This client expected an upload server which accepts the "
+				"This client expects an upload server which accepts the "
 				code { "/api/upload" }
 				" route. "
 				"Here's a super simple one I wrote:"

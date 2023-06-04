@@ -13,7 +13,7 @@ upload_form.onsubmit = ((e) => {
 		form_data.append("files", file)
 
 	const ip = ip_input.value
-	const url = `http://${ip}/api/upload`
+	const url = `${ip}/api/upload`
 
 	const xhr = new XMLHttpRequest()
 	xhr.open("POST", url, true)
