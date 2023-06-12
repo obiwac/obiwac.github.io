@@ -327,6 +327,12 @@ a {
 	height: 100%;
 }
 
+@media screen and (max-width: 1280px) {
+	.explanation-container {
+		padding-top: 64px;
+	}
+}
+
 @media screen and (max-width: 768px) {
 	.explanation-container {
 		padding-bottom: 0;
