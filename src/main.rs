@@ -234,6 +234,10 @@ fn explanation_page(title: &'static str, img_src: &'static str, descr: Markup, e
 	}}"#, title, img_src);
 
 	base(&schema, html! {
+		a.go-back href="/" {
+			(include_static_unsafe!("/icons/arrow.svg"))
+			p { "Main page" }
+		}
 		.explanation-container {
 			.explanation #article {
 				header role="banner" {
