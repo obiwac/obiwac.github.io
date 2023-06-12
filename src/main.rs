@@ -235,7 +235,7 @@ fn explanation_page(title: &'static str, img_src: &'static str, descr: Markup, e
 
 	base(&schema, html! {
 		a.go-back href="/" {
-			(include_static_unsafe!("/icons/arrow.svg"))
+			(include_static_unsafe!("/icons/back.svg"))
 			p { "Main page" }
 		}
 		.explanation-container {
