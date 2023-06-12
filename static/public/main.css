@@ -190,7 +190,13 @@ a {
 	border-radius: var(--border-radius);
 }
 
-.learn-more {
+.go-back {
+	position: absolute;
+	top: 32px;
+	left: 16px;
+}
+
+.learn-more, .go-back {
 	margin-inline: 16px;
 	margin-bottom: 16px;
 	padding: 4px;
@@ -201,36 +207,39 @@ a {
 	transition: background 0.1s ease-in-out;
 }
 
-.learn-more p {
-	background: none;
+.learn-more p, .go-back p {
 	margin: 0;
 }
 
-.learn-more svg {
+.learn-more svg, .go-back svg {
 	margin-right: 16px;
 	width: 24px;
 }
 
-.learn-more:hover, .learn-more:focus {
+.learn-more:hover, .learn-more:focus,
+.go-back:hover, .go-back:focus {
 	background: var(--text-colour);
 }
 
-.learn-more p, .learn-more svg {
+.learn-more p, .learn-more svg,
+.go-back p, .go-back svg {
 	font-weight: lighter;
 	color: var(--muted-colour);
 	transition: color 0.1s ease-in-out;
 }
 
 .thing:hover .learn-more p, .thing:hover .learn-more svg,
-.thing:focus-within .learn-more p, .thing:focus-within .learn-more svg
-{
+.thing:focus-within .learn-more p, .thing:focus-within .learn-more svg,
+.thing:hover .go-back p, .thing:hover .go-back svg,
+.thing:focus-within .go-back p, .thing:focus-within .go-back svg {
 	font-weight: bold;
 	color: var(--text-colour);
 }
 
 .learn-more:hover p, .learn-more:hover svg,
-.learn-more:focus-within p, .learn-more:focus-within svg
-{
+.learn-more:focus-within p, .learn-more:focus-within svg,
+.go-back:hover p, .go-back:hover svg,
+.go-back:focus-within p, .go-back:focus-within svg {
 	color: var(--background-colour) !important;
 }
 
@@ -277,8 +286,7 @@ a {
 }
 
 .social:hover p, .social:hover svg,
-.social:focus p, .social:focus svg
-{
+.social:focus p, .social:focus svg {
 	color: var(--background-colour);
 }
 
@@ -317,6 +325,12 @@ a {
 	cursor: pointer;
 	width: 100%;
 	height: 100%;
+}
+
+@media screen and (max-width: 1280px) {
+	.explanation-container {
+		padding-top: 64px;
+	}
 }
 
 @media screen and (max-width: 768px) {
