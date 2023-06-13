@@ -229,9 +229,7 @@ a {
 }
 
 .thing:hover .learn-more p, .thing:hover .learn-more svg,
-.thing:focus-within .learn-more p, .thing:focus-within .learn-more svg,
-.thing:hover .go-back p, .thing:hover .go-back svg,
-.thing:focus-within .go-back p, .thing:focus-within .go-back svg {
+.thing:focus-within .learn-more p, .thing:focus-within .learn-more svg {
 	font-weight: bold;
 	color: var(--text-colour);
 }
