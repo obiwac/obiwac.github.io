@@ -156,7 +156,7 @@ fn index() -> Markup {
 					(social("obiwac@gmail.com", "mailto:obiwac@gmail.com", include_static_unsafe!("/icons/email.svg")))
 					(social("obiwac@freebsd.org", "mailto:obiwac@freebsd.org", include_static_unsafe!("/icons/fbsd.svg")))
 					(social("obiwac", "https://youtube.com/obiwac", include_static_unsafe!("/icons/youtube.svg")))
-					(social("obiwac#7599", "https://discord.com/users/305047157197504522", include_static_unsafe!("/icons/discord.svg")))
+					(social("obiwac", "https://discord.com/users/305047157197504522", include_static_unsafe!("/icons/discord.svg")))
 				}
 			}
 			main role="main" {
@@ -165,7 +165,7 @@ fn index() -> Markup {
 					strong { "Aymeric Wibo" }
 					" (AKA "
 					strong { "obiwac" }
-					", no relation to Obi-Wan). I'm a Belgian open-source enthusiast who likes dogs and beer 🍺 Here are some of my projects - those which have a "
+					"). I'm a Belgian open-source enthusiast who likes dogs and beer 🍺 Here are some of my projects - those which have a "
 					span.inline-svg {
 						(include_static_unsafe!("/icons/magic.svg"))
 					}
