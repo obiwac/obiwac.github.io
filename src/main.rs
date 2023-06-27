@@ -122,9 +122,25 @@ fn social(handle: &'static str, link: &'static str, icon: PreEscaped<&str>) -> M
 	}
 }
 
-const MCPY_IMG_SRC: &str = "/public/thumbnails/mcpy.png";
-const MOODLE_IMG_SRC: &str = "/public/thumbnails/moodle.png";
-const GDPR_IMG_SRC: &str = "/public/thumbnails/gdpr.png";
+const AQUABSD_IMG_SRC: &str = "/public/thumbnails/aquabsd-small.png";
+const MCPY_IMG_SRC:    &str = "/public/thumbnails/mcpy-small.png";
+const BFM_IMG_SRC:     &str = "/public/thumbnails/bfm-small.png";
+const KARWA_IMG_SRC:   &str = "/public/thumbnails/karwa-small.png";
+const MOODLE_IMG_SRC:  &str = "/public/thumbnails/moodle-small.png";
+const GDPR_IMG_SRC:    &str = "/public/thumbnails/gdpr-small.png";
+const LLN23_IMG_SRC:   &str = "/public/thumbnails/lln23-small.png";
+const LLN22_IMG_SRC:   &str = "/public/thumbnails/lln22-small.png";
+const X_IMG_SRC:       &str = "/public/thumbnails/x-small.png";
+
+// const AQUABSD_IMG_SRC: &str = "/public/thumbnails/aquabsd.png";
+// const MCPY_IMG_SRC:    &str = "/public/thumbnails/mcpy.png";
+// const BFM_IMG_SRC:     &str = "/public/thumbnails/bfm.png";
+// const KARWA_IMG_SRC:   &str = "/public/thumbnails/karwa.png";
+// const MOODLE_IMG_SRC:  &str = "/public/thumbnails/moodle.png";
+// const GDPR_IMG_SRC:    &str = "/public/thumbnails/gdpr.png";
+// const LLN23_IMG_SRC:   &str = "/public/thumbnails/lln23.png";
+// const LLN22_IMG_SRC:   &str = "/public/thumbnails/lln22.png";
+// const X_IMG_SRC:       &str = "/public/thumbnails/x.png";
 
 #[get("/")]
 fn index() -> Markup {
@@ -156,7 +172,7 @@ fn index() -> Markup {
 					" next to their name are interactive experiences:"
 				}
 				.things {
-					(thing("aquaBSD", "https://github.com/inobulles/aquabsd/releases", false, "/public/thumbnails/aquabsd.png", html! {
+					(thing("aquaBSD", "https://github.com/inobulles/aquabsd/releases", false, AQUABSD_IMG_SRC, html! {
 						"OS forked from FreeBSD geared towards general users. Includes a full DE, app distribution system, and network device sharing."
 					}))
 
@@ -164,7 +180,7 @@ fn index() -> Markup {
 						"Video tutorial series on 3D graphics programming with OpenGL, where I write a Minecraft clone in Python."
 					}))
 
-					(thing("BFM", "https://github.com/obiwac/bfm", false, "/public/thumbnails/bfm.png", html! {
+					(thing("BFM", "https://github.com/obiwac/bfm", false, BFM_IMG_SRC, html! {
 						"Big F'ing Matrix. FEM/FEA C library ("
 						code { "libbfm" }
 						") with Python bindings ("
@@ -174,7 +190,7 @@ fn index() -> Markup {
 						" and I made this for LEPL1110."
 					}))
 
-					(thing("KARWa '23", "https://www.linkedin.com/posts/louvain-li-nux_algo-algorithmes-programmingcontest-activity-7054432800577306624-CR6L?utm_source=share&utm_medium=member_desktop", false, "/public/thumbnails/karwa.png", html! {
+					(thing("KARWa '23", "https://www.linkedin.com/posts/louvain-li-nux_algo-algorithmes-programmingcontest-activity-7054432800577306624-CR6L?utm_source=share&utm_medium=member_desktop", false, KARWA_IMG_SRC, html! {
 						"Francophone algorithmics contest. Jointly organized by Louvain-li-Nux (in Louvain-la-Neuve) and CPUMons (in Mons)."
 					}))
 
@@ -188,7 +204,7 @@ fn index() -> Markup {
 						" and I made in English class in highschool."
 					}))
 
-					(thing("LLN '23", "https://github.com/obiwac/lln-gamejam-2023", false, "/public/thumbnails/lln23.png", html! {
+					(thing("LLN '23", "https://github.com/obiwac/lln-gamejam-2023", false, LLN23_IMG_SRC, html! {
 						"Submission for the 2023 Louvain-li-Nux gamejam. AKA "
 						(person(Person::Alexis))
 						" and "
@@ -196,11 +212,11 @@ fn index() -> Markup {
 						" and I's first foray into Vulkan and Rust. AKA Obamatriangle."
 					}))
 
-					(thing("LLN '22", "https://github.com/obiwac/lln-gamejam-2022", false, "/public/thumbnails/lln22.png", html! {
+					(thing("LLN '22", "https://github.com/obiwac/lln-gamejam-2022", false, LLN22_IMG_SRC, html! {
 						"Submission for the 2022 Louvain-li-Nux gamejam. Pure C11. Pure X11. Pure 7/11."
 					}))
 
-					(thing("Compositing WM", "https://github.com/obiwac/x-compositing-wm", false, "/public/thumbnails/x.png", html! {
+					(thing("Compositing WM", "https://github.com/obiwac/x-compositing-wm", false, X_IMG_SRC, html! {
 						"Extremely basic X11 compositing window manager written in C with Xlib and OpenGL."
 					}))
 				}
