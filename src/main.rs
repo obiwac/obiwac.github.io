@@ -180,7 +180,7 @@ fn index() -> Markup {
 						"Video tutorial series on 3D graphics programming with OpenGL, where I write a Minecraft clone in Python."
 					}))
 
-					(thing("BFM", "https://github.com/obiwac/bfm", false, BFM_IMG_SRC, html! {
+					(thing("BFM", "/bfm", false, BFM_IMG_SRC, html! {
 						"Big F'ing Matrix. FEM/FEA C library ("
 						code { "libbfm" }
 						") with Python bindings ("
@@ -298,6 +298,43 @@ fn mcpy() -> Markup {
 	})
 }
 
+#[get("/bfm")]
+fn bfm() -> Markup {
+	explanation_page("BFM 📐", BFM_IMG_SRC, html! {
+		p {
+			"BFM (aka. Big F***ing Matrix) is a FEM/FEA C library with Python bindings and 3D visualization tool. I wrote this with "
+			(person(Person::Alex))
+			" as our final project for the "
+			a.link href="https://perso.uclouvain.be/vincent.legat/zouLab/epl1110.php" { "LEPL1110" }
+			" course at uni."
+		}
+		p {
+			"The visualization on the right just shows a precomputed deformation of a classical bridge over a valley."
+		}
+		p {
+			"We have plans to extend this more and use it as an educational tool (complemented with video tutorials on finite elements). Stay tuned!!"
+		}
+		.socials {
+			(social("Source code", "https://github.com/obiwac/bfm", include_static_unsafe!("/icons/gh.svg")))
+		}
+	}, html! {
+		// shaders
+
+		script #bfm-scenery-vert-shader type="x-shader/x-vertex" { (include_static_unsafe!("/bfm/scenery.vert")) }
+		script #bfm-scenery-frag-shader type="x-shader/x-fragment" { (include_static_unsafe!("/bfm/scenery.frag")) }
+
+		// models
+
+		script src="/public/bfm/models/terrain.js" defer {}
+		script src="/public/bfm/models/bridge.js" defer {}
+
+		// actual paturage
+
+		canvas #bfm title="Classical bridge simulation visualization" width="800px" height="500px" {}
+		script src="/public/bfm/bfm.js" defer {}
+	})
+}
+
 #[get("/moodle")]
 fn moodle() -> Markup {
 	explanation_page("MOOdle 🐮", MOODLE_IMG_SRC, html! {
@@ -340,8 +377,8 @@ fn moodle() -> Markup {
 
 		// shaders
 
-		script #vert-shader type="x-shader/x-vertex" { (include_static_unsafe!("/moodle/vert.glsl")) }
-		script #frag-shader type="x-shader/x-fragment" { (include_static_unsafe!("/moodle/frag.glsl")) }
+		script #moodle-vert-shader type="x-shader/x-vertex" { (include_static_unsafe!("/moodle/vert.glsl")) }
+		script #moodle-frag-shader type="x-shader/x-fragment" { (include_static_unsafe!("/moodle/frag.glsl")) }
 
 		// models
 
