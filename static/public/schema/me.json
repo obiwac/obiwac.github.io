@@ -13,7 +13,7 @@
 	],
 	"email": "obiwac@gmail.com",
 	"url": "https://obiw.ac",
-	"nationality": "Belgian",
+	"nationality": ["Belgian", "French"],
 	"birthDate": "2004-06-15",
 	"birthPlace": "London, UK"
 }

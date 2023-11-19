@@ -1,5 +1,5 @@
 #![allow(macro_expanded_macro_exports_accessed_by_absolute_paths)]
-#![feature(decl_macro)]
+// #![feature(decl_macro)]
 
 #[macro_use] extern crate rocket;
 extern crate maud;
@@ -180,7 +180,7 @@ fn index() -> Markup {
 						"Video tutorial series on 3D graphics programming with OpenGL, where I write a Minecraft clone in Python."
 					}))
 
-					(thing("BFM", "https://github.com/obiwac/bfm", false, BFM_IMG_SRC, html! {
+					(thing("BFM", "/bfm", true, BFM_IMG_SRC, html! {
 						"Big F'ing Matrix. FEM/FEA C library ("
 						code { "libbfm" }
 						") with Python bindings ("
@@ -298,6 +298,32 @@ fn mcpy() -> Markup {
 	})
 }
 
+#[get("/bfm")]
+fn bfm() -> Markup {
+	explanation_page("Big F'ing Matrix 🌉", BFM_IMG_SRC, html! {
+		p {
+			"BFM (aka. Big F***ing Matrix) is a FEM/FEA C library with Python bindings and 3D visualization tool. I wrote this with "
+			(person(Person::Alex))
+			" as our final project for the "
+			a.link href="https://perso.uclouvain.be/vincent.legat/zouLab/epl1110.php" { "LEPL1110" }
+			" course at uni."
+		}
+		p {
+			"I recently got around to implementing "
+			a.link href="https://git@github.com/obiwac/bfm/pulls/1" { "web exporting" }
+			" so that you can embed simulation visualizations in a website. You can orbit/pan by left/right clicking, and you can zoom in and out by scrolling."
+		}
+		p {
+			"I have plans to extend this more and use it as an educational tool (complemented by video tutorials). Stay tuned!!"
+		}
+		.socials {
+			(social("Source code", "https://github.com/obiwac/bfm", include_static_unsafe!("/icons/gh.svg")))
+		}
+	}, html! {
+		iframe title="Classical bridge simulation visualization" src="/public/bfm/index.html" loading="lazy";
+	})
+}
+
 #[get("/moodle")]
 fn moodle() -> Markup {
 	explanation_page("MOOdle 🐮", MOODLE_IMG_SRC, html! {
@@ -340,8 +366,8 @@ fn moodle() -> Markup {
 
 		// shaders
 
-		script #vert-shader type="x-shader/x-vertex" { (include_static_unsafe!("/moodle/vert.glsl")) }
-		script #frag-shader type="x-shader/x-fragment" { (include_static_unsafe!("/moodle/frag.glsl")) }
+		script #moodle-vert-shader type="x-shader/x-vertex" { (include_static_unsafe!("/moodle/vert.glsl")) }
+		script #moodle-frag-shader type="x-shader/x-fragment" { (include_static_unsafe!("/moodle/frag.glsl")) }
 
 		// models
 
@@ -429,6 +455,6 @@ fn rocket() -> _ {
 	let rocket = rocket::build();
 
 	rocket
-		.mount("/", routes![index, mcpy, moodle, gdpr, upload])
+		.mount("/", routes![index, mcpy, moodle, gdpr, bfm, upload])
 		.mount("/public", FileServer::from(relative!("/public")))
 }

@@ -405,11 +405,11 @@ class Paturage {
 		// load shader program
 		// again, nothing interesting to comment on, this is all basically boilerplate
 
-		let vert_shader = this.gl.createShader(this.gl.VERTEX_SHADER)
-		let frag_shader = this.gl.createShader(this.gl.FRAGMENT_SHADER)
+		const vert_shader = this.gl.createShader(this.gl.VERTEX_SHADER)
+		const frag_shader = this.gl.createShader(this.gl.FRAGMENT_SHADER)
 
-		this.gl.shaderSource(vert_shader, document.getElementById("vert-shader").innerHTML)
-		this.gl.shaderSource(frag_shader, document.getElementById("frag-shader").innerHTML)
+		this.gl.shaderSource(vert_shader, document.getElementById("moodle-vert-shader").innerHTML)
+		this.gl.shaderSource(frag_shader, document.getElementById("moodle-frag-shader").innerHTML)
 
 		this.gl.compileShader(vert_shader)
 		this.gl.compileShader(frag_shader)
@@ -428,7 +428,7 @@ class Paturage {
 		this.gl.deleteShader(frag_shader)
 
 		if (!this.gl.getProgramParameter(this.program, this.gl.LINK_STATUS)) {
-			let log = this.gl.getProgramInfoLog(this.program)
+			const log = this.gl.getProgramInfoLog(this.program)
 
 			error.innerHTML = `Shader error: ${log}`
 			error.hidden = false
