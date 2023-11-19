@@ -1,4 +1,4 @@
-# obiwac.github.io
+# [obiw.ac](https://obiw.ac)
 
 Super simple static website about myself ;)
 
