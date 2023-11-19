@@ -1,5 +1,5 @@
 #![allow(macro_expanded_macro_exports_accessed_by_absolute_paths)]
-#![feature(decl_macro)]
+// #![feature(decl_macro)]
 
 #[macro_use] extern crate rocket;
 extern crate maud;
@@ -180,7 +180,7 @@ fn index() -> Markup {
 						"Video tutorial series on 3D graphics programming with OpenGL, where I write a Minecraft clone in Python."
 					}))
 
-					(thing("BFM", "/bfm", false, BFM_IMG_SRC, html! {
+					(thing("BFM", "/bfm", true, BFM_IMG_SRC, html! {
 						"Big F'ing Matrix. FEM/FEA C library ("
 						code { "libbfm" }
 						") with Python bindings ("
@@ -300,7 +300,7 @@ fn mcpy() -> Markup {
 
 #[get("/bfm")]
 fn bfm() -> Markup {
-	explanation_page("BFM 📐", BFM_IMG_SRC, html! {
+	explanation_page("Big F'ing Matrix 🌉", BFM_IMG_SRC, html! {
 		p {
 			"BFM (aka. Big F***ing Matrix) is a FEM/FEA C library with Python bindings and 3D visualization tool. I wrote this with "
 			(person(Person::Alex))
@@ -309,29 +309,18 @@ fn bfm() -> Markup {
 			" course at uni."
 		}
 		p {
-			"The visualization on the right just shows a precomputed deformation of a classical bridge over a valley."
+			"I recently got around to implementing "
+			a.link href="https://git@github.com/obiwac/bfm/pulls/1" { "web exporting" }
+			" so that you can embed simulation visualizations in a website. You can orbit/pan by left/right clicking, and you can zoom in and out by scrolling."
 		}
 		p {
-			"We have plans to extend this more and use it as an educational tool (complemented with video tutorials on finite elements). Stay tuned!!"
+			"I have plans to extend this more and use it as an educational tool (complemented by video tutorials). Stay tuned!!"
 		}
 		.socials {
 			(social("Source code", "https://github.com/obiwac/bfm", include_static_unsafe!("/icons/gh.svg")))
 		}
 	}, html! {
-		// shaders
-
-		script #bfm-scenery-vert-shader type="x-shader/x-vertex" { (include_static_unsafe!("/bfm/scenery.vert")) }
-		script #bfm-scenery-frag-shader type="x-shader/x-fragment" { (include_static_unsafe!("/bfm/scenery.frag")) }
-
-		// models
-
-		script src="/public/bfm/models/terrain.js" defer {}
-		script src="/public/bfm/models/bridge.js" defer {}
-
-		// actual paturage
-
-		canvas #bfm title="Classical bridge simulation visualization" width="800px" height="500px" {}
-		script src="/public/bfm/bfm.js" defer {}
+		iframe title="Classical bridge simulation visualization" src="/public/bfm/index.html" loading="lazy";
 	})
 }
 
@@ -466,6 +455,6 @@ fn rocket() -> _ {
 	let rocket = rocket::build();
 
 	rocket
-		.mount("/", routes![index, mcpy, moodle, gdpr, upload])
+		.mount("/", routes![index, mcpy, moodle, gdpr, bfm, upload])
 		.mount("/public", FileServer::from(relative!("/public")))
 }
