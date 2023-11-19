@@ -6,6 +6,7 @@ ROUTES=$(cat <<-END
 /mcpy
 /moodle
 /gdpr
+/bfm
 /upload
 END
 )
