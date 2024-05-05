@@ -535,6 +535,45 @@ fn x_compositing_wm() -> Markup {
 	})
 }
 
+#[get("/24hvelo")]
+fn _24hvelo() -> Markup {
+	explanation_page("24h Vélo 🚲", _24H_VELO_IMG_SRC, html! {
+		p {
+			"During the "
+			a.link href="https://24heureslln.be" { "24h Vélo de Louvain-la-Neuve" }
+			", I built a folkloric bike with "
+			(person(Person::Aditya))
+			", "
+			(person(Person::Piwy))
+			", and "
+			(person(Person::Alexis))
+			" for my "
+			a.link href="https://en.wikipedia.org/wiki/Theme-based_shared_flat_(kot-%C3%A0-projet)" { "KAP" }
+			" ("
+			a.link href="https://louvainlinux.org" { "Louvain-li-Nux" }
+			") and I wrote visualization software with "
+			(person(Person::Alexis))
+			" for a giant 250K EUR screen on the Grand' Place (where the biggest of the 7 concurrent concerts take place). Once they were all done, I played "
+			a.link href="https://supertuxkart.net/Main_Page" { "SuperTuxKart" }
+			" on it, which is certainly the most expensive gaming monitor I've ever played on."
+		}
+		p {
+			"This page is very much a work in progress, and I've been meaning to make a video on all we did during the event. One day I'll get around to it, hopefully before next year's edition 😊"
+		}
+		p {
+			"The photo on the right is the bike after a rainy night left outside."
+		}
+		p {
+			"I'd also like to host the visualization software itself here."
+		}
+		.socials {
+			(social("Screen source code", "https://github.com/obiwac/24h-lln-screen", include_static_unsafe!("/icons/gh.svg")))
+		}
+	}, html! {
+		img alt="The folkloric bike" src="/public/24hvelo/bike.jpg";
+	})
+}
+
 // server stuff
 
 #[launch]
@@ -542,6 +581,6 @@ fn rocket() -> _ {
 	let rocket = rocket::build();
 
 	rocket
-		.mount("/", routes![index, mcpy, moodle, gdpr, bfm, karwa, graphic_design, x_compositing_wm])
+		.mount("/", routes![index, mcpy, moodle, gdpr, bfm, karwa, graphic_design, x_compositing_wm, _24hvelo])
 		.mount("/public", FileServer::from(relative!("/public")))
 }
