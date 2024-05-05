@@ -19,6 +19,7 @@ mkdir -p static
 cp -r public static/public
 cp CNAME static/CNAME
 
+killall obiwac-website || true
 cargo run &
 sleep 2 # XXX should be enough, lol
 
