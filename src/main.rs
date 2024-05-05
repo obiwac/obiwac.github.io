@@ -177,6 +177,9 @@ fn index() -> Markup {
 					}
 					" next to their name are interactive experiences."
 				}
+				p {
+					"My interests programming-wise lie mostly in operating systems and graphics programming, but I'm also a huge public transport nerd."
+				}
 				.things {
 					(thing("aquaBSD", "https://github.com/inobulles/aquabsd/releases", false, AQUABSD_IMG_SRC, html! {
 						"OS forked from FreeBSD geared towards general users. Includes a full DE, app distribution system, and network device sharing."
@@ -213,49 +216,49 @@ fn index() -> Markup {
 			}
 			p {
 				"Here are a few more random smaller side-projects I've worked on and that I deem to be finished."
-				.things {
-					(thing("Compositing WM", "/x-compositing-wm", false, X_IMG_SRC, html! {
-						"Extremely basic X11 compositing window manager written in C with Xlib and OpenGL. A modified version is used in a helicopter simulator at the "
-						a.link href="https://www.dlr.de/de/das-dlr/standorte-und-bueros/braunschweig" { "DLR in Braunschweig" }
-						"."
-					}))
+			}
+			.things {
+				(thing("Compositing WM", "/x-compositing-wm", false, X_IMG_SRC, html! {
+					"Extremely basic X11 compositing window manager written in C with Xlib and OpenGL. A modified version is used in a helicopter simulator at the "
+					a.link href="https://www.dlr.de/de/das-dlr/standorte-und-bueros/braunschweig" { "DLR in Braunschweig" }
+					"."
+				}))
 
-					(thing("MOOdle", "/moodle", true, MOODLE_IMG_SRC, html! {
-						"Advanced cow visualization tool, with a 3D pasture simulation written in WebGL. Made with "
-						(person(Person::Noa))
-						" and "
-						(person(Person::Alexis))
-						"."
-					}))
+				(thing("MOOdle", "/moodle", true, MOODLE_IMG_SRC, html! {
+					"Advanced cow visualization tool, with a 3D pasture simulation written in WebGL. Made with "
+					(person(Person::Noa))
+					" and "
+					(person(Person::Alexis))
+					"."
+				}))
 
-					(thing("GDPR", "/gdpr", true, GDPR_IMG_SRC, html! {
-						"Interactive GDPR presentation "
-						(person(Person::Noa))
-						" and I made in English class in highschool, which emulates a Windows 7 desktop."
-					}))
+				(thing("GDPR", "/gdpr", true, GDPR_IMG_SRC, html! {
+					"Interactive GDPR presentation "
+					(person(Person::Noa))
+					" and I made in English class in highschool, which emulates a Windows 7 desktop."
+				}))
 
-					(thing("LLN '24", "https://github.com/obiwac/lln-gamejam-2024", false, LLN24_IMG_SRC, html! {
-						"Submission for the 2024 Louvain-li-Nux gamejam. Written with "
-						(person(Person::Piwy))
-						" in Go with a custom WebGPU engine. You play a day in the life of "
-						(person(Person::Alexis))
-						"."
-					}))
+				(thing("LLN '24", "https://github.com/obiwac/lln-gamejam-2024", false, LLN24_IMG_SRC, html! {
+					"Submission for the 2024 Louvain-li-Nux gamejam. Written with "
+					(person(Person::Piwy))
+					" in Go with a custom WebGPU engine. You play a day in the life of "
+					(person(Person::Alexis))
+					"."
+				}))
 
-					(thing("LLN '23", "https://github.com/obiwac/lln-gamejam-2023", false, LLN23_IMG_SRC, html! {
-						"Submission for the 2023 Louvain-li-Nux gamejam. aka "
-						(person(Person::Alexis))
-						" and "
-						(person(Person::Aless))
-						" and I's first foray into Vulkan and Rust, aka Obamatriangle."
-					}))
+				(thing("LLN '23", "https://github.com/obiwac/lln-gamejam-2023", false, LLN23_IMG_SRC, html! {
+					"Submission for the 2023 Louvain-li-Nux gamejam. aka "
+					(person(Person::Alexis))
+					" and "
+					(person(Person::Aless))
+					" and I's first foray into Vulkan and Rust, aka Obamatriangle."
+				}))
 
-					(thing("LLN '22", "https://github.com/obiwac/lln-gamejam-2022", false, LLN22_IMG_SRC, html! {
-						"Submission for the 2022 Louvain-li-Nux gamejam, made with "
-						(person(Person::Alexis))
-						". Pure C11. Pure X11. Pure 7/11."
-					}))
-				}
+				(thing("LLN '22", "https://github.com/obiwac/lln-gamejam-2022", false, LLN22_IMG_SRC, html! {
+					"Submission for the 2022 Louvain-li-Nux gamejam, made with "
+					(person(Person::Alexis))
+					". Pure C11. Pure X11. Pure 7/11."
+				}))
 			}
 			footer role="contentinfo" {
 				p {
