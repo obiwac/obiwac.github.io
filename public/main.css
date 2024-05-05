@@ -321,7 +321,6 @@ a {
 .exhibit video {
 	border-radius: var(--border-radius);
 	width: 100%;
-	aspect-ratio: 8 / 5;
 }
 
 .exhibit canvas {
