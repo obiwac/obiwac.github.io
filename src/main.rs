@@ -136,7 +136,7 @@ const LLN23_IMG_SRC:     &str = "/public/thumbnails/lln23-small.png";
 const LLN22_IMG_SRC:     &str = "/public/thumbnails/lln22-small.png";
 const X_IMG_SRC:         &str = "/public/thumbnails/x-small.png";
 const _24H_VELO_IMG_SRC: &str = "/public/thumbnails/24hvelo-small.png";
-const GP_2022_IMG_SRC:   &str = "/public/thumbnails/gp-2022-small.png";
+const DESIGN_IMG_SRC:    &str = "/public/thumbnails/graphic-design.webp";
 
 #[get("/")]
 fn index() -> Markup {
@@ -189,7 +189,7 @@ fn index() -> Markup {
 						" and I made this for LEPL1110."
 					}))
 
-					(thing("Graphic design", "/graphic-design", false, GP_2022_IMG_SRC, html! {
+					(thing("Graphic design", "/graphic-design", false, DESIGN_IMG_SRC, html! {
 						"I like creating posters for various student events, and am generally (casually) interested in graphic design."
 					}))
 
