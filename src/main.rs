@@ -259,6 +259,8 @@ fn index() -> Markup {
 					(person(Person::Alexis))
 					". Pure C11. Pure X11. Pure 7/11."
 				}))
+
+				// TODO BATMAN here
 			}
 			footer role="contentinfo" {
 				p {
