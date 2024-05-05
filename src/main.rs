@@ -69,7 +69,7 @@ fn base(schema: &str, content: Markup) -> Markup {
 // these are separate components, so I can easily update links
 
 enum Person {
-	Noa, Alexis, Alex, Drakeerv, Juk, Brichant, Aless
+	Noa, Alexis, Alex, Drakeerv, Juk, Brichant, Aless, Piwy,
 }
 
 fn person(person: Person) -> Markup {
@@ -82,6 +82,7 @@ fn person(person: Person) -> Markup {
 			Person::Juk => a.link href="https://github.com/jukitsu" { "@jukitsu" },
 			Person::Brichant => a.link href="http://brichant.eu" { "Monsieur Brichant" },
 			Person::Aless => a.link href="https://github.com/akialess" { "Aless" },
+			Person::Piwy => a.link href="https://github.com/Piwy-dev" { "Piwy" },
 		}
 	}
 }
