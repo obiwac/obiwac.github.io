@@ -7,7 +7,10 @@ ROUTES=$(cat <<-END
 /moodle
 /gdpr
 /bfm
-/upload
+/karwa
+/graphic-design
+/x-compositing-wm
+/24hvelo
 END
 )
 
