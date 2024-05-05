@@ -196,34 +196,64 @@ fn index() -> Markup {
 						" and I made this for LEPL1110."
 					}))
 
-					(thing("KARWa '23", "https://www.linkedin.com/posts/louvain-li-nux_algo-algorithmes-programmingcontest-activity-7054432800577306624-CR6L?utm_source=share&utm_medium=member_desktop", false, KARWA_IMG_SRC, html! {
+					(thing("Graphic design", "/graphic-design", false, GP_2022_IMG_SRC, html! {
+						"I like creating posters for various student events, and am generally (casually) interested in graphic design."
+					}))
+
+					(thing("KARWa", "/karwa", false, KARWA_IMG_SRC, html! {
 						"Francophone algorithmics contest. Jointly organized by Louvain-li-Nux (in Louvain-la-Neuve) and CPUMons (in Mons)."
 					}))
 
+					(thing("24h Vélo", "/24hvelo", false, _24H_VELO_IMG_SRC, html! {
+						"Work done for the "
+						a.link href="https://24heureslln.be" { "24h Vélo de Louvain-la-Neuve" }
+						". Made a folkloric bike as well as visualization software for a giant screen on the Grand' Place."
+					}))
+				}
+			}
+			p {
+				"Here are a few more random smaller side-projects I've worked on and that I deem to be finished."
+				.things {
+					(thing("Compositing WM", "/x-compositing-wm", false, X_IMG_SRC, html! {
+						"Extremely basic X11 compositing window manager written in C with Xlib and OpenGL. A modified version is used in a helicopter simulator at the "
+						a.link href="https://www.dlr.de/de/das-dlr/standorte-und-bueros/braunschweig" { "DLR in Braunschweig" }
+						"."
+					}))
+
 					(thing("MOOdle", "/moodle", true, MOODLE_IMG_SRC, html! {
-						"Advanced cow visualization tool."
+						"Advanced cow visualization tool, with a 3D pasture simulation written in WebGL. Made with "
+						(person(Person::Noa))
+						" and "
+						(person(Person::Alexis))
+						"."
 					}))
 
 					(thing("GDPR", "/gdpr", true, GDPR_IMG_SRC, html! {
 						"Interactive GDPR presentation "
 						(person(Person::Noa))
-						" and I made in English class in highschool."
+						" and I made in English class in highschool, which emulates a Windows 7 desktop."
+					}))
+
+					(thing("LLN '24", "https://github.com/obiwac/lln-gamejam-2024", false, LLN24_IMG_SRC, html! {
+						"Submission for the 2024 Louvain-li-Nux gamejam. Written with "
+						(person(Person::Piwy))
+						" in Go with a custom WebGPU engine. You play a day in the life of "
+						(person(Person::Alexis))
+						"."
 					}))
 
 					(thing("LLN '23", "https://github.com/obiwac/lln-gamejam-2023", false, LLN23_IMG_SRC, html! {
-						"Submission for the 2023 Louvain-li-Nux gamejam. AKA "
+						"Submission for the 2023 Louvain-li-Nux gamejam. aka "
 						(person(Person::Alexis))
 						" and "
 						(person(Person::Aless))
-						" and I's first foray into Vulkan and Rust. AKA Obamatriangle."
+						" and I's first foray into Vulkan and Rust, aka Obamatriangle."
 					}))
 
 					(thing("LLN '22", "https://github.com/obiwac/lln-gamejam-2022", false, LLN22_IMG_SRC, html! {
-						"Submission for the 2022 Louvain-li-Nux gamejam. Pure C11. Pure X11. Pure 7/11."
-					}))
-
-					(thing("Compositing WM", "https://github.com/obiwac/x-compositing-wm", false, X_IMG_SRC, html! {
-						"Extremely basic X11 compositing window manager written in C with Xlib and OpenGL."
+						"Submission for the 2022 Louvain-li-Nux gamejam, made with "
+						(person(Person::Alexis))
+						". Pure C11. Pure X11. Pure 7/11."
 					}))
 				}
 			}
