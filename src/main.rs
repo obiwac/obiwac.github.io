@@ -163,13 +163,13 @@ fn index() -> Markup {
 				p {
 					"My name is "
 					strong { "Aymeric Wibo" }
-					" (AKA "
+					" (aka "
 					strong { "obiwac" }
-					"). I'm a Belgian open-source enthusiast who likes dogs and beer 🍺 Here are some of my projects - those which have a "
+					"). I'm a Belgian open-source enthusiast who likes dogs and beer 🍺 Here are some of my bigger projects - those which have a "
 					span.inline-svg {
 						(include_static_unsafe!("/icons/magic.svg"))
 					}
-					" next to their name are interactive experiences:"
+					" next to their name are interactive experiences."
 				}
 				.things {
 					(thing("aquaBSD", "https://github.com/inobulles/aquabsd/releases", false, AQUABSD_IMG_SRC, html! {
