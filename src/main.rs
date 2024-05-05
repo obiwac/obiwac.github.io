@@ -508,44 +508,6 @@ fn graphic_design() -> Markup {
 	})
 }
 
-// upload page
-// TODO Remove this.
-
-#[get("/upload")]
-fn upload() -> Markup {
-	// no schema here!
-
-	base("", html! {
-		.upload-container {
-			h1 { "Upload 📁" }
-			p {
-				"Simple app for uploading files to a given IP. You can select as many files as you want! "
-				"JS is required, unfortunately 😢"
-				br; br;
-				strong { "Warning: " }
-				"Don't upload sensitive data if over HTTP!"
-			}
-			form #form {
-				input #ip type="text" placeholder="Enter protocol://IP:port here" required;
-				label.file-chooser for="files" { "Click to choose files" }
-				input #files name="files" type="file" multiple required;
-				input.button #button type="submit" value="Send files!";
-			}
-			br; br; br; // XXX ... whatever man, this ain't hackier than the web at least
-			p {
-				"This client expects an upload server which accepts the "
-				code { "/api/upload" }
-				" route. "
-				"Here's a super simple one I wrote:"
-				.socials {
-					(social("Source code", "https://github.com/obiwac/upload-server-rs", include_static_unsafe!("/icons/gh.svg")))
-				}
-			}
-			script { (include_static_unsafe!("/upload/index.js")) }
-		}
-	})
-}
-
 // server stuff
 
 #[launch]
@@ -553,6 +515,6 @@ fn rocket() -> _ {
 	let rocket = rocket::build();
 
 	rocket
-		.mount("/", routes![index, mcpy, moodle, gdpr, bfm, karwa, graphic_design, upload])
+		.mount("/", routes![index, mcpy, moodle, gdpr, bfm, karwa, graphic_design])
 		.mount("/public", FileServer::from(relative!("/public")))
 }
