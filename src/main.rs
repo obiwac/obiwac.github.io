@@ -69,7 +69,7 @@ fn base(schema: &str, content: Markup) -> Markup {
 // these are separate components, so I can easily update links
 
 enum Person {
-	Noa, Alexis, Alex, Drakeerv, Juk, Brichant, Aless, Piwy,
+	Noa, Alexis, Alex, Drakeerv, Juk, Brichant, Aless, Piwy, Aditya,
 }
 
 fn person(person: Person) -> Markup {
@@ -83,6 +83,7 @@ fn person(person: Person) -> Markup {
 			Person::Brichant => a.link href="http://brichant.eu" { "Monsieur Brichant" },
 			Person::Aless => a.link href="https://github.com/akialess" { "Aless" },
 			Person::Piwy => a.link href="https://github.com/Piwy-dev" { "Piwy" },
+			Person::Aditya => a.link href="https://adityachugh.be" { "Aditya" },
 		}
 	}
 }
@@ -493,18 +494,44 @@ fn graphic_design() -> Markup {
 		}
 	}, html! {
 		.image-grid {
-				// Posters are ordered by creation date.
+			// Posters are ordered by creation date.
 
-				img style="grid-area: gimp" alt="GIMP course poster" src="/public/graphic-design/gimp.webp";
-				img style="grid-area: conf" alt="Private life conference poster" src="/public/graphic-design/private-life-conference.webp";
-				img style="grid-area: gp22" alt="Geekparty '22 poster" src="/public/graphic-design/gp22.webp";
-				img style="grid-area: karwa23" alt="KARWa '23 poster" src="/public/graphic-design/karwa23.webp";
-				img style="grid-area: banquet23" alt="Banquet SINFO '23 poster" src="/public/graphic-design/banquet23.webp";
-				img style="grid-area: gp23" alt="Geekparty '23 poster" src="/public/graphic-design/gp23.webp";
-				img style="grid-area: trilogie" alt="\"Trilogie\" poster" src="/public/graphic-design/trilogie.webp";
-				img style="grid-area: gj24" alt="Gamejam '24 poster" src="/public/graphic-design/gj24.webp";
-				img style="grid-area: karwa24" alt="KARWa '24 poster" src="/public/graphic-design/karwa24.webp";
+			img style="grid-area: gimp" alt="GIMP course poster" src="/public/graphic-design/gimp.webp";
+			img style="grid-area: conf" alt="Private life conference poster" src="/public/graphic-design/private-life-conference.webp";
+			img style="grid-area: gp22" alt="Geekparty '22 poster" src="/public/graphic-design/gp22.webp";
+			img style="grid-area: karwa23" alt="KARWa '23 poster" src="/public/graphic-design/karwa23.webp";
+			img style="grid-area: banquet23" alt="Banquet SINFO '23 poster" src="/public/graphic-design/banquet23.webp";
+			img style="grid-area: gp23" alt="Geekparty '23 poster" src="/public/graphic-design/gp23.webp";
+			img style="grid-area: trilogie" alt="\"Trilogie\" poster" src="/public/graphic-design/trilogie.webp";
+			img style="grid-area: gj24" alt="Gamejam '24 poster" src="/public/graphic-design/gj24.webp";
+			img style="grid-area: karwa24" alt="KARWa '24 poster" src="/public/graphic-design/karwa24.webp";
 		}
+	})
+}
+
+#[get("/x-compositing-wm")]
+fn x_compositing_wm() -> Markup {
+	explanation_page("X Com-positing WM 🪟", X_IMG_SRC, html! {
+		p {
+			"Super simple compositing window manager for X11 written in C with Xlib and OpenGL (through GLX). Initially this was for prototyping the "
+			code { "aquabsd.alps.wm" }
+			" device for aquaBSD to, well, manage windows. The point was for it to be a minimal viable example of a compositing window manager."
+		}
+		p {
+			"I got to visit the "
+			a.link href="https://www.dlr.de/de/das-dlr/standorte-und-bueros/braunschweig" { "DLR in Braunschweig" }
+			" who based a WM on this one to project onto a large spherical screen for use in a helicopter simulator on this code. On the right is a photo of my friend "
+			(person(Person::Aditya))
+			" attempting to fly it."
+		}
+		p {
+			"Braunschweig and Hanover, which we also stayed at, are both very nice cities. I recommend visiting them if you're in the area."
+		}
+		.socials {
+			(social("Source code", "https://github.com/obiwac/x-compositing-wm", include_static_unsafe!("//icons/gh.svg")))
+		}
+	}, html! {
+		img alt="Aditya in the DLR helicopter simulator" src="/public/x-compositing-wm/dlr.jpg";
 	})
 }
 
@@ -515,6 +542,6 @@ fn rocket() -> _ {
 	let rocket = rocket::build();
 
 	rocket
-		.mount("/", routes![index, mcpy, moodle, gdpr, bfm, karwa, graphic_design])
+		.mount("/", routes![index, mcpy, moodle, gdpr, bfm, karwa, graphic_design, x_compositing_wm])
 		.mount("/public", FileServer::from(relative!("/public")))
 }

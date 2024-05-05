@@ -323,6 +323,11 @@ a {
 	width: 100%;
 }
 
+.exhibit img {
+	border-radius: var(--border-radius);
+	width: 100%;
+}
+
 .exhibit canvas {
 	border-radius: var(--border-radius);
 	cursor: pointer;
@@ -371,7 +376,7 @@ a {
 		min-width: 100vw;
 	}
 
-	.exhibit iframe, .exhibit canvas, .exhibit video, .exhibit .image-grid {
+	.exhibit iframe, .exhibit canvas, .exhibit video, .exhibit .image-grid, .exhibit img {
 		border-radius: 0;
 		height: auto;
 		aspect-ratio: auto;
