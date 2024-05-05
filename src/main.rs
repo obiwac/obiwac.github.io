@@ -442,6 +442,32 @@ fn gdpr() -> Markup {
 	})
 }
 
+#[get("/karwa")]
+fn karwa() -> Markup {
+	explanation_page("KARWa 🧮", KARWA_IMG_SRC, html! {
+		p {
+			"Francophone algorithmics contest, standing for \"Kompétition d'Algorithmique Régionale Wallonne\". Jointly organized by Louvain-li-Nux (in Louvain-la-Neuve) and CPUMons (in Mons). Created in 2022 by "
+			(person(Person::Alex))
+			" and I after happening to be in the same train as the Mons team on the way back from the "
+			a.link href="https://nwerc.eu/" { "NWERC" }
+			" algorithmics contest in Delft. The name was inspired by a legendary karaoke we had in Eindhoven a month prior."
+		}
+		p { "The first edition was in 2023 and teams had 2 hours and 30 minutes to solve as many problems as possible." }
+		p { "It was successful enough to organize again in 2024, and had similar modalities." }
+		p { "To the right is a promotional visual I made for the 2024 edition which was played on the screens in the halls of the engineering faculty." }
+		.socials {
+			(social("KARWa '23", "https://github.com/karwa-org/karwa2023", include_static_unsafe!("//icons/gh.svg")))
+			(social("KARWa '24", "https://github.com/karwa-org/karwa2024", include_static_unsafe!("//icons/gh.svg")))
+			(social("Website", "https://alexisenglebert.github.io/", include_static_unsafe!("/icons/link.svg")))
+		}
+	}, html! {
+		video loop controls {
+			source src="/public/karwa/promo.mp4#t=1" type="video/mp4";
+			"Video playback is not supported by your browser."
+		}
+	})
+}
+
 // upload page
 
 #[get("/upload")]
@@ -486,6 +512,6 @@ fn rocket() -> _ {
 	let rocket = rocket::build();
 
 	rocket
-		.mount("/", routes![index, mcpy, moodle, gdpr, bfm, upload])
+		.mount("/", routes![index, mcpy, moodle, gdpr, bfm, karwa, upload])
 		.mount("/public", FileServer::from(relative!("/public")))
 }

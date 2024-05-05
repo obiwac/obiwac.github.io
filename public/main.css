@@ -318,6 +318,11 @@ a {
 	height: 100%;
 }
 
+.exhibit video {
+	border-radius: var(--border-radius);
+	width: 100%;
+}
+
 .exhibit canvas {
 	border-radius: var(--border-radius);
 	cursor: pointer;
@@ -340,7 +345,7 @@ a {
 		min-width: 100vw;
 	}
 
-	.exhibit iframe, .exhibit canvas {
+	.exhibit iframe, .exhibit canvas, .exhibit video {
 		border-radius: 0;
 	}
 }
