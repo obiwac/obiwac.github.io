@@ -351,6 +351,7 @@ a {
 }
 
 .image-grid img {
+	border-radius: 0;
 	width: 100%;
 	max-width: 100%;
 }
