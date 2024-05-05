@@ -123,15 +123,20 @@ fn social(handle: &'static str, link: &'static str, icon: PreEscaped<&str>) -> M
 	}
 }
 
-const AQUABSD_IMG_SRC: &str = "/public/thumbnails/aquabsd-small.png";
-const MCPY_IMG_SRC:    &str = "/public/thumbnails/mcpy-small.png";
-const BFM_IMG_SRC:     &str = "/public/thumbnails/bfm-small.png";
-const KARWA_IMG_SRC:   &str = "/public/thumbnails/karwa-small.png";
-const MOODLE_IMG_SRC:  &str = "/public/thumbnails/moodle-small.png";
-const GDPR_IMG_SRC:    &str = "/public/thumbnails/gdpr-small.png";
-const LLN23_IMG_SRC:   &str = "/public/thumbnails/lln23-small.png";
-const LLN22_IMG_SRC:   &str = "/public/thumbnails/lln22-small.png";
-const X_IMG_SRC:       &str = "/public/thumbnails/x-small.png";
+// Imagemagick command to resize image to 400x250: `convert -resize 400x250 input.png output.png`
+
+const AQUABSD_IMG_SRC:   &str = "/public/thumbnails/aquabsd-small.png";
+const MCPY_IMG_SRC:      &str = "/public/thumbnails/mcpy-small.png";
+const BFM_IMG_SRC:       &str = "/public/thumbnails/bfm-small.png";
+const KARWA_IMG_SRC:     &str = "/public/thumbnails/karwa-small.png";
+const MOODLE_IMG_SRC:    &str = "/public/thumbnails/moodle-small.png";
+const GDPR_IMG_SRC:      &str = "/public/thumbnails/gdpr-small.png";
+const LLN24_IMG_SRC:     &str = "/public/thumbnails/lln24-small.png";
+const LLN23_IMG_SRC:     &str = "/public/thumbnails/lln23-small.png";
+const LLN22_IMG_SRC:     &str = "/public/thumbnails/lln22-small.png";
+const X_IMG_SRC:         &str = "/public/thumbnails/x-small.png";
+const _24H_VELO_IMG_SRC: &str = "/public/thumbnails/24hvelo-small.png";
+const GP_2022_IMG_SRC:   &str = "/public/thumbnails/gp-2022-small.png";
 
 // const AQUABSD_IMG_SRC: &str = "/public/thumbnails/aquabsd.png";
 // const MCPY_IMG_SRC:    &str = "/public/thumbnails/mcpy.png";
