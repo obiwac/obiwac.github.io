@@ -189,10 +189,6 @@ fn index() -> Markup {
 						" and I made this for LEPL1110."
 					}))
 
-					(thing("Graphic design", "/graphic-design", false, DESIGN_IMG_SRC, html! {
-						"I like creating posters for various student events, and am generally (casually) interested in graphic design."
-					}))
-
 					(thing("KARWa", "/karwa", false, KARWA_IMG_SRC, html! {
 						"Francophone algorithmics contest. Jointly organized by Louvain-li-Nux (in Louvain-la-Neuve) and CPUMons (in Mons)."
 					}))
@@ -201,6 +197,10 @@ fn index() -> Markup {
 						"Work done for the "
 						a.link href="https://24heureslln.be" { "24h Vélo de Louvain-la-Neuve" }
 						". Made a folkloric bike as well as visualization software for a giant screen on the Grand' Place."
+					}))
+
+					(thing("Graphic design", "/graphic-design", false, DESIGN_IMG_SRC, html! {
+						"I like creating posters for various student events, and am generally (casually) interested in graphic design."
 					}))
 				}
 			}
