@@ -138,16 +138,6 @@ const X_IMG_SRC:         &str = "/public/thumbnails/x-small.png";
 const _24H_VELO_IMG_SRC: &str = "/public/thumbnails/24hvelo-small.png";
 const GP_2022_IMG_SRC:   &str = "/public/thumbnails/gp-2022-small.png";
 
-// const AQUABSD_IMG_SRC: &str = "/public/thumbnails/aquabsd.png";
-// const MCPY_IMG_SRC:    &str = "/public/thumbnails/mcpy.png";
-// const BFM_IMG_SRC:     &str = "/public/thumbnails/bfm.png";
-// const KARWA_IMG_SRC:   &str = "/public/thumbnails/karwa.png";
-// const MOODLE_IMG_SRC:  &str = "/public/thumbnails/moodle.png";
-// const GDPR_IMG_SRC:    &str = "/public/thumbnails/gdpr.png";
-// const LLN23_IMG_SRC:   &str = "/public/thumbnails/lln23.png";
-// const LLN22_IMG_SRC:   &str = "/public/thumbnails/lln22.png";
-// const X_IMG_SRC:       &str = "/public/thumbnails/x.png";
-
 #[get("/")]
 fn index() -> Markup {
 	base(include_static!("/schema/me.json"), html! {
