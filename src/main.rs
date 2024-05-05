@@ -136,7 +136,7 @@ const LLN23_IMG_SRC:     &str = "/public/thumbnails/lln23-small.png";
 const LLN22_IMG_SRC:     &str = "/public/thumbnails/lln22-small.png";
 const X_IMG_SRC:         &str = "/public/thumbnails/x-small.png";
 const _24H_VELO_IMG_SRC: &str = "/public/thumbnails/24hvelo-small.png";
-const DESIGN_IMG_SRC:    &str = "/public/thumbnails/graphic-design.webp";
+const DESIGN_IMG_SRC:    &str = "/public/thumbnails/graphic-design-small.webp";
 
 #[get("/")]
 fn index() -> Markup {
@@ -468,7 +468,48 @@ fn karwa() -> Markup {
 	})
 }
 
+#[get("/graphic-design")]
+fn graphic_design() -> Markup {
+	explanation_page("Graphic design 🎨", DESIGN_IMG_SRC, html! {
+		p {
+			"I like creating posters for various student events, especially related to my "
+			a.link href="https://en.wikipedia.org/wiki/Theme-based_shared_flat_(kot-%C3%A0-projet)" { "KAP" }
+			" ("
+			a.link href="https://louvainlinux.org" { "Louvain-li-Nux" }
+			")."
+		}
+		p {
+			"To the right are a collection of some of the posters I've made in a scrollable gallery. I don't consider myself to have that much experience in graphic design, so this is mostly all for fun."
+		}
+		p {
+			"Blender was the tool used for most of these (❤️)."
+		}
+		p {
+			"Some of them have animated equivalents which are displayed on our social media profiles."
+		}
+		.socials {
+			(social("@louvainlinux", "https://instagram.com/louvainlinux", include_static_unsafe!("//icons/instagram.svg")))
+			(social("Website", "https://louvainlinux.org", include_static_unsafe!("//icons/link.svg")))
+		}
+	}, html! {
+		.image-grid {
+				// Posters are ordered by creation date.
+
+				img style="grid-area: gimp" alt="GIMP course poster" src="/public/graphic-design/gimp.webp";
+				img style="grid-area: conf" alt="Private life conference poster" src="/public/graphic-design/private-life-conference.webp";
+				img style="grid-area: gp22" alt="Geekparty '22 poster" src="/public/graphic-design/gp22.webp";
+				img style="grid-area: karwa23" alt="KARWa '23 poster" src="/public/graphic-design/karwa23.webp";
+				img style="grid-area: banquet23" alt="Banquet SINFO '23 poster" src="/public/graphic-design/banquet23.webp";
+				img style="grid-area: gp23" alt="Geekparty '23 poster" src="/public/graphic-design/gp23.webp";
+				img style="grid-area: trilogie" alt="\"Trilogie\" poster" src="/public/graphic-design/trilogie.webp";
+				img style="grid-area: gj24" alt="Gamejam '24 poster" src="/public/graphic-design/gj24.webp";
+				img style="grid-area: karwa24" alt="KARWa '24 poster" src="/public/graphic-design/karwa24.webp";
+		}
+	})
+}
+
 // upload page
+// TODO Remove this.
 
 #[get("/upload")]
 fn upload() -> Markup {
@@ -512,6 +553,6 @@ fn rocket() -> _ {
 	let rocket = rocket::build();
 
 	rocket
-		.mount("/", routes![index, mcpy, moodle, gdpr, bfm, karwa, upload])
+		.mount("/", routes![index, mcpy, moodle, gdpr, bfm, karwa, graphic_design, upload])
 		.mount("/public", FileServer::from(relative!("/public")))
 }

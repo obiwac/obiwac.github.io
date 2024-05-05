@@ -310,17 +310,18 @@ a {
 
 .exhibit {
 	width: 800px;
-	aspect-ratio: 8 / 5;
 }
 
 .exhibit iframe {
 	border-radius: var(--border-radius);
 	height: 100%;
+	aspect-ratio: 8 / 5;
 }
 
 .exhibit video {
 	border-radius: var(--border-radius);
 	width: 100%;
+	aspect-ratio: 8 / 5;
 }
 
 .exhibit canvas {
@@ -328,6 +329,32 @@ a {
 	cursor: pointer;
 	width: 100%;
 	height: 100%;
+	aspect-ratio: 8 / 5;
+}
+
+.image-grid {
+	aspect-ratio: 1 / 1;
+	height: 100%;
+	display: grid;
+	grid-template-areas:
+		"karwa24 gj24"
+		"gp22 gp22"
+		"conf banquet23"
+		"gp23 gp23"
+		"karwa23 gimp"
+		"trilogie trilogie"
+	;
+}
+
+.image-grid img {
+	width: 100%;
+	max-width: 100%;
+}
+
+.exhibit .image-grid {
+	overflow-y: scroll;
+	border-radius: var(--border-radius);
+	width: 100%;
 }
 
 @media screen and (max-width: 1280px) {
@@ -345,8 +372,10 @@ a {
 		min-width: 100vw;
 	}
 
-	.exhibit iframe, .exhibit canvas, .exhibit video {
+	.exhibit iframe, .exhibit canvas, .exhibit video, .exhibit .image-grid {
 		border-radius: 0;
+		height: auto;
+		aspect-ratio: auto;
 	}
 }
 
