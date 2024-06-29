@@ -65,6 +65,7 @@ code {
 iframe {
 	border: none;
 	width: 100%;
+	display: block;
 }
 
 a {
@@ -305,11 +306,12 @@ a {
 }
 
 .explanation {
-	max-width: 500px;
+	max-width: 600px;
 }
 
 .exhibit {
 	width: 800px;
+	line-height: 0;
 }
 
 .exhibit iframe {
@@ -353,6 +355,7 @@ a {
 .image-grid img {
 	width: 100%;
 	max-width: 100%;
+	border-radius: 0;
 }
 
 .exhibit .image-grid {
@@ -362,6 +365,10 @@ a {
 }
 
 @media screen and (max-width: 1280px) {
+	.image-grid {
+		aspect-ratio: auto;
+	}
+
 	.explanation-container {
 		padding-top: 64px;
 	}

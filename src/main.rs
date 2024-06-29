@@ -326,7 +326,7 @@ fn mcpy() -> Markup {
 			(social("Full demo", "https://drakeerv.github.io/js-minecraft-clone/", include_static_unsafe!("/icons/link.svg")))
 		}
 	}, html! {
-		iframe title="Drakeerv's port of MCPY to the browser" src="https://drakeerv.github.io/js-minecraft-clone/episodes/episode-11/index.html" loading="lazy";
+		iframe title="Drakeerv's port of MCPY to the browser" src="https://drakeerv.github.io/js-minecraft-clone/episodes/episode-11/index.html" loading="lazy" {};
 	})
 }
 
@@ -352,7 +352,7 @@ fn bfm() -> Markup {
 			(social("Source code", "https://github.com/obiwac/bfm", include_static_unsafe!("/icons/gh.svg")))
 		}
 	}, html! {
-		iframe title="Classical bridge simulation visualization" src="/public/bfm/index.html" loading="lazy";
+		iframe title="Classical bridge simulation visualization" src="/public/bfm/index.html" loading="lazy" {};
 	})
 }
 
@@ -439,7 +439,7 @@ fn gdpr() -> Markup {
 			(social("Full version", "https://novation.dev/GDPR-presentation", include_static_unsafe!("/icons/link.svg")))
 		}
 	}, html! {
-		iframe title="The GDPR presentation in question" src="https://novation.dev/GDPR-presentation" loading="lazy";
+		iframe title="The GDPR presentation in question" src="https://novation.dev/GDPR-presentation" loading="lazy" {};
 	})
 }
 
