@@ -591,7 +591,9 @@ fn batman() -> Markup {
 		}
 		p {
 			"I gave a talk about this at BSDCan 2024, which was recorded and is embedded here."
-			"The slides are also embedded on this page below the video, so you can follow along if you're so inclined."
+			"The slides are also embedded on this page below the video, so you can follow along if you're so inclined (they are made with "
+			a.link href="https://marp.app/" { "Marp" }
+			"which is actually awesome 💙)."
 		}
 		.socials {
 			(social("Source code", "https://github.com/obiwac/freebsd-gsoc", include_static_unsafe!("/icons/gh.svg")))
