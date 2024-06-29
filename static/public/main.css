@@ -65,6 +65,7 @@ code {
 iframe {
 	border: none;
 	width: 100%;
+	display: block;
 }
 
 a {
@@ -305,11 +306,12 @@ a {
 }
 
 .explanation {
-	max-width: 500px;
+	max-width: 600px;
 }
 
 .exhibit {
 	width: 800px;
+	line-height: 0;
 }
 
 .exhibit iframe {
@@ -354,6 +356,7 @@ a {
 	border-radius: 0;
 	width: 100%;
 	max-width: 100%;
+	border-radius: 0;
 }
 
 .exhibit .image-grid {
@@ -362,7 +365,30 @@ a {
 	width: 100%;
 }
 
+.presentation {
+	aspect-ratio: 16 / 18; /* Two 16:9 thing stacked on top of each other. */
+	height: 100%;
+	padding: 0;
+}
+
+.presentation iframe {
+	aspect-ratio: 16 / 9; /* XXX No clue why this thing isn't working. */
+	height: 50%;
+	border-radius: 0;
+	margin: 0;
+}
+
+.exhibit .presentation {
+	width: 100%;
+	border-radius: var(--border-radius);
+	overflow-y: hidden;
+}
+
 @media screen and (max-width: 1280px) {
+	.image-grid {
+		aspect-ratio: auto;
+	}
+
 	.explanation-container {
 		padding-top: 64px;
 	}
@@ -375,82 +401,12 @@ a {
 
 	.exhibit {
 		min-width: 100vw;
+		bottom: 0;
+		position: relative;
 	}
 
-	.exhibit iframe, .exhibit canvas, .exhibit video, .exhibit .image-grid, .exhibit img {
+	.exhibit iframe, .exhibit canvas, .exhibit video, .exhibit .image-grid, .exhibit img, .exhibit .presentation {
 		border-radius: 0;
 		height: auto;
-		aspect-ratio: auto;
 	}
-}
-
-/* upload */
-
-.upload-container {
-	max-width: 500px;
-	margin: auto;
-	padding: 32px;
-}
-
-.upload-container h1 {
-	text-align: center;
-}
-
-input, .file-chooser {
-	background: var(--code-background);
-	color: var(--text-colour);
-
-	border: none;
-	border-radius: 16px;
-
-	margin-block: 8px;
-	padding: 16px;
-
-	min-width: 100%;
-	box-sizing: border-box;
-}
-
-.file-chooser {
-	display: inline-block;
-	cursor: pointer;
-}
-
-input[type="file"] {
-	display: none;
-}
-
-.button {
-	background: var(--gradient);
-	color: var(--background-colour);
-	box-shadow: none;
-	border: none;
-	border-radius: var(--border-radius);
-	padding: 8px 32px;
-	font-size: 24px;
-	font-display: optional;
-	font-weight: 700;
-
-	cursor: pointer;
-
-	opacity: 100%;
-	transition: background .2s, color .2s, opacity .2s, box-shadow .2s, transform .2s;
-
-	float: right;
-}
-
-.button:hover {
-	box-shadow: var(--accent-shadow-colour) 0 8px 32px;
-	transform: translateY(-4px);
-}
-
-.button:active {
-	transform: none;
-	opacity: 50%;
-}
-
-.button:disabled, .button[disabled] {
-	cursor: initial;
-	opacity: 50%;
-	transform: none;
-	box-shadow: none;
 }
