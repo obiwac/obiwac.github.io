@@ -331,7 +331,7 @@ fn mcpy() -> Markup {
 			(social("Full demo", "https://drakeerv.github.io/js-minecraft-clone/", include_static_unsafe!("/icons/link.svg")))
 		}
 	}, html! {
-		iframe title="Drakeerv's port of MCPY to the browser" src="https://drakeerv.github.io/js-minecraft-clone/episodes/episode-11/index.html" loading="lazy" {};
+		iframe title="Drakeerv's port of MCPY to the browser" src="https://drakeerv.github.io/js-minecraft-clone/episodes/episode-11/index.html" loading="lazy" {}
 	})
 }
 
@@ -357,7 +357,7 @@ fn bfm() -> Markup {
 			(social("Source code", "https://github.com/obiwac/bfm", include_static_unsafe!("/icons/gh.svg")))
 		}
 	}, html! {
-		iframe title="Classical bridge simulation visualization" src="/public/bfm/index.html" loading="lazy" {};
+		iframe title="Classical bridge simulation visualization" src="/public/bfm/index.html" loading="lazy" {}
 	})
 }
 
@@ -444,7 +444,7 @@ fn gdpr() -> Markup {
 			(social("Full version", "https://novation.dev/GDPR-presentation", include_static_unsafe!("/icons/link.svg")))
 		}
 	}, html! {
-		iframe title="The GDPR presentation in question" src="https://novation.dev/GDPR-presentation" loading="lazy" {};
+		iframe title="The GDPR presentation in question" src="https://novation.dev/GDPR-presentation" loading="lazy" {}
 	})
 }
 
@@ -602,8 +602,21 @@ fn batman() -> Markup {
 		}
 	}, html! {
 		.presentation {
-			iframe src="https://www.youtube.com/embed/BAVogweBQ8M?list=PLeF8ZihVdpFfct_WnzwObWtj4y9qH3H7X" title="Calling the BATMAN: Free Networks on FreeBSD By: Aymeric Wibo" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen frameborder="0" {};
-			iframe src="/public/batman/presentation.html" allowfullscreen {};
+			iframe src="https://www.youtube.com/embed/BAVogweBQ8M?list=PLeF8ZihVdpFfct_WnzwObWtj4y9qH3H7X" title="Calling the BATMAN: Free Networks on FreeBSD By: Aymeric Wibo" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen frameborder="0" {}
+			/* TODO I need to buy these fonts to be able to use them here!
+			style {"
+				@font-face {
+					font-family: PP Fraktion Mono;
+					src: url(¯\\_(ツ)_/¯);
+				}
+
+				@font-face {
+					font-family: PP Fraktion Neue Machina;
+					src: url(¯\\_(ツ)_/¯);
+				}
+			"}
+			*/
+			iframe src="/public/batman/presentation.html" allowfullscreen {}
 		}
 	})
 }
