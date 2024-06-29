@@ -11,6 +11,7 @@ ROUTES=$(cat <<-END
 /graphic-design
 /x-compositing-wm
 /24hvelo
+/batman
 END
 )
 

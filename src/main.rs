@@ -138,6 +138,7 @@ const LLN22_IMG_SRC:     &str = "/public/thumbnails/lln22-small.png";
 const X_IMG_SRC:         &str = "/public/thumbnails/x-small.png";
 const _24H_VELO_IMG_SRC: &str = "/public/thumbnails/24hvelo-small.png";
 const DESIGN_IMG_SRC:    &str = "/public/thumbnails/graphic-design-small.webp";
+const BATMAN_IMG_SRC:    &str = "/public/thumbnails/batman-small.webp";
 
 #[get("/")]
 fn index() -> Markup {
@@ -192,6 +193,10 @@ fn index() -> Markup {
 
 					(thing("KARWa", "/karwa", false, KARWA_IMG_SRC, html! {
 						"Francophone algorithmics contest. Jointly organized by Louvain-li-Nux (in Louvain-la-Neuve) and CPUMons (in Mons)."
+					}))
+
+					(thing("B.A.T.M.A.N. on FreeBSD", "/batman", false, BATMAN_IMG_SRC, html! {
+						"Port of the B.A.T.M.A.N. mesh routing protocol to FreeBSD. Initially written as a GSoC project."
 					}))
 
 					(thing("24h Vélo", "/24hvelo", false, _24H_VELO_IMG_SRC, html! {
@@ -574,6 +579,33 @@ fn _24hvelo() -> Markup {
 	})
 }
 
+#[get("/batman")]
+fn batman() -> Markup {
+	explanation_page("B.A.T.M.A.N. 🦇", BATMAN_IMG_SRC, html! {
+		p {
+			"As my 2023 GSoC project, I ported the implementation of the B.A.T.M.A.N. mesh routing protocol ("
+			code {
+				"batman-adv"
+			}
+			") to FreeBSD."
+		}
+		p {
+			"I gave a talk about this at BSDCan 2024, which was recorded and is embedded here."
+			"The slides are also embedded on this page below the video, so you can follow along if you're so inclined."
+		}
+		.socials {
+			(social("Source code", "https://github.com/obiwac/freebsd-gsoc", include_static_unsafe!("/icons/gh.svg")))
+			(social("FreeBSD wiki page", "https://wiki.freebsd.org/SummerOfCode2023Projects/CallingTheBatmanFreeNetworksOnFreeBSD", include_static_unsafe!("/icons/fbsd.svg")))
+			(social("GSoC page", "https://summerofcode.withgoogle.com/archive/2023/projects/9YX3dONN", include_static_unsafe!("/icons/link.svg")))
+		}
+	}, html! {
+		.presentation {
+			iframe src="https://www.youtube.com/embed/BAVogweBQ8M?list=PLeF8ZihVdpFfct_WnzwObWtj4y9qH3H7X" title="Calling the BATMAN: Free Networks on FreeBSD By: Aymeric Wibo" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen frameborder="0" {};
+			iframe src="/public/batman/presentation.html" allowfullscreen {};
+		}
+	})
+}
+
 // server stuff
 
 #[launch]
@@ -581,6 +613,6 @@ fn rocket() -> _ {
 	let rocket = rocket::build();
 
 	rocket
-		.mount("/", routes![index, mcpy, moodle, gdpr, bfm, karwa, graphic_design, x_compositing_wm, _24hvelo])
+		.mount("/", routes![index, mcpy, moodle, gdpr, bfm, karwa, graphic_design, x_compositing_wm, _24hvelo, batman])
 		.mount("/public", FileServer::from(relative!("/public")))
 }

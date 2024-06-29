@@ -364,6 +364,25 @@ a {
 	width: 100%;
 }
 
+.presentation {
+	aspect-ratio: 16 / 18; /* Two 16:9 thing stacked on top of each other. */
+	height: 100%;
+	padding: 0;
+}
+
+.presentation iframe {
+	aspect-ratio: 16 / 9; /* XXX No clue why this thing isn't working. */
+	height: 50%;
+	border-radius: 0;
+	margin: 0;
+}
+
+.exhibit .presentation {
+	width: 100%;
+	border-radius: var(--border-radius);
+	overflow-y: hidden;
+}
+
 @media screen and (max-width: 1280px) {
 	.image-grid {
 		aspect-ratio: auto;
