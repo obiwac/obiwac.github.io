@@ -155,7 +155,7 @@ fn index() -> Markup {
 					(social("obiwac@freebsd.org", "mailto:obiwac@freebsd.org", include_static_unsafe!("/icons/fbsd.svg")))
 					(social("obiwac", "https://youtube.com/obiwac", include_static_unsafe!("/icons/youtube.svg")))
 					(social("obiwac", "https://discord.com/users/305047157197504522", include_static_unsafe!("/icons/discord.svg")))
-					(social("Webring", "https://dflund.se/~getz", include_static_unsafe!("/icons/bell.svg")))
+					(social("Webring", "http://fuz.su", include_static_unsafe!("/icons/bell.svg")))
 				}
 			}
 			main role="main" {
