@@ -15,14 +15,14 @@ fn thing(title: &'static str, link: &'static str, magic: bool, img_src: &'static
 					div {
 						h2 { (title) }
 						@if magic {
-							(include_static_unsafe!("/icons/magic.svg"))
+							(include_static!("/icons/magic.svg"))
 						}
 					}
 				}
 			}
 			p { (descr) }
 			a.learn-more href=(link) {
-				(include_static_unsafe!("/icons/arrow.svg"))
+				(include_static!("/icons/arrow.svg"))
 				p { "Learn more" }
 			}
 		}
@@ -54,13 +54,13 @@ pub fn index() -> Markup {
 					h1 { "Hey! 👋" }
 				}
 				.socials {
-					(social("awibo", "https://www.linkedin.com/in/awibo", include_static_unsafe!("/icons/linkedin.svg")))
-					(social("@obiwac", "https://github.com/obiwac", include_static_unsafe!("/icons/gh.svg")))
-					(social("obiwac@gmail.com", "mailto:obiwac@gmail.com", include_static_unsafe!("/icons/email.svg")))
-					(social("obiwac@freebsd.org", "mailto:obiwac@freebsd.org", include_static_unsafe!("/icons/fbsd.svg")))
-					(social("obiwac", "https://youtube.com/obiwac", include_static_unsafe!("/icons/youtube.svg")))
-					(social("obiwac", "https://discord.com/users/305047157197504522", include_static_unsafe!("/icons/discord.svg")))
-					(social("Webring", "http://fuz.su", include_static_unsafe!("/icons/bell.svg")))
+					(social("awibo", "https://www.linkedin.com/in/awibo", include_static!("/icons/linkedin.svg")))
+					(social("@obiwac", "https://github.com/obiwac", include_static!("/icons/gh.svg")))
+					(social("obiwac@gmail.com", "mailto:obiwac@gmail.com", include_static!("/icons/email.svg")))
+					(social("obiwac@freebsd.org", "mailto:obiwac@freebsd.org", include_static!("/icons/fbsd.svg")))
+					(social("obiwac", "https://youtube.com/obiwac", include_static!("/icons/youtube.svg")))
+					(social("obiwac", "https://discord.com/users/305047157197504522", include_static!("/icons/discord.svg")))
+					(social("Webring", "http://fuz.su", include_static!("/icons/bell.svg")))
 				}
 			}
 			main role="main" {
@@ -71,7 +71,7 @@ pub fn index() -> Markup {
 					strong { "obiwac" }
 					"). I'm a Belgian open-source enthusiast who likes dogs and beer 🍺 Here are some of my bigger projects - those which have a "
 					span.inline-svg {
-						(include_static_unsafe!("/icons/magic.svg"))
+						(include_static!("/icons/magic.svg"))
 					}
 					" next to their name are interactive experiences."
 				}
@@ -173,7 +173,7 @@ pub fn index() -> Markup {
 					"! Fun fact: this site's source doesn't have a single line of the godforsaken language known as HTML in it. It does have some JS on some pages though (not this one), so count that as an L if you want."
 				}
 				.socials {
-					(social("Source code", "https://github.com/obiwac/obiwac.github.io", include_static_unsafe!("/icons/gh.svg")))
+					(social("Source code", "https://github.com/obiwac/obiwac.github.io", include_static!("/icons/gh.svg")))
 				}
 			}
 		}

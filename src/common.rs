@@ -5,16 +5,16 @@ macro_rules! relative {
 	($path: expr) => (concat!(env!("CARGO_MANIFEST_DIR"), $path))
 }
 
-macro_rules! include_static {
+macro_rules! include_static_unsafe {
 	($path: expr) => (include_str!(relative!(concat!("/public", $path))))
 }
 
-macro_rules! include_static_unsafe {
-	($path: expr) => (PreEscaped(include_static!($path)))
+macro_rules! include_static {
+	($path: expr) => (PreEscaped(include_static_unsafe!($path)))
 }
 
 macro_rules! include_css {
-	($path: expr) => (PreEscaped(Minifier::default().minify(include_static!($path), Level::Three).unwrap()))
+	($path: expr) => (PreEscaped(Minifier::default().minify(include_static_unsafe!($path), Level::Three).unwrap()))
 }
 
 macro_rules! include_md {
@@ -22,14 +22,14 @@ macro_rules! include_md {
 }
 
 pub(crate) use relative;
-pub(crate) use include_static;
 pub(crate) use include_static_unsafe;
+pub(crate) use include_static;
 pub(crate) use include_css;
 pub(crate) use include_md;
 
-struct Markdown<T: AsRef<str>>(T);
+pub struct Markdown<T>(pub T);
 
-impl <T: AsRef<str>> Render for Markdown<T> {
+impl<T: AsRef<str>> Render for Markdown<T> {
 	fn render(&self) -> Markup {
 		let mut unsafe_html = String::new();
 		let parser = Parser::new(self.0.as_ref());

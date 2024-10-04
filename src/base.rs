@@ -1,8 +1,8 @@
 use maud::{html, DOCTYPE, Markup, PreEscaped};
-use crate::common::{relative, include_static, include_css};
+use crate::common::{relative, include_static_unsafe, include_css};
 use css_minify::optimizations::{Minifier, Level};
 
-pub fn base(schema: &str, content: Markup) -> Markup {
+pub fn base(schema: PreEscaped<&str>, content: Markup) -> Markup {
 	html! {
 		(DOCTYPE)
 
@@ -27,7 +27,7 @@ pub fn base(schema: &str, content: Markup) -> Markup {
 				// TODO keywords, apple-touch-startup-image
 
 				title { "Aymeric Wibo" }
-				script type="application/ld+json" { (PreEscaped(schema)) }
+				script type="application/ld+json" { (schema) }
 
 				// link rel="stylesheet" type="text/css" href="/public/main.css";
 

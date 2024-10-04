@@ -1,5 +1,5 @@
 use maud::{html, Markup, PreEscaped};
-use crate::common::{include_static_unsafe, include_static, relative};
+use crate::common::{include_static, include_static_unsafe, relative};
 use crate::person::{person, Person};
 use crate::social::social;
 use crate::projects::{MCPY_IMG_SRC, BFM_IMG_SRC, MOODLE_IMG_SRC, GDPR_IMG_SRC, KARWA_IMG_SRC, DESIGN_IMG_SRC, X_IMG_SRC, _24H_VELO_IMG_SRC, BATMAN_IMG_SRC};
@@ -15,9 +15,9 @@ fn explanation_page(title: &'static str, img_src: &'static str, descr: Markup, e
 		"image": "{}"
 	}}"#, title, img_src);
 
-	base(&schema, html! {
+	base(PreEscaped(&schema), html! {
 		a.go-back href="/" {
-			(include_static_unsafe!("/icons/back.svg"))
+			(include_static!("/icons/back.svg"))
 			p { "Main page" }
 		}
 		.explanation-container {
@@ -55,9 +55,9 @@ pub fn mcpy() -> Markup {
 			") implements other cool features, such as lighting, smooth shading, and (soon) mobs!"
 		}
 		.socials {
-			(social("Playlist", "https://www.youtube.com/watch?v=fWkbIOna6RA&list=PL6_bLxRDFzoKjaa3qCGkwR5L_ouSreaVP", include_static_unsafe!("/icons/youtube.svg")))
-			(social("Source code", "https://github.com/obiwac/python-minecraft-clone", include_static_unsafe!("/icons/gh.svg")))
-			(social("Full demo", "https://drakeerv.github.io/js-minecraft-clone/", include_static_unsafe!("/icons/link.svg")))
+			(social("Playlist", "https://www.youtube.com/watch?v=fWkbIOna6RA&list=PL6_bLxRDFzoKjaa3qCGkwR5L_ouSreaVP", include_static!("/icons/youtube.svg")))
+			(social("Source code", "https://github.com/obiwac/python-minecraft-clone", include_static!("/icons/gh.svg")))
+			(social("Full demo", "https://drakeerv.github.io/js-minecraft-clone/", include_static!("/icons/link.svg")))
 		}
 	}, html! {
 		iframe title="Drakeerv's port of MCPY to the browser" src="https://drakeerv.github.io/js-minecraft-clone/episodes/episode-11/index.html" loading="lazy" {}
@@ -83,7 +83,7 @@ pub fn bfm() -> Markup {
 			"I have plans to extend this more and use it as an educational tool (complemented by video tutorials). Stay tuned!!"
 		}
 		.socials {
-			(social("Source code", "https://github.com/obiwac/bfm", include_static_unsafe!("/icons/gh.svg")))
+			(social("Source code", "https://github.com/obiwac/bfm", include_static!("/icons/gh.svg")))
 		}
 	}, html! {
 		iframe title="Classical bridge simulation visualization" src="/public/bfm/index.html" loading="lazy" {}
@@ -111,8 +111,8 @@ pub fn moodle() -> Markup {
 			": French. Sensitive viewers are advised to look away."
 		}
 		.socials {
-			(social("Source code", "https://github.com/novati0n/moodle", include_static_unsafe!("/icons/gh.svg")))
-			(social("Full version", "https://moodle.novation.dev", include_static_unsafe!("/icons/link.svg")))
+			(social("Source code", "https://github.com/novati0n/moodle", include_static!("/icons/gh.svg")))
+			(social("Full version", "https://moodle.novation.dev", include_static!("/icons/link.svg")))
 		}
 	}, html! {
 		// settings (because we're not attached to a full webapp anymore)
@@ -132,8 +132,8 @@ pub fn moodle() -> Markup {
 
 		// shaders
 
-		script #moodle-vert-shader type="x-shader/x-vertex" { (include_static_unsafe!("/moodle/vert.glsl")) }
-		script #moodle-frag-shader type="x-shader/x-fragment" { (include_static_unsafe!("/moodle/frag.glsl")) }
+		script #moodle-vert-shader type="x-shader/x-vertex" { (include_static!("/moodle/vert.glsl")) }
+		script #moodle-frag-shader type="x-shader/x-fragment" { (include_static!("/moodle/frag.glsl")) }
 
 		// models
 
@@ -169,8 +169,8 @@ pub fn gdpr() -> Markup {
 			") ❤️"
 		}
 		.socials {
-			(social("Source code", "https://github.com/novati0n/gdpr-presentation", include_static_unsafe!("//icons/gh.svg")))
-			(social("Full version", "https://novation.dev/GDPR-presentation", include_static_unsafe!("/icons/link.svg")))
+			(social("Source code", "https://github.com/novati0n/gdpr-presentation", include_static!("//icons/gh.svg")))
+			(social("Full version", "https://novation.dev/GDPR-presentation", include_static!("/icons/link.svg")))
 		}
 	}, html! {
 		iframe title="The GDPR presentation in question" src="https://novation.dev/GDPR-presentation" loading="lazy" {}
@@ -191,9 +191,9 @@ pub fn karwa() -> Markup {
 		p { "It was successful enough to organize again in 2024, and had similar modalities." }
 		p { "To the right is a promotional visual I made for the 2024 edition which was played on the screens in the halls of the engineering faculty." }
 		.socials {
-			(social("KARWa '23", "https://github.com/karwa-org/karwa2023", include_static_unsafe!("//icons/gh.svg")))
-			(social("KARWa '24", "https://github.com/karwa-org/karwa2024", include_static_unsafe!("//icons/gh.svg")))
-			(social("Website", "https://alexisenglebert.github.io/", include_static_unsafe!("/icons/link.svg")))
+			(social("KARWa '23", "https://github.com/karwa-org/karwa2023", include_static!("//icons/gh.svg")))
+			(social("KARWa '24", "https://github.com/karwa-org/karwa2024", include_static!("//icons/gh.svg")))
+			(social("Website", "https://alexisenglebert.github.io/", include_static!("/icons/link.svg")))
 		}
 	}, html! {
 		video loop controls {
@@ -223,8 +223,8 @@ pub fn graphic_design() -> Markup {
 			"Some of them have animated equivalents which are displayed on our social media profiles."
 		}
 		.socials {
-			(social("@louvainlinux", "https://instagram.com/louvainlinux", include_static_unsafe!("//icons/instagram.svg")))
-			(social("Website", "https://louvainlinux.org", include_static_unsafe!("//icons/link.svg")))
+			(social("@louvainlinux", "https://instagram.com/louvainlinux", include_static!("//icons/instagram.svg")))
+			(social("Website", "https://louvainlinux.org", include_static!("//icons/link.svg")))
 		}
 	}, html! {
 		.image-grid {
@@ -262,7 +262,7 @@ pub fn x_compositing_wm() -> Markup {
 			"Braunschweig and Hanover, which we also stayed at, are both very nice cities. I recommend visiting them if you're in the area."
 		}
 		.socials {
-			(social("Source code", "https://github.com/obiwac/x-compositing-wm", include_static_unsafe!("//icons/gh.svg")))
+			(social("Source code", "https://github.com/obiwac/x-compositing-wm", include_static!("//icons/gh.svg")))
 		}
 	}, html! {
 		img alt="Aditya in the DLR helicopter simulator" src="/public/x-compositing-wm/dlr.jpg";
@@ -301,7 +301,7 @@ pub fn _24hvelo() -> Markup {
 			"I'd also like to host the visualization software itself here."
 		}
 		.socials {
-			(social("Screen source code", "https://github.com/obiwac/24h-lln-screen", include_static_unsafe!("/icons/gh.svg")))
+			(social("Screen source code", "https://github.com/obiwac/24h-lln-screen", include_static!("/icons/gh.svg")))
 		}
 	}, html! {
 		img alt="The folkloric bike" src="/public/24hvelo/bike.jpg";
@@ -325,9 +325,9 @@ pub fn batman() -> Markup {
 			" which is actually awesome 💙)."
 		}
 		.socials {
-			(social("Source code", "https://github.com/obiwac/freebsd-gsoc", include_static_unsafe!("/icons/gh.svg")))
-			(social("FreeBSD wiki page", "https://wiki.freebsd.org/SummerOfCode2023Projects/CallingTheBatmanFreeNetworksOnFreeBSD", include_static_unsafe!("/icons/fbsd.svg")))
-			(social("GSoC page", "https://summerofcode.withgoogle.com/archive/2023/projects/9YX3dONN", include_static_unsafe!("/icons/link.svg")))
+			(social("Source code", "https://github.com/obiwac/freebsd-gsoc", include_static!("/icons/gh.svg")))
+			(social("FreeBSD wiki page", "https://wiki.freebsd.org/SummerOfCode2023Projects/CallingTheBatmanFreeNetworksOnFreeBSD", include_static!("/icons/fbsd.svg")))
+			(social("GSoC page", "https://summerofcode.withgoogle.com/archive/2023/projects/9YX3dONN", include_static!("/icons/link.svg")))
 		}
 	}, html! {
 		.presentation {
