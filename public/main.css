@@ -74,16 +74,23 @@ a {
 }
 
 .link {
-	background: var(--gradient);
-	background-clip: none;
-	color: var(--background-colour);
+	color: var(--text-colour);
 	font-weight: bold;
-	border-radius: 3px;
+
+	background-image: var(--gradient);
+	background-position: 0 1.1em;
+	background-repeat: repeat-x;
+	background-size: 8px 5px;
+	transition: background-position 0.1s, color 0.1s, text-shadow 0.1s;
 }
 
 .link:hover, .link:focus {
-	/* transitions for gradients annoyingly aren't supported in most browsers */
-	background: var(--text-colour);
+	color: var(--background-colour);
+
+	background-image: var(--gradient);
+	background-position: 0 0;
+	background-repeat: repeat-x;
+	background-size: 8px 5px;
 }
 
 .container {
