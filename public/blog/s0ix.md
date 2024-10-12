@@ -1,5 +1,3 @@
-# Modern standby on FreeBSD
-
 ## Background (S3 v. S0ix)
 
 One of the main things still missing in FreeBSD for it to be usable on a modern laptop such as the AMD Framework laptops and the newer Intel ones is the ability to go to sleep.
