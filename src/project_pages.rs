@@ -245,7 +245,7 @@ pub fn graphic_design() -> Markup {
 
 #[get("/x-compositing-wm")]
 pub fn x_compositing_wm() -> Markup {
-	explanation_page("X Com-positing WM 🪟", X_IMG_SRC, html! {
+	explanation_page("X Compositing WM 🪟", X_IMG_SRC, html! {
 		p {
 			"Super simple compositing window manager for X11 written in C with Xlib and OpenGL (through GLX). Initially this was for prototyping the "
 			code { "aquabsd.alps.wm" }
@@ -348,4 +348,8 @@ pub fn batman() -> Markup {
 			iframe src="/public/batman/presentation.html" allowfullscreen {}
 		}
 	})
+}
+
+pub fn project_page_routes() -> Vec<rocket::Route> {
+	routes![mcpy, bfm, moodle, gdpr, karwa, graphic_design, x_compositing_wm, _24hvelo, batman]
 }

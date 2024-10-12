@@ -7,11 +7,11 @@ extern crate css_minify;
 extern crate pulldown_cmark;
 extern crate ammonia;
 
-use blog::s0ix;
+use blog::blog_routes;
 use rocket::fs::FileServer;
-use crate::common::relative;
-use crate::projects::index;
-use crate::project_pages::{mcpy, moodle, gdpr, bfm, karwa, graphic_design, x_compositing_wm, _24hvelo, batman};
+use common::relative;
+use projects::index;
+use project_pages::project_page_routes;
 
 mod common;
 mod social;
@@ -28,7 +28,8 @@ fn rocket() -> _ {
 	let rocket = rocket::build();
 
 	rocket
-		.mount("/", routes![index, mcpy, moodle, gdpr, bfm, karwa, graphic_design, x_compositing_wm, _24hvelo, batman])
-		.mount("/blog", routes![s0ix])
+		.mount("/", routes![index])
+		.mount("/", project_page_routes())
+		.mount("/", blog_routes())
 		.mount("/public", FileServer::from(relative!("/public")))
 }
