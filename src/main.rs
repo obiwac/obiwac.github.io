@@ -11,13 +11,12 @@ extern crate ammonia;
 use blog::blog_routes;
 use rocket::fs::FileServer;
 use common::relative;
-use projects::index;
 use project_pages::project_page_routes;
 
 mod common;
 mod social;
 mod person;
-mod projects;
+mod index;
 mod project_pages;
 mod base;
 mod blog;
@@ -29,7 +28,7 @@ fn rocket() -> _ {
 	let rocket = rocket::build();
 
 	rocket
-		.mount("/", routes![index])
+		.mount("/", routes![index::index])
 		.mount("/", project_page_routes())
 		.mount("/", blog_routes())
 		.mount("/public", FileServer::from(relative!("/public")))
