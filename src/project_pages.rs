@@ -2,7 +2,7 @@ use maud::{html, Markup, PreEscaped};
 use crate::common::{include_static, include_static_unsafe, relative};
 use crate::person::{person, Person};
 use crate::social::social;
-use crate::projects::{MCPY_IMG_SRC, BFM_IMG_SRC, MOODLE_IMG_SRC, GDPR_IMG_SRC, KARWA_IMG_SRC, DESIGN_IMG_SRC, X_IMG_SRC, _24H_VELO_IMG_SRC, BATMAN_IMG_SRC};
+use crate::index::{MCPY_IMG_SRC, BFM_IMG_SRC, MOODLE_IMG_SRC, GDPR_IMG_SRC, KARWA_IMG_SRC, DESIGN_IMG_SRC, X_IMG_SRC, _24H_VELO_IMG_SRC, BATMAN_IMG_SRC};
 use crate::base::base;
 
 fn explanation_page(title: &'static str, img_src: &'static str, descr: Markup, exhibit: Markup) -> Markup {

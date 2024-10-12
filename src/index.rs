@@ -3,6 +3,7 @@ use crate::common::{relative, include_static, include_static_unsafe};
 use crate::social::social;
 use crate::person::{person, Person};
 use crate::base::base;
+use crate::blog::BLOGS;
 
 fn thing(title: &'static str, link: &'static str, magic: bool, img_src: &'static str, descr: Markup) -> Markup {
 	let alt: &str = &(title.to_owned() + " thumbnail");
@@ -134,24 +135,13 @@ fn projects() -> Markup {
 }
 
 fn articles() -> Markup {
+	let entries: Vec<Markup> = BLOGS.iter().map(|blog| blog.render_entry()).collect();
+
 	html! {
-		.blog-entry {
-			h2 {
-				a.link href="/fprint" { "Biometric authentication on FreeBSD with fingerprint scanners 🔑" }
-			}
-			p {
-				"Guide on setting up fingerprint scanners on FreeBSD as a means of biometric authentication. Goes over the general software architecture and a few use cases."
-			}
-			.blog-tag {
-				b { "Reading time:" }
-				"5 min"
-			}
-			.blog-tag {
-				b { "Date published:" }
-				"12/10/2024"
-			}
+		@for entry in entries {
+			(entry)
+			hr;
 		}
-		hr;
 	}
 }
 

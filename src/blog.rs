@@ -4,9 +4,19 @@ use crate::base::base;
 use crate::social::social;
 use rocket::route::Outcome;
 
-struct Blog {
+fn blog_tag(key: &str, val: &str) -> Markup {
+	html! {
+		.blog-tag {
+			b { (key) }
+			(val)
+		}
+	}
+}
+
+pub struct Blog {
 	route: &'static str,
 	title: &'static str,
+	descr: &'static str,
 	reading_time: u32,
 	date: &'static str,
 	content: Markdown<&'static str>,
@@ -29,14 +39,8 @@ impl Blog {
 			}
 			.blog-container {
 				h1.blog-title { (self.title) }
-				.blog-tag {
-					b { "Reading time:" }
-					(format!("{} min", self.reading_time))
-				}
-				.blog-tag {
-					b { "Date published:" }
-					(self.date)
-				}
+				(blog_tag("Reading time:", &format!("{} min", self.reading_time)))
+				(blog_tag("Date published:", self.date))
 				hr;
 				(self.content)
 				.socials {
@@ -45,12 +49,26 @@ impl Blog {
 			}
 		})
 	}
+
+	pub fn render_entry(&self) -> Markup {
+		html! {
+			.blog-entry {
+				h2 {
+					a.link href=(self.route) { (self.title) }
+				}
+				p { (self.descr) }
+				(blog_tag("Reading time:", &format!("{} min", self.reading_time)))
+				(blog_tag("Date published:", self.date))
+			}
+		}
+	}
 }
 
-const BLOGS: &'static [&'static Blog] = &[
+pub const BLOGS: &'static [&'static Blog] = &[
 	&Blog {
 		route: "/s0ix",
 		title: "Modern standby on FreeBSD (S0ix)",
+		descr: "Overview of the process of implementing S0ix on FreeBSD, a power-saving feature on modern laptops which replaces the previous ACPI S3 sleep state.",
 		reading_time: 0,
 		date: "idk",
 		content: include_md!("/blog/s0ix.md"),
@@ -58,6 +76,7 @@ const BLOGS: &'static [&'static Blog] = &[
 	&Blog {
 		route: "/fprint",
 		title: "Biometric authentication on FreeBSD with fingerprint scanners 🔑",
+		descr: "Guide on setting up fingerprint scanners on FreeBSD as a means of biometric authentication. Goes over the general software architecture and a few use cases.",
 		reading_time: 5,
 		date: "12/10/2024",
 		content: include_md!("/blog/fprint.md"),
