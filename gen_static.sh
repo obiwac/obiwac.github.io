@@ -12,6 +12,7 @@ ROUTES=$(cat <<-END
 /x-compositing-wm
 /24hvelo
 /batman
+/fprint
 END
 )
 

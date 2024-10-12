@@ -1,0 +1,148 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="description" content="Personal website for Aymeric Wibo"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="index,follow"><meta name="google-site-verification" content="fAAF9QVbOi5rD1tThBbfzVtfhyAFbl4iN2LR42G67TI"><meta name="theme-color" content="#000000"><link rel="icon" type="image/png" href="/public/icons/me.png"><link rel="manifest" href="manifest.json"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Aymeric Wibo"><title>Aymeric Wibo</title><script type="application/ld+json">{
+			"@context": "http://schema.org",
+			"@type": "Article",
+			"@id": "{#}article",
+			"name": "Biometric authentication on FreeBSD with fingerprint scanners 🔑",
+			"author": "Aymeric Wibo",
+		}</script><style>@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap');
+
+/* default is light for the accessibility ting */
+
+:root {--gradient:-webkit-linear-gradient(50deg,rgb(126,119,255),rgb(255,34,137));--background-colour:#fff;--title-colour:#000;--text-colour:#000;--muted-colour:#555;--divider-colour:#ccc;--border-radius:12px;--code-background:#eee;--accent-shadow-colour:rgba(183,0,255,.487);--glyph-colour:#222;--keyword-colour:#8b00ff;--comment-colour:#788770;--literal-colour:#40f;--identifier-colour:#85006a}html{overflow:auto}body{background:var(--background-colour);color:var(--text-colour);margin:0;font:20px Montserrat,sans-serif,Noto Color Emoji,sans-serif;font-display:optional;overflow-x:hidden;word-break:break-word}h1{color:var(--title-colour);font-size:70px;margin-block:16px}strong{background:var(--gradient);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;font-weight:700}code{border-radius:8px;background:var(--code-background)}.link code{background:inherit}pre{border-radius:8px;background:var(--code-background);padding:16px;overflow-x:scroll}.inline-svg svg{width:24px;margin:4px;margin-bottom:-4px}iframe{border:none;width:100%;display:block}a{text-decoration:none;color:var(--text-colour)}.link{color:var(--text-colour);font-weight:700;background-size:8px 5px;background:var(--gradient) repeat-x 0 1.1em;transition:background-position .1s,color .2s}.link:focus ,.link:hover{color:var(--background-colour);background-size:8px 5px;background:var(--gradient) repeat-x 0 0}.container{max-width:950px;margin:auto;padding:32px}.things{display:flex;justify-content:space-around;align-items:start;flex-wrap:wrap;padding-top:16px;padding-bottom:32px;padding-inline:4px;row-gap:12px}.thing{max-width:280px;margin:16px;border-radius:var(--border-radius);transition:transform .1s ease-in-out,background .1s ease-in-out}.thing p{margin-inline:16px;margin-top:32px;margin-bottom:16px;font-size:18px}.thing:focus-within ,.thing:hover{background:var(--code-background);transform:scale(105%)}.labeled-img{max-width:100%;position:relative;transition:transform .1s ease-in-out}.thing:focus-within .labeled-img ,.thing:hover .labeled-img{transform:scale(105%)}.labeled-img div{position:absolute;bottom:0;width:100%;height:70%;background:linear-gradient(to bottom,transparent,black);border-radius:var(--border-radius);display:flex;align-items:center}.labeled-img div div h2{color:white;margin-inline:32px}.labeled-img div div svg{color:white;width:24px;margin-left:-16px}.labeled-img img{aspect-ratio:8 / 5;object-fit:cover;width:100%;border-radius:var(--border-radius)}.go-back{position:absolute;top:32px;left:16px}.go-back,.label,.learn-more{margin-inline:16px;margin-bottom:16px;padding:4px;display:flex;align-items:center;border-radius:4px;cursor:pointer;transition:background .1s ease-in-out}.go-back p,.learn-more p{margin:0}.go-back svg,.learn-more svg{margin-right:16px;width:24px}.go-back:focus ,.go-back:hover,.learn-more:focus,.learn-more:hover{background:var(--text-colour)}.go-back p,.go-back svg,.learn-more p,.learn-more svg{font-weight:lighter;color:var(--muted-colour);transition:color .1s ease-in-out}.thing:focus-within .learn-more p,.thing:focus-within .learn-more svg ,.thing:hover .learn-more p,.thing:hover .learn-more svg{font-weight:700;color:var(--text-colour)}.go-back:focus-within p,.go-back:focus-within svg ,.go-back:hover p,.go-back:hover svg,.learn-more:focus-within p,.learn-more:focus-within svg,.learn-more:hover p,.learn-more:hover svg{color:var(--background-colour)!important}.socials{display:flex;justify-content:center;flex-wrap:wrap;padding-block:32px;padding-inline:8px;column-gap:24px;row-gap:12px}.social{padding:4px;display:flex;align-items:center;border-radius:4px;cursor:pointer;transition:background .1s ease-in-out}.social:focus ,.social:hover{background:var(--text-colour);color:var(--background-colour)}.social p{font-weight:700;background:none;margin:0}.social svg{margin-right:16px;width:32px;height:32px}.social p,.social svg{color:var(--text-colour);transition:color .1s ease-in-out}.social:focus p,.social:focus svg ,.social:hover p,.social:hover svg{color:var(--background-colour)}.explanation-container{padding:32px;gap:64px;display:flex;flex-wrap:wrap;justify-content:space-around;align-items:center;max-width:1600px;margin-inline:auto;min-height:100svh;box-sizing:border-box}.explanation{max-width:600px}.exhibit{width:800px;line-height:0}.exhibit iframe{border-radius:var(--border-radius);height:100%;aspect-ratio:8 / 5}.exhibit video{border-radius:var(--border-radius);width:100%}.exhibit img{border-radius:var(--border-radius);width:100%}.exhibit canvas{border-radius:var(--border-radius);cursor:pointer;width:100%;height:100%;aspect-ratio:8 / 5}.image-grid{aspect-ratio:1 / 1;height:100%;display:grid;grid-template-areas:"karwa24 gj24"
+		"gp22 gp22"
+		"conf banquet23"
+		"gp23 gp23"
+		"karwa23 gimp"
+		"trilogie trilogie"}.image-grid img{border-radius:0;width:100%;max-width:100%}.exhibit .image-grid{overflow-y:scroll;border-radius:var(--border-radius);width:100%}.presentation{aspect-ratio:16 / 18;height:100%;padding:0}.presentation iframe{aspect-ratio:16 / 9;height:50%;border-radius:0;margin:0}.exhibit .presentation{width:100%;border-radius:var(--border-radius);overflow-y:hidden}.blog-container{padding:32px;gap:64px;max-width:900px;margin-inline:auto;min-height:100svh;box-sizing:border-box}.blog-title{font-size:48px;margin-block:32px}.blog-tag{margin-top:4px;font-size:18px}.blog-tag b{margin-right:8px}hr{border:1px solid var(--divider-colour);margin-block:32px}.glyph{color:var(--glyph-colour)}.literal{color:var(--literal-colour)}.keyword{color:var(--keyword-colour);font-weight:700}.comment{color:var(--comment-colour)}.identifier,.special-identifier,.strong-identifier{color:var(--identifier-colour)}.all-my-homies-hate-margin-collapsing{display:flex;flex-direction:column}.tabs{margin-top:32px;margin-bottom:16px;display:flex;justify-content:center;gap:32px}#articles-tab-label,#projects-tab-label{font-weight:700;color:var(--muted-colour);padding-bottom:5px;cursor:pointer;box-shadow:inset 0 0 var(--text-colour);transform:translateY(2px);transition:box-shadow .2s,color .2s,transform .2s}#articles-tab-input:checked ~ .tabs #articles-tab-label ,#projects-tab-input:checked ~ .tabs #projects-tab-label{transform:translateY(0px);color:var(--text-colour);box-shadow:inset 0 -4px var(--text-colour)}.tab-content{padding:0;position:relative}.tab{position:absolute;top:0;overflow:hidden;height:100%;transition:transform .5s,opacity .5s;opacity:0%}#projects-tab{transform:translateX(-100vw)}#articles-tab{transform:translateX(100vw)}#articles-tab-input:checked ~ .tab-content #articles-tab ,#projects-tab-input:checked ~ .tab-content #projects-tab {position:relative;transform:translateX(0);opacity:100%;display:block}input[type="radio"]{display:none}@media (prefers-color-scheme:dark){:root {--gradient:-webkit-linear-gradient(50deg,rgb(255,79,79),rgb(255,52,221));--background-colour:#000;--title-colour:#fff;--text-colour:#ddd;--muted-colour:#999;--divider-colour:#666;--code-background:#111;--accent-shadow-colour:#ff00cc29;--glyph-colour:#a5a0bc;--keyword-colour:#ff65ca;--comment-colour:#4a4e45;--literal-colour:#9b92ff;--identifier-colour:#e7bdff}}@media screen and (max-width:1024px){.thing{max-width:308px}}@media screen and (max-width:768px){.thing{max-width:100%}.explanation-container{padding-bottom:0}.exhibit{min-width:100vw;bottom:0;position:relative}.exhibit .image-grid,.exhibit .presentation,.exhibit canvas,.exhibit iframe,.exhibit img,.exhibit video{border-radius:0;height:auto}}@media screen and (max-width:480px){.things{padding-inline:0}.thing{margin-inline:0}}@media screen and (max-width:1280px){.image-grid{aspect-ratio:auto}.explanation-container{padding-top:64px}.blog-container{padding-top:64px}}</style></head><body><a class="go-back" href="/"><svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path fill="currentColor" d="M9.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.2 288 416 288c17.7 0 32-14.3 32-32s-14.3-32-32-32l-306.7 0L214.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg>
+<p>Main page</p></a><div class="blog-container"><h1 class="blog-title">Biometric authentication on FreeBSD with fingerprint scanners 🔑</h1><div class="blog-tag"><b>Reading time:</b>5 min</div><div class="blog-tag"><b>Date published:</b>12/10/2024</div><hr><h2>Introduction</h2>
+<p>Biometric authentication is a faster, more secure, and unarguably cooler method of authentication than plain old passwords.
+This article goes through the process of setting up a fingerprint scanner on FreeBSD and using it for biometric authentication.</p>
+<p>This has only been tested on the AMD Framework 13 (as that's the only laptop I own which has a fingerprint scanner), so YMMV on other laptops, but in theory any scanner supported under Linux (and that's most) should Just Work™ on FreeBSD following this guide.</p>
+<h2>How everything fits together</h2>
+<p>Fingerprint scanner support is provided by the <a class="link" href="https://fprint.freedesktop.org/" rel="noopener noreferrer"><code>libfprint</code></a> library.
+It provides an API for fingerprint scanning devices, as well as the userspace drivers for a range of different fingerprint scanners.</p>
+<p>These userspace drivers sit on top of <code>libusb</code>.
+Most scanners are connected via USB, even if they're internal, so all that's really needed from the kernel is for it to provide a USB interface to the device though a <code>libusb</code> implementation.</p>
+<p>This is where we hit our first snag on FreeBSD, but I'll get back to that.</p>
+<p>A separate <code>fprintd</code> daemon is used to manage the fingerprint scanner (including a D-Bus interface and management commands), and also provides the <code>pam_fprintd</code> authentication module for PAM.</p>
+<p>In the past, you had the now-obsolete <code>pam_fprint</code> module which didn't need <code>fprintd</code> or D-Bus.
+OpenBSD still has something similar with <a class="link" href="https://openports.pl/path/sysutils/login_fingerprint" rel="noopener noreferrer"><code>sysutils/login_fingerprint</code></a>, but unfortunately at the moment you're stuck with <code>fprintd</code> and D-Bus on FreeBSD.</p>
+<p>Now that you're up to speed with the general architecture, let's get to actually getting things to work!</p>
+<h2>Updated port</h2>
+<p>Currently, the <code>security/libfprint</code> port in FreeBSD is very outdated, and doesn't support the 2<sup>nd</sup> version of the API or any new fingerprint scanners (including the Framework ones).
+I'm working on a new port (new versions of <code>libfprint</code> use Meson instead of GNU configure and include what was previously in the also now-obsolete <code>security/fprint_demo</code>), but until that's done you'll have to build it yourself.</p>
+<p>The main issue you'll encounter doing so is the build script not being able to find the <code>udev</code> library, needed for fingerprint scanners connected via SPI (i.e. those from ELAN).
+I believe it is named something different on FreeBSD than it is on Linux, so a patch probably needs to be made against <code>meson.build</code>.
+For now, you can just disable it with <code>-Dudev_rules=disabled -Dudev_hwdb=disabled</code>.</p>
+<p>In all, this is what you need to do to build and install <code>libfprint</code>:</p>
+<pre><code><span class="strong-identifier">git</span> clone <span class="literal">"https://gitlab.freedesktop.org/libfprint/libfprint.git"</span>
+<span class="strong-identifier">cd</span> libfprint
+<span class="strong-identifier">meson</span> setup build -Dudev_rules=disabled -Dudev_hwdb=disabled
+<span class="strong-identifier">ninja</span> -Cbuild install
+</code></pre>
+<p>To test things out, there are some example programs you can run in the <code>build/examples</code> directory buuuuut...</p>
+<h2><code>libusb_get_parent</code></h2>
+<p>...the next thing you'll run into is that <code>libfprint</code> won't detect any scanners.</p>
+<p>This is because it uses the <code>g_usb_device_get_parent</code> function from <code>devel/libgusb</code>, which always returns <code>NULL</code> on FreeBSD.
+This is because <code>libgusb</code> relies on <code>libusb_get_parent</code> from the system's <code>libusb</code> implementation, which FreeBSD doesn't implement, so it defaults to returning <code>NULL</code> (see <a class="link" href="https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=224454" rel="noopener noreferrer">PR224454</a>).</p>
+<p>I've implemented this in <a class="link" href="https://reviews.freebsd.org/D46992" rel="noopener noreferrer">D46992</a>, which is currently awaiting review.
+You'll have to apply this patch to your kernel and rebuild <code>libgusb</code> for <code>libfprint</code> to be able to detect your fingerprint scanner correctly.</p>
+<h2>Updating firmware (for Framework laptops)</h2>
+<p>On certain revisions of Framework laptops, specifically those who's fingerprint scanner is on firmware version 01000320, <code>libfprint</code> will still refuse to work, and will tell you to update your firmware.</p>
+<p>This is a bit annoying and tricky to do.</p>
+<p>On Linux, this is done using <code>fwupd</code>, but this has not yet been fully ported to FreeBSD, though work seems to be well underway (see <a class="link" href="https://reviews.freebsd.org/D29332" rel="noopener noreferrer">D29332</a>).</p>
+<p>In the meantime, you can just use a Linux live ISO, but do make sure <code>fwupd</code> is up to date as support for the AMD Framework's fingerprint scanner was only added in newer versions (see <a class="link" href="https://github.com/fwupd/fwupd/discussions/3637" rel="noopener noreferrer">fwupd#3637</a>).
+Then, you can just follow the instructions at <a class="link" href="https://knowledgebase.frame.work/en_us/updating-fingerprint-reader-firmware-on-linux-for-13th-gen-and-amd-ryzen-7040-series-laptops-HJrvxv_za" rel="noopener noreferrer">Updating Fingerprint Reader Firmware on Linux for all Framework Laptops | Framework</a>.</p>
+<p>If it says something about a transfer timing out, that's alright, it's apparently still transferring in the background.
+Just wait a couple minutes and then reboot, and it should all work fine.</p>
+<h2>Installing <code>fprintd</code></h2>
+<p>As mentioned earlier, you need to build and install <code>fprintd</code>.
+It's a similar story to <code>libfprint</code>: the <code>securiry/fprintd</code> port is outdated on FreeBSD, so you need to build it yourself.
+It's also a Meson project, so the process is pretty simple, you just need to pass <code>-Dlibsystemd=basu</code> to the setup command as FreeBSD doesn't have systemd:</p>
+<pre><code><span class="strong-identifier">git</span> clone <span class="literal">"https://gitlab.freedesktop.org/libfprint/fprintd.git"</span>
+<span class="strong-identifier">cd</span> fprintd
+<span class="strong-identifier">meson</span> setup build -Dlibsystemd=basu
+<span class="strong-identifier">ninja</span> -Cbuild install
+</code></pre>
+<p>Then, we can create a service for <code>fprintd</code>, in <code>/usr/local/etc/rc.d/fprintd</code>:</p>
+<pre><code><span class="comment">#!/bin/sh</span>
+
+<span class="comment"># PROVIDE: fprintd</span>
+<span class="comment"># REQUIRE: DAEMON dbus</span>
+<span class="comment"># BEFORE: LOGIN</span>
+<span class="comment">#</span>
+<span class="comment"># Add the following lines to /etc/rc.conf to enable fprintd:</span>
+<span class="comment">#</span>
+<span class="comment"># fprintd_enable="YES"</span>
+<span class="comment">#</span>
+
+<span class="strong-identifier">.</span> /etc/rc.subr
+
+<span class="strong-identifier">name</span>=fprintd
+<span class="strong-identifier">rcvar</span>=<span class="identifier">${name}</span>_enable
+
+<span class="strong-identifier">:</span> <span class="identifier">${seatd_enable="NO"}</span>
+
+<span class="strong-identifier">command</span>=<span class="literal">"/usr/sbin/daemon"</span>
+<span class="strong-identifier">procname</span>=<span class="literal">"/usr/local/libexec/${name}"</span>
+<span class="strong-identifier">pidfile</span>=<span class="literal">"/var/run/${name}.pid"</span>
+<span class="strong-identifier">command_args</span>=<span class="literal">"-s notice -T ${name} -p ${pidfile} ${procname} -t"</span>
+
+<span class="strong-identifier">load_rc_config</span> <span class="identifier">${name}</span>
+<span class="strong-identifier">run_rc_command</span> <span class="literal">"$1"</span>
+</code></pre>
+<p>And start it with:</p>
+<pre><code><span class="strong-identifier">service</span> fprintd start
+</code></pre>
+<p>This is all assuming you've already set up D-Bus and the <code>dbus</code> service is running.</p>
+<p>You can naturally set it to start automatically in your <code>/etc/rc.conf</code> by adding the <code>fprintd_enable="YES"</code> line, and that's all.</p>
+<p>Phew.</p>
+<h2>Enrolling and managing fingerprints</h2>
+<p><code>fprintd</code> provides the <code>fprintd-enroll</code> command (to be run as root!) to enroll fingerprints:</p>
+<pre><code><span class="strong-identifier">fprintd-enroll</span> &lt;username&gt; [-f finger]
+</code></pre>
+<h2>PAM configuration and login</h2>
+<p>Finally, you need to add the following to the PAM configuration file for the <code>system</code> service (<code>/etc/pam.d/system</code>):</p>
+<pre><code>auth		sufficient	pam_unix.so	no_warn try_first_pass nullok
+auth		sufficient	/usr/local/lib/security/pam_fprintd.so
+</code></pre>
+<p>If you'd like a MFA setup, you can also set both authentication factors to be <code>required</code> or <code>requisite</code>, rather than sufficient.
+See the <a class="link" href="https://man.freebsd.org/cgi/man.cgi?query=pam.conf" rel="noopener noreferrer"><code>pam.conf(5)</code></a> manpage for details.</p>
+<p>This should now allow you to log in using your fingerprint!</p>
+<h2><code>doas</code> configuration</h2>
+<p>You can use the same policy for the <code>doas</code> PAM service as for the <code>system</code> service by creating the <code>/usr/local/etc/pam.d/doas</code> file:</p>
+<pre><code>auth include system
+</code></pre>
+<p>That'll work, but it'll continuously prompt you for your password, even if like 1 ms elapsed since you last authenticated.
+Vanilla <code>doas</code> only supports the <code>persist</code> option in its config on OpenBSD, not on FreeBSD.</p>
+<p>You can install the <code>security/opendoas</code> port which does let you use the <code>persist</code> option on FreeBSD.
+Do be advised that this <em>might</em> not be as secure as <code>persist</code> is on OpenBSD, however.
+The only issue is that the timeout is hardcoded to 5 minutes, which is a tad long.
+You can just <code>sed -i '' 's/5 \* 60/10/g'</code> occurrences of <code>5 * 60</code> to set the timeout to 10 seconds instead.</p>
+<h2>Polkit configuration</h2>
+<p>You're probably going to want user applications to have permission to verify fingerprints without needing to be root.
+You can do this by creating a new Polkit rule in something like <code>/usr/local/etc/polkit-1/rules.d/10-fprintd.rules</code>:</p>
+<pre><code><span class="identifier">polkit</span><span class="glyph">.</span><span class="special-identifier">addRule</span>(<span class="keyword">function</span>(<span class="special-identifier">action</span>, <span class="identifier">subject</span>) {
+    <span class="keyword">if</span> (<span class="identifier">action</span><span class="glyph">.</span><span class="special-identifier">id</span> <span class="glyph">===</span> <span class="literal">"net.reactivated.fprint.device.verify"</span>) {
+        <span class="keyword">return</span> <span class="identifier">polkit</span><span class="glyph">.</span><span class="special-identifier">Result</span><span class="glyph">.</span><span class="special-identifier">YES</span>
+    }
+})
+</code></pre>
+<p>To apply these changes, just restart the <code>dbus</code> service:</p>
+<pre><code><span class="strong-identifier">service</span> dbus restart
+</code></pre>
+<h2><code>swaylock</code></h2>
+<p><code>swaylock</code> is a popular screen locker for <code>wlroots</code> Wayland compositors.
+It doesn't support <code>fprintd</code> by default, however.
+Fortunately, there is a <a class="link" href="https://github.com/SL-RU/swaylock-fprintd" rel="noopener noreferrer"><code>swaylock-fprintd</code></a> fork of <code>swaylock</code> which does.</p>
+<p>This port is slightly broken on FreeBSD.
+In <code>fingerprint/meson.build</code>, you need to change the <code>/usr/share/dbus-1</code> prefixes to <code>/usr/local/share/dbus-1</code>.
+Then, in the <code>/usr/local/etc/pam.d/swaylock</code> PAM service file it installs, you need to include the <code>unix-selfauth</code> service instead of <code>login</code>.</p>
+<p>Finally, you can run <code>swaylock</code> with <code>--fingerprint</code>, and it should work fine (there's no need to add <code>fprintd</code> in its PAM service file):</p>
+<pre><code><span class="strong-identifier">swaylock</span> --fingerprint
+</code></pre>
+<h2>Conclusion</h2>
+<p>HTH! 👋</p>
+<div class="socials"><a class="social" href="mailto:obiwac@freebsd.org"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path fill="currentColor" d="M303.7 96.2c11.1-11.1 115.5-77 139.2-53.2 23.7 23.7-42.1 128.1-53.2 139.2-11.1 11.1-39.4.9-63.1-22.9-23.8-23.7-34.1-52-22.9-63.1zM109.9 68.1C73.6 47.5 22 24.6 5.6 41.1c-16.6 16.6 7.1 69.4 27.9 105.7 18.5-32.2 44.8-59.3 76.4-78.7zM406.7 174c3.3 11.3 2.7 20.7-2.7 26.1-20.3 20.3-87.5-27-109.3-70.1-18-32.3-11.1-53.4 14.9-48.7 5.7-3.6 12.3-7.6 19.6-11.6-29.8-15.5-63.6-24.3-99.5-24.3-119.1 0-215.6 96.5-215.6 215.6 0 119 96.5 215.6 215.6 215.6S445.3 380.1 445.3 261c0-38.4-10.1-74.5-27.7-105.8-3.9 7-7.6 13.3-10.9 18.8z"/></svg>
+<p>obiwac@freebsd.org</p></a></div></div></body></html>
