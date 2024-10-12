@@ -34,9 +34,18 @@ impl<T: AsRef<str>> Render for Markdown<T> {
 		let mut unsafe_html = String::new();
 		let parser = Parser::new(self.0.as_ref());
 
-		html::push_html(&mut unsafe_html, parser);
+		// Write out unsafe HTML.
 
-		let safe = ammonia::clean(&unsafe_html);
+		html::push_html(&mut unsafe_html, parser.into_iter());
+
+		// Sanitize unsafe HTML.
+
+		let safe = ammonia::Builder::default()
+			.add_allowed_classes("a", &["link"])
+			.add_allowed_classes("span", &["glyph", "literal", "identifier", "special-identifier", "strong-identifier", "keyword", "comment"])
+			.clean(&unsafe_html)
+			.to_string();
+
 		PreEscaped(safe)
 	}
 }
