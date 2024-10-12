@@ -234,7 +234,7 @@ a {
 	left: 16px;
 }
 
-.learn-more, .go-back {
+.learn-more, .go-back, .label {
 	margin-inline: 16px;
 	margin-bottom: 16px;
 	padding: 4px;
@@ -507,4 +507,69 @@ hr {
 
 .strong-identifier, .special-identifier, .identifier {
 	color: var(--identifier-colour);
+}
+
+/* tabs */
+
+.all-my-homies-hate-margin-collapsing {
+	display: flex;
+	flex-direction: column;
+}
+
+.tabs {
+	margin-top: 32px;
+	margin-bottom: 16px;
+	display: flex;
+	justify-content: center;
+	gap: 32px;
+}
+
+#projects-tab-label, #articles-tab-label {
+	font-weight: bold;
+	color: var(--muted-colour);
+	padding-bottom: 5px;
+	cursor: pointer;
+	box-shadow: inset 0 0 var(--text-colour);
+	transition: box-shadow .2s, color .1s;
+}
+
+#projects-tab-input:checked ~ .tabs #projects-tab-label,
+#articles-tab-input:checked ~ .tabs #articles-tab-label {
+	color: var(--text-colour);
+	box-shadow: inset 0 -4px var(--text-colour);
+}
+
+.tab-content {
+	padding: 0;
+	position: relative;
+}
+
+.tab {
+	position: absolute;
+	top: 0;
+	overflow: hidden;
+	/* 'transition-behavior: allow-discrete' with 'display: none' is broken on Firefox and Safari, so the best we can do is this. */
+	height: 100%;
+	transition: transform 0.5s, opacity 0.5s;
+	opacity: 0%;
+}
+
+#projects-tab {
+	transform: translateX(-100vw);
+}
+
+#articles-tab {
+	transform: translateX(100vw);
+}
+
+#projects-tab-input:checked ~ .tab-content #projects-tab ,
+#articles-tab-input:checked ~ .tab-content #articles-tab {
+	position: relative;
+	transform: translateX(0);
+	opacity: 100%;
+	display: block;
+}
+
+input[type="radio"] {
+	display: none;
 }
