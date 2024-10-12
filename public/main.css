@@ -57,7 +57,7 @@ body {
 
 h1 {
 	color: var(--title-colour);
-	font-size: 90px;
+	font-size: 70px;
 	margin-block: 16px;
 }
 
@@ -135,7 +135,8 @@ a {
 	justify-content: space-around;
 	align-items: start;
 	flex-wrap: wrap;
-	padding-block: 32px;
+	padding-top: 16px;
+	padding-bottom: 32px;
 	padding-inline: 4px;
 	row-gap: 12px;
 }
