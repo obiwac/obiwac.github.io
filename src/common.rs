@@ -32,11 +32,50 @@ pub struct Markdown<T>(pub T);
 impl<T: AsRef<str>> Render for Markdown<T> {
 	fn render(&self) -> Markup {
 		let mut unsafe_html = String::new();
-		let parser = Parser::new(self.0.as_ref());
+		let mut parser = Parser::new(self.0.as_ref());
+
+		// Preprocessor to add the "link" class to anchors.
+
+		let mut in_link = false;
+		let mut link_code = false;
+		let mut link_url: Option<pulldown_cmark::CowStr> = None;
+		let mut link_text: Option<pulldown_cmark::CowStr> = None;
+		let mut new_parser: Vec<pulldown_cmark::Event> = Vec::new();
+
+		while let Some(event) = parser.next() {
+			match event {
+				pulldown_cmark::Event::Start(pulldown_cmark::Tag::Link { link_type: _, dest_url, title: _, id: _ }) => {
+					link_url = Some(dest_url);
+					in_link = true;
+				}
+				pulldown_cmark::Event::Text(ref text) | pulldown_cmark::Event::Code(ref text) => {
+					if in_link {
+						link_code = matches!(event, pulldown_cmark::Event::Code(_));
+						link_text = Some(text.clone());
+					} else {
+						new_parser.push(event);
+					}
+				}
+				pulldown_cmark::Event::End(pulldown_cmark::TagEnd::Link) => {
+					assert!(in_link);
+					in_link = false;
+
+					let link_text = link_text.clone().unwrap().to_string();
+					let inner_html = if link_code { format!("<code>{}</code>", link_text) } else { link_text };
+					let html = format!("<a class=\"link\" href=\"{}\">{}</a>", link_url.clone().unwrap(), inner_html);
+
+					new_parser.push(pulldown_cmark::Event::InlineHtml(pulldown_cmark::CowStr::Boxed(html.into())));
+				}
+				_ => {
+					assert!(!in_link);
+					new_parser.push(event)
+				}
+			}
+		}
 
 		// Write out unsafe HTML.
 
-		html::push_html(&mut unsafe_html, parser.into_iter());
+		html::push_html(&mut unsafe_html, new_parser.into_iter());
 
 		// Sanitize unsafe HTML.
 
