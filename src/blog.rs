@@ -47,25 +47,25 @@ impl Blog {
 	}
 }
 
-pub fn blog_routes() -> Vec<rocket::Route> {
-	let blogs: &'static [&'static Blog] = &[
-		&Blog {
-			route: "/s0ix",
-			title: "Modern standby on FreeBSD (S0ix)",
-			reading_time: 0,
-			date: "idk",
-			content: include_md!("/blog/s0ix.md"),
-		},
-		&Blog {
-			route: "/fprint",
-			title: "Biometric authentication on FreeBSD with fingerprint scanners 🔑",
-			reading_time: 5,
-			date: "12/10/2024",
-			content: include_md!("/blog/fprint.md"),
-		},
-	];
+const BLOGS: &'static [&'static Blog] = &[
+	&Blog {
+		route: "/s0ix",
+		title: "Modern standby on FreeBSD (S0ix)",
+		reading_time: 0,
+		date: "idk",
+		content: include_md!("/blog/s0ix.md"),
+	},
+	&Blog {
+		route: "/fprint",
+		title: "Biometric authentication on FreeBSD with fingerprint scanners 🔑",
+		reading_time: 5,
+		date: "12/10/2024",
+		content: include_md!("/blog/fprint.md"),
+	},
+];
 
-	blogs.iter().map(|blog| {
+pub fn blog_routes() -> Vec<rocket::Route> {
+	BLOGS.iter().map(|blog| {
 		let handler = for<'r, 'x> move |req: &'r rocket::Request<'x>, _: rocket::Data<'r>| -> rocket::route::BoxFuture<'r> {
 			Outcome::from(req, blog.render()).pin()
 		};
