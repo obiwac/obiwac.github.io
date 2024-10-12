@@ -32,7 +32,11 @@ pub struct Markdown<T>(pub T);
 impl<T: AsRef<str>> Render for Markdown<T> {
 	fn render(&self) -> Markup {
 		let mut unsafe_html = String::new();
-		let mut parser = Parser::new(self.0.as_ref());
+		let parser = Parser::new(self.0.as_ref());
+
+		// Preprocessor to highlight syntax in code blocks.
+
+		let mut parser = cmark_syntax::SyntaxPreprocessor::new(parser);
 
 		// Preprocessor to add the "link" class to anchors.
 
