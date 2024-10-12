@@ -3,22 +3,24 @@
 Biometric authentication is a faster, more secure, and unarguably cooler method of authentication than plain old passwords.
 This article goes through the process of setting up a fingerprint scanner on FreeBSD and using it for biometric authentication.
 
-This has only been tested on the AMD Framework 13 (as that's the only laptop I own which has a fingerprint scanner), so YMMV on other laptops, but in theory any scanner supported under Linux (and that's most) should Just Work™ on FreeBSD following this guide.
+I have only tested this on the AMD Framework 13 (as that's the only laptop I own which has a fingerprint scanner), so YMMV on other laptops, but in theory any scanner supported under Linux* (and that's most) should Just Work™ on FreeBSD following this guide.
+
+*Except for ELAN scanners.
+More on that later.
 
 ## How everything fits together
 
 Fingerprint scanner support is provided by the [`libfprint`](https://fprint.freedesktop.org/) library.
 It provides an API for fingerprint scanning devices, as well as the userspace drivers for a range of different fingerprint scanners.
 
-These userspace drivers sit on top of `libusb`.
-Most scanners are connected via USB, even if they're internal, so all that's really needed from the kernel is for it to provide a USB interface to the device though a `libusb` implementation.
+Most scanners are connected via USB, even if they're internal, so all that's really needed from the kernel is for it to provide a USB interface to the device though a `libusb` implementation, and the `libfprint` userspace drivers sit on top of that.
 
 This is where we hit our first snag on FreeBSD, but I'll get back to that.
 
 A separate `fprintd` daemon is used to manage the fingerprint scanner (including a D-Bus interface and management commands), and also provides the `pam_fprintd` authentication module for PAM.
 
 In the past, you had the now-obsolete `pam_fprint` module which didn't need `fprintd` or D-Bus.
-OpenBSD still has something similar with [`sysutils/login_fingerprint`](https://openports.pl/path/sysutils/login_fingerprint), but unfortunately at the moment you're stuck with `fprintd` and D-Bus on FreeBSD.
+OpenBSD still has something similar with [`sysutils/login_fingerprint`](https://openports.pl/path/sysutils/login_fingerprint), but unfortunately, at the moment, you're stuck with `fprintd` and D-Bus on FreeBSD.
 
 Now that you're up to speed with the general architecture, let's get to actually getting things to work!
 
@@ -46,8 +48,7 @@ To test things out, there are some example programs you can run in the `build/ex
 
 ...the next thing you'll run into is that `libfprint` won't detect any scanners.
 
-This is because it uses the `g_usb_device_get_parent` function from `devel/libgusb`, which always returns `NULL` on FreeBSD.
-This is because `libgusb` relies on `libusb_get_parent` from the system's `libusb` implementation, which FreeBSD doesn't implement, so it defaults to returning `NULL` (see [PR224454](https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=224454)).
+This is because it uses the `g_usb_device_get_parent` function from `devel/libgusb`, which always returns `NULL` on FreeBSD, because it relies on `libusb_get_parent` from the system's `libusb` implementation, which FreeBSD doesn't implement yet (see [PR224454](https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=224454)).
 
 I've implemented this in [D46992](https://reviews.freebsd.org/D46992), which is currently awaiting review.
 You'll have to apply this patch to your kernel and rebuild `libgusb` for `libfprint` to be able to detect your fingerprint scanner correctly.
@@ -58,18 +59,18 @@ On certain revisions of Framework laptops, specifically those who's fingerprint 
 
 This is a bit annoying and tricky to do.
 
-On Linux, this is done using `fwupd`, but this has not yet been fully ported to FreeBSD, though work seems to be well underway (see [D29332](https://reviews.freebsd.org/D29332)).
+On Linux, this is done using `fwupd`, but this has not yet been fully ported to FreeBSD (though work seems to be well underway, see [D29332](https://reviews.freebsd.org/D29332)).
 
-In the meantime, you can just use a Linux live ISO, but do make sure `fwupd` is up to date as support for the AMD Framework's fingerprint scanner was only added in newer versions (see [fwupd#3637](https://github.com/fwupd/fwupd/discussions/3637)).
+In the meantime, you can just use a Linux live ISO. Do make sure `fwupd` is up to date though as support for the AMD Framework's fingerprint scanner was only added in newer versions (see [fwupd#3637](https://github.com/fwupd/fwupd/discussions/3637)).
 Then, you can just follow the instructions at [Updating Fingerprint Reader Firmware on Linux for all Framework Laptops | Framework](https://knowledgebase.frame.work/en_us/updating-fingerprint-reader-firmware-on-linux-for-13th-gen-and-amd-ryzen-7040-series-laptops-HJrvxv_za).
 
-If it says something about a transfer timing out, that's alright, it's apparently still transferring in the background.
+If it says something about a transfer timing out, that's alright, it's still transferring in the background.
 Just wait a couple minutes and then reboot, and it should all work fine.
 
 ## Installing `fprintd`
 
 As mentioned earlier, you need to build and install `fprintd`.
-It's a similar story to `libfprint`: the `securiry/fprintd` port is outdated on FreeBSD, so you need to build it yourself.
+It's a similar story to `libfprint`: the `security/fprintd` port is outdated on FreeBSD, so you need to build it yourself.
 It's also a Meson project, so the process is pretty simple, you just need to pass `-Dlibsystemd=basu` to the setup command as FreeBSD doesn't have systemd:
 
 ```sh
@@ -79,7 +80,7 @@ meson setup build -Dlibsystemd=basu
 ninja -Cbuild install
 ```
 
-Then, we can create a service for `fprintd`, in `/usr/local/etc/rc.d/fprintd`:
+Then, we can create a service for `fprintd` in `/usr/local/etc/rc.d/fprintd`:
 
 ```sh
 #!/bin/sh
@@ -119,7 +120,7 @@ This is all assuming you've already set up D-Bus and the `dbus` service is runni
 
 You can naturally set it to start automatically in your `/etc/rc.conf` by adding the `fprintd_enable="YES"` line, and that's all.
 
-Phew.
+Phew 😮‍💨
 
 ## Enrolling and managing fingerprints
 
@@ -157,7 +158,7 @@ Vanilla `doas` only supports the `persist` option in its config on OpenBSD, not 
 You can install the `security/opendoas` port which does let you use the `persist` option on FreeBSD.
 Do be advised that this _might_ not be as secure as `persist` is on OpenBSD, however.
 The only issue is that the timeout is hardcoded to 5 minutes, which is a tad long.
-You can just `sed -i '' 's/5 \* 60/10/g'` occurrences of `5 * 60` to set the timeout to 10 seconds instead.
+You can just `sed -i '' 's/5 \* 60/10/g'` files with occurrences of `5 * 60` to set the timeout to 10 seconds instead.
 
 ## Polkit configuration
 
@@ -197,3 +198,5 @@ swaylock --fingerprint
 ## Conclusion
 
 HTH! 👋
+
+I will keep this article up to date as I work on the new `libfprint` and `fprintd` ports.
