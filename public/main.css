@@ -9,6 +9,7 @@
 	--title-colour: #000000;
 	--text-colour: #000000;
 	--muted-colour: #555555;
+	--divider-colour: #ccc;
 	--border-radius: 12px;
 	--code-background: #ddd;
 	--accent-shadow-colour: rgba(183, 0, 255, 0.487);
@@ -21,6 +22,7 @@
 		--title-colour: #ffffff;
 		--text-colour: #dddddd;
 		--muted-colour: #999999;
+		--divider-colour: #666;
 		--code-background: #111;
 		--accent-shadow-colour: #ff00cc29;
 	}
@@ -416,5 +418,42 @@ a {
 	.exhibit iframe, .exhibit canvas, .exhibit video, .exhibit .image-grid, .exhibit img, .exhibit .presentation {
 		border-radius: 0;
 		height: auto;
+	}
+}
+
+/* blog */
+
+.blog-container {
+	padding: 32px;
+	gap: 64px;
+	max-width: 900px;
+	margin-inline: auto;
+	min-height: 100vh;
+	min-height: 100svh;
+	box-sizing: border-box; /* so that min-height includes padding */
+}
+
+.blog-title {
+	font-size: 48px;
+	margin-block: 32px;
+}
+
+.blog-tag {
+	margin-top: 4px;
+	font-size: 18px;
+}
+
+.blog-tag b {
+	margin-right: 8px;
+}
+
+hr {
+	border: 1px solid var(--divider-colour);
+	margin-block: 32px;
+}
+
+@media screen and (max-width: 1280px) {
+	.blog-container {
+		padding-top: 64px;
 	}
 }
