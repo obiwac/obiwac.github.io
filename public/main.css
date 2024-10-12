@@ -13,6 +13,14 @@
 	--border-radius: 12px;
 	--code-background: #ddd;
 	--accent-shadow-colour: rgba(183, 0, 255, 0.487);
+
+	/* syntax highlighting */
+
+	--glyph-colour: #222;
+	--keyword-colour: #8b00ff;
+	--comment-colour: #788770;
+	--literal-colour: #40f;
+	--identifier-colour: #85006a;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -25,6 +33,14 @@
 		--divider-colour: #666;
 		--code-background: #111;
 		--accent-shadow-colour: #ff00cc29;
+
+		/* syntax highlighting */
+
+		--glyph-colour: #a5a0bc;
+		--keyword-colour: #ff65ca;
+		--comment-colour: #4a4e45;
+		--literal-colour: #9b92ff;
+		--identifier-colour: #e7bdff;
 	}
 }
 
@@ -56,6 +72,17 @@ strong {
 code {
 	border-radius: 8px;
 	background-color: var(--code-background);
+}
+
+.link code {
+	background: inherit;
+}
+
+pre {
+	border-radius: 8px;
+	background-color: var(--code-background);
+	padding: 16px;
+	overflow-x: scroll;
 }
 
 .inline-svg svg {
@@ -456,4 +483,27 @@ hr {
 	.blog-container {
 		padding-top: 64px;
 	}
+}
+
+/* syntax highlighting */
+
+.glyph {
+	color: var(--glyph-colour);
+}
+
+.literal {
+	color: var(--literal-colour);
+}
+
+.keyword {
+	color: var(--keyword-colour);
+	font-weight: bold;
+}
+
+.comment {
+	color: var(--comment-colour);
+}
+
+.strong-identifier, .special-identifier, .identifier {
+	color: var(--identifier-colour);
 }
