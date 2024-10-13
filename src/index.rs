@@ -191,14 +191,10 @@ pub fn index() -> Markup {
 					}
 					.tab-content {
 						#projects-tab .tab {
-					.section-container {
 							(projects())
-}
 						}
 						#articles-tab .tab {
-.section-container {
 							(articles())
-}
 						}
 					}
 				}
