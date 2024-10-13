@@ -128,10 +128,16 @@ a {
 	background-size: 8px 5px;
 }
 
-.container {
+/* The reason why we have this stupid two container thing is that we need the Y-axis overflow to be hidden on 'tab-content', as otherwise we'd be able to scroll around ('overflow' has no option to still show the content but not allow scrolling, because of course it doesn't). But since, of course, you can't hide the Y-axis overflow without also hiding the X-axis overflow, we need to move the X-axis padding that would've otherwise been on '.page-container' to '.tab-content'. So '.page-container' can only affect Y-axis padding, and we need an extra '.section-container' for X-axis padding.  */
+
+.section-container {
 	max-width: 950px;
 	margin: auto;
-	padding: 32px;
+	padding-inline: 32px;
+}
+
+.page-container {
+	padding-block: 32px;
 }
 
 /* things */
@@ -548,14 +554,16 @@ hr {
 }
 
 .tab-content {
-	padding: 0;
+	padding: -32px;
 	position: relative;
 }
+
+/* CSS is making me loose braincells: https://stackoverflow.com/a/5072540 */
 
 .tab {
 	position: absolute;
 	top: 0;
-	overflow: hidden;
+	overflow-y: hidden;
 	/* 'transition-behavior: allow-discrete' with 'display: none' is broken on Firefox and Safari, so the best we can do is this. */
 	height: 100%;
 	transition: transform 0.5s, opacity 0.5s;
