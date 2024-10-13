@@ -24,7 +24,7 @@ More on that later.</p>
 <h2>How everything fits together</h2>
 <p>Fingerprint scanner support is provided by the <a class="link" href="https://fprint.freedesktop.org/" rel="noopener noreferrer"><code>libfprint</code></a> library.
 It provides an API for fingerprint scanning devices, as well as the userspace drivers for a range of different fingerprint scanners.</p>
-<p>Most scanners are connected via USB, even if they're internal, so all that's really needed from the kernel is for it to provide a USB interface to the device though a <code>libusb</code> implementation, and the <code>libfprint</code> userspace drivers sit on top of that.</p>
+<p>Most scanners are connected via USB, even if they're internal, so all that's really needed from the OS is for it to provide a USB interface to the device though a <code>libusb</code> implementation, and the <code>libfprint</code> userspace drivers sit on top of that.</p>
 <p>This is where we hit our first snag on FreeBSD, but I'll get back to that.</p>
 <p>A separate <code>fprintd</code> daemon is used to manage the fingerprint scanner (including a D-Bus interface and management commands), and also provides the <code>pam_fprintd</code> authentication module for PAM.</p>
 <p>In the past, you had the now-obsolete <code>pam_fprint</code> module which didn't need <code>fprintd</code> or D-Bus.
@@ -47,7 +47,7 @@ For now, you can just disable it with <code>-Dudev_rules=disabled -Dudev_hwdb=di
 <p>...the next thing you'll run into is that <code>libfprint</code> won't detect any scanners.</p>
 <p>This is because it uses the <code>g_usb_device_get_parent</code> function from <code>devel/libgusb</code>, which always returns <code>NULL</code> on FreeBSD, because it relies on <code>libusb_get_parent</code> from the system's <code>libusb</code> implementation, which FreeBSD doesn't implement yet (see <a class="link" href="https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=224454" rel="noopener noreferrer">PR224454</a>).</p>
 <p>I've implemented this in <a class="link" href="https://reviews.freebsd.org/D46992" rel="noopener noreferrer">D46992</a>, which is currently awaiting review.
-You'll have to apply this patch to your kernel and rebuild <code>libgusb</code> for <code>libfprint</code> to be able to detect your fingerprint scanner correctly.</p>
+You'll have to apply this patch to your <code>libusb</code> library, rebuild it, and then rebuild <code>libgusb</code> for <code>libfprint</code> to be able to detect your fingerprint scanner correctly.</p>
 <h2>Updating firmware (for Framework laptops)</h2>
 <p>On certain revisions of Framework laptops, specifically those who's fingerprint scanner is on firmware version 01000320, <code>libfprint</code> will still refuse to work, and will tell you to update your firmware.</p>
 <p>This is a bit annoying and tricky to do.</p>

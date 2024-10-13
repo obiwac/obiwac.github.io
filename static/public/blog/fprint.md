@@ -13,7 +13,7 @@ More on that later.
 Fingerprint scanner support is provided by the [`libfprint`](https://fprint.freedesktop.org/) library.
 It provides an API for fingerprint scanning devices, as well as the userspace drivers for a range of different fingerprint scanners.
 
-Most scanners are connected via USB, even if they're internal, so all that's really needed from the kernel is for it to provide a USB interface to the device though a `libusb` implementation, and the `libfprint` userspace drivers sit on top of that.
+Most scanners are connected via USB, even if they're internal, so all that's really needed from the OS is for it to provide a USB interface to the device though a `libusb` implementation, and the `libfprint` userspace drivers sit on top of that.
 
 This is where we hit our first snag on FreeBSD, but I'll get back to that.
 
@@ -51,7 +51,7 @@ To test things out, there are some example programs you can run in the `build/ex
 This is because it uses the `g_usb_device_get_parent` function from `devel/libgusb`, which always returns `NULL` on FreeBSD, because it relies on `libusb_get_parent` from the system's `libusb` implementation, which FreeBSD doesn't implement yet (see [PR224454](https://bugs.freebsd.org/bugzilla/show_bug.cgi?id=224454)).
 
 I've implemented this in [D46992](https://reviews.freebsd.org/D46992), which is currently awaiting review.
-You'll have to apply this patch to your kernel and rebuild `libgusb` for `libfprint` to be able to detect your fingerprint scanner correctly.
+You'll have to apply this patch to your `libusb` library, rebuild it, and then rebuild `libgusb` for `libfprint` to be able to detect your fingerprint scanner correctly.
 
 ## Updating firmware (for Framework laptops)
 
