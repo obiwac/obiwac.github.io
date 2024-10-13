@@ -148,35 +148,39 @@ fn articles() -> Markup {
 #[get("/")]
 pub fn index() -> Markup {
 	base(include_static!("/schema/me.json"), html! {
-		.container {
+		.page-container {
 			header role="banner" {
-				center {
-					h1 { "Hey! 👋" }
-				}
-				.socials {
-					(social("awibo", "https://www.linkedin.com/in/awibo", include_static!("/icons/linkedin.svg")))
-					(social("@obiwac", "https://github.com/obiwac", include_static!("/icons/gh.svg")))
-					(social("obiwac@gmail.com", "mailto:obiwac@gmail.com", include_static!("/icons/email.svg")))
-					(social("obiwac@freebsd.org", "mailto:obiwac@freebsd.org", include_static!("/icons/fbsd.svg")))
-					(social("obiwac", "https://youtube.com/obiwac", include_static!("/icons/youtube.svg")))
-					(social("obiwac", "https://discord.com/users/305047157197504522", include_static!("/icons/discord.svg")))
-					(social("Webring", "http://fuz.su", include_static!("/icons/bell.svg")))
+				.section-container {
+					center {
+						h1 { "Hey! 👋" }
+					}
+					.socials {
+						(social("awibo", "https://www.linkedin.com/in/awibo", include_static!("/icons/linkedin.svg")))
+						(social("@obiwac", "https://github.com/obiwac", include_static!("/icons/gh.svg")))
+						(social("obiwac@gmail.com", "mailto:obiwac@gmail.com", include_static!("/icons/email.svg")))
+						(social("obiwac@freebsd.org", "mailto:obiwac@freebsd.org", include_static!("/icons/fbsd.svg")))
+						(social("obiwac", "https://youtube.com/obiwac", include_static!("/icons/youtube.svg")))
+						(social("obiwac", "https://discord.com/users/305047157197504522", include_static!("/icons/discord.svg")))
+						(social("Webring", "http://fuz.su", include_static!("/icons/bell.svg")))
+					}
 				}
 			}
 			main role="main" {
-				p {
-					"My name is "
-					strong { "Aymeric Wibo" }
-					" (aka "
-					strong { "obiwac" }
-					"). I'm a Belgian open-source enthusiast who likes dogs and beer 🍺 Here are some of my bigger projects - those which have a "
-					span.inline-svg {
-						(include_static!("/icons/magic.svg"))
+				.section-container {
+					p {
+						"My name is "
+						strong { "Aymeric Wibo" }
+						" (aka "
+						strong { "obiwac" }
+						"). I'm a Belgian open-source enthusiast who likes dogs and beer 🍺 Here are some of my bigger projects - those which have a "
+						span.inline-svg {
+							(include_static!("/icons/magic.svg"))
+						}
+						" next to their name are interactive experiences."
 					}
-					" next to their name are interactive experiences."
-				}
-				p style="margin:0" {
-					"My interests programming-wise lie mostly in operating systems and graphics programming, but I'm also a huge public transport nerd."
+					p style="margin:0" {
+						"My interests programming-wise lie mostly in operating systems and graphics programming, but I'm also a huge public transport nerd."
+					}
 				}
 				.all-my-homies-hate-margin-collapsing {
 					input #projects-tab-input type="radio" name="tab" checked;
@@ -187,24 +191,30 @@ pub fn index() -> Markup {
 					}
 					.tab-content {
 						#projects-tab .tab {
+					.section-container {
 							(projects())
+}
 						}
 						#articles-tab .tab {
+.section-container {
 							(articles())
+}
 						}
 					}
 				}
 			}
 			footer role="contentinfo" {
-				p {
-					"This page was made possible thanks to "
-					a.link href="https://rocket.rs" { "Rocket.rs" }
-					" and "
-					a.link href="https://maud.lambda.xyz" { "Maud" }
-					"! Fun fact: this site's source doesn't have a single line of the godforsaken language known as HTML in it. It does have some JS on some pages though (not this one), so count that as an L if you want."
-				}
-				.socials {
-					(social("Source code", "https://github.com/obiwac/obiwac.github.io", include_static!("/icons/gh.svg")))
+				.section-container {
+					p {
+						"This page was made possible thanks to "
+						a.link href="https://rocket.rs" { "Rocket.rs" }
+						" and "
+						a.link href="https://maud.lambda.xyz" { "Maud" }
+						"! Fun fact: this site's source doesn't have a single line of the godforsaken language known as HTML in it. It does have some JS on some pages though (not this one), so count that as an L if you want."
+					}
+					.socials {
+						(social("Source code", "https://github.com/obiwac/obiwac.github.io", include_static!("/icons/gh.svg")))
+					}
 				}
 			}
 		}
