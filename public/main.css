@@ -13,6 +13,9 @@
 	--border-radius: 12px;
 	--code-background: #eee;
 	--accent-shadow-colour: rgba(183, 0, 255, 0.487);
+	--section-max-width: 950px;
+	--section-x-padding: 24px;
+	--section-y-padding: 24px;
 
 	/* syntax highlighting */
 
@@ -128,16 +131,16 @@ a {
 	background-size: 8px 5px;
 }
 
-/* The reason why we have this stupid two container thing is that we need the Y-axis overflow to be hidden on 'tab-content', as otherwise we'd be able to scroll around ('overflow' has no option to still show the content but not allow scrolling, because of course it doesn't). But since, of course, you can't hide the Y-axis overflow without also hiding the X-axis overflow, we need to move the X-axis padding that would've otherwise been on '.page-container' to '.tab-content'. So '.page-container' can only affect Y-axis padding, and we need an extra '.section-container' for X-axis padding.  */
+/* The reason why we have this stupid two container thing is that we need the Y-axis overflow to be hidden on 'tab-content', as otherwise we'd be able to scroll around ('overflow' has no option to still show the content but not allow scrolling, because of course it doesn't). But since, of course, you can't hide the Y-axis overflow without also hiding the X-axis overflow, we need to move the X-axis padding that would've otherwise been on '.page-container' to '.tab-content'. So '.page-container' can only affect Y-axis padding, and we need an extra '.section-container' for X-axis padding. I despise CSS with passion. */
 
 .section-container {
-	max-width: 950px;
+	max-width: var(--section-max-width);
 	margin: auto;
-	padding-inline: 32px;
+	padding-inline: var(--section-x-padding);
 }
 
 .page-container {
-	padding-block: 32px;
+	padding-block: var(--section-y-padding);
 }
 
 /* things */
@@ -242,8 +245,8 @@ a {
 
 .go-back {
 	position: absolute;
-	top: 32px;
-	left: 16px;
+	top: var(--section-y-padding);
+	left: calc(var(--section-x-padding) / 2);
 }
 
 .learn-more, .go-back, .label {
@@ -342,7 +345,8 @@ a {
 /* explanation pages */
 
 .explanation-container {
-	padding: 32px;
+	padding-inline: var(--section-x-padding);
+	padding-block: var(--section-y-padding);
 	gap: 64px;
 	display: flex;
 	flex-wrap: wrap;
@@ -464,7 +468,8 @@ a {
 /* blog */
 
 .blog-container {
-	padding: 32px;
+	padding-inline: var(--section-x-padding);
+	padding-block: var(--section-y-padding);
 	gap: 64px;
 	max-width: 900px;
 	margin-inline: auto;
@@ -554,13 +559,17 @@ hr {
 }
 
 .tab-content {
-	padding: -32px;
+	/* Have to do this stupid-ass hack because the padding must absolutely be applied in '.tab'. See the comment about 'overflow: hidden' above. */
+
+	max-width: calc(var(--section-max-width) + 2 * var(--section-x-padding));
+	margin: auto;
 	position: relative;
 }
 
 /* CSS is making me loose braincells: https://stackoverflow.com/a/5072540 */
 
 .tab {
+	padding-inline: var(--section-x-padding);
 	position: absolute;
 	top: 0;
 	overflow-y: hidden;
