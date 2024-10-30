@@ -94,6 +94,13 @@ pre {
 	overflow-x: auto;
 }
 
+blockquote {
+	border-left: 8px solid var(--muted-colour);
+	padding-left: 16px;
+	margin-inline: 0;
+	font-style: italic;
+}
+
 table {
 	width: 700px;
 	margin: auto;
