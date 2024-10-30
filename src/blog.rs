@@ -65,16 +65,14 @@ impl Blog {
 }
 
 pub const BLOGS: &'static [&'static Blog] = &[
-	/*
 	&Blog {
 		route: "/s0ix",
 		title: "Modern standby on FreeBSD (S0ix) ⚡",
-		descr: "Overview of the process of implementing S0ix on FreeBSD, a power-saving feature on modern laptops which replaces the previous ACPI S3 sleep state.",
+		descr: "Overview of the process of implementing S0ix on FreeBSD, a power-saving feature on modern laptops which superseeds the previous ACPI S3 sleep state.",
 		reading_time: 0,
 		date: "idk",
 		content: include_md!("/blog/s0ix.md"),
 	},
-	*/
 	&Blog {
 		route: "/fprint",
 		title: "Biometric authentication on FreeBSD with fingerprint scanners 🔑",
