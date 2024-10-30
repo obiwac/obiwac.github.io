@@ -102,8 +102,6 @@ blockquote {
 }
 
 table {
-	width: 700px;
-	margin: auto;
 	margin-block: 16px;
 	border-spacing: 0;
 }
