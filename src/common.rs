@@ -32,7 +32,7 @@ pub struct Markdown<T>(pub T);
 impl<T: AsRef<str>> Render for Markdown<T> {
 	fn render(&self) -> Markup {
 		let mut unsafe_html = String::new();
-		let parser = Parser::new(self.0.as_ref());
+		let parser = Parser::new_ext(self.0.as_ref(), pulldown_cmark::Options::ENABLE_TABLES);
 
 		// Preprocessor to highlight syntax in code blocks.
 
