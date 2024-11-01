@@ -68,9 +68,9 @@ pub const BLOGS: &'static [&'static Blog] = &[
 	&Blog {
 		route: "/s0ix",
 		title: "Modern standby on FreeBSD (S0ix) ⚡",
-		descr: "Overview of the process of implementing S0ix on FreeBSD, a power-saving feature on modern laptops which superseeds the previous ACPI S3 sleep state.",
-		reading_time: 0,
-		date: "idk",
+		descr: "Overview and notes for implementing S0ix on FreeBSD, a power-saving feature on modern laptops which superseeds the previous ACPI S3 sleep state.",
+		reading_time: 6,
+		date: "1/11/2024",
 		content: include_md!("/blog/s0ix.md"),
 	},
 	&Blog {

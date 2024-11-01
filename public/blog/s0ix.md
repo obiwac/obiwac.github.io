@@ -12,9 +12,12 @@ With S0ix, the operating system is the one responsible for figuring out what dev
 
 A fair warning: this article delves into the sombre depths and tedium of ACPI, so it's not the most exciting read.
 
+Also I'm still currently figuring this out, so some of the information here might be incomplete or flat wrong.
+These are really mostly personal notes.
+
 ### Does my laptop use S3 or S0ix?
 
-On FreeBSD, you can query the sleep states your machine supports by reading the `hw.acpi.supported_sleep_state` sysctl.
+On FreeBSD, you can query the sleep states your machine supports by reading the `hw.acpi.supported_sleep_state` sysctl (`hw.acpi.suspend_state` gives you the sleep state used for suspend).
 If you don't see `S3` in the list, your machine probably only supports S0ix.
 
 To be sure that your machine indeed does support S0ix, you need to check the FADT flags, specifically `AcpiGbl_FADT.Flags & ACPI_FADT_LOW_POWER_S0`.
@@ -113,15 +116,20 @@ From this, the process of inferring the D-state of the device is as follows:
 
 I've implemented this through the `acpi_pwr_infer_state` function, which is called as a fallback to `_PSC` in `acpi_pwr_get_consumer`.
 
-### Putting those devices to sleep.
+### Putting those devices to sleep
 
 Each device which is constraining the CPU from going to sleep (i.e. their D-state is lower than the minimum D-state required) needs to be put to sleep.
 
-This is done by calling the `acpi_pwr_switch_consumer` function.
+I think this is done by calling the `acpi_pwr_switch_consumer` function.
 
 **TODO** Actually implement this.
+I'm going to need to work on a bit more infrastructure and understand the sleep process in FreeBSD before I can do this.
 
 Now, the system should be ready to go to sleep.
+
+### Sending display off and entry notifications
+
+**TODO** This is easy.
 
 ### Putting the CPU to sleep
 
@@ -147,9 +155,15 @@ All in all, this is what that looks like on FreeBSD:
 cpu_mwait(MWAIT_INTRBREAK, MWAIT_C3); // TODO What's the maximum C-state?
 ```
 
+## Waking up from sleep
+
+**TODO**
+
 ## What about hibernation (S4)?
 
 S4 is really just S3 with the extra step of writing the contents of memory to disk before fully powering off.
 This essentially gives you the power savings of S5 while still having a relatively small wake latency.
 
-## What's left to do?
+## What's next?
+
+**TODO** Modern standby.
