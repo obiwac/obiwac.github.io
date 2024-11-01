@@ -13,6 +13,7 @@ ROUTES=$(cat <<-END
 /24hvelo
 /batman
 /fprint
+/s0ix
 END
 )
 
