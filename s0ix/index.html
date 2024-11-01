@@ -117,9 +117,9 @@ Specifically, <code>eax</code> can be set to contain hints to MWAIT and <code>ec
 Thanks to this, we can forgo the need to set up a memory range to monitor.</p>
 <p>Bits 7 to 4 of <code>ecx</code> are used to specify the target C-state to enter (we can ignore the lowest 4 bits which are for "sub C-states").</p>
 <p>All in all, this is what that looks like on FreeBSD:</p>
-<pre><code>#include &lt;machine/cpufunc.h&gt;
+<pre><code><span class="keyword">#include</span> <span class="glyph">&lt;</span><span class="identifier">machine</span><span class="glyph">/</span><span class="identifier">cpufunc</span><span class="glyph">.</span><span class="special-identifier">h</span><span class="glyph">&gt;</span>
 
-cpu_mwait(MWAIT_INTRBREAK, MWAIT_C3); // TODO What's the maximum C-state?
+<span class="identifier">cpu_mwait</span>(<span class="identifier">MWAIT_INTRBREAK</span>, <span class="identifier">MWAIT_C3</span>); <span class="comment">// TODO What's the maximum C-state?</span>
 </code></pre>
 <h2>Waking up from sleep</h2>
 <p><strong>TODO</strong></p>
