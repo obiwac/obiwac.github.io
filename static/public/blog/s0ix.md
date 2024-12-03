@@ -161,8 +161,7 @@ cpu_mwait(MWAIT_INTRBREAK, MWAIT_C3); // TODO What's the maximum C-state?
 
 ## What about hibernation (S4)?
 
-S4 is really just S3 with the extra step of writing the contents of memory to disk before fully powering off.
-This essentially gives you the power savings of S5 while still having a relatively small wake latency.
+**TODO**
 
 ## What's next?
 
