@@ -5,7 +5,9 @@
 	font-style: normal;
 	font-weight: 500;
 	font-display: swap;
-	src: url(/public/fonts/montserrat-regular.ttf);
+	src:
+		url(/public/fonts/montserrat.woff2) format("woff2"),
+		url(/public/fonts/montserrat-regular.ttf) format("truetype");
 }
 
 @font-face {
@@ -13,15 +15,19 @@
 	font-style: normal;
 	font-weight: 700;
 	font-display: swap;
-	src: url(/public/fonts/montserrat-bold.ttf);
+	/* TODO The network tab in Firefox shows the WOFF2 font as being downloaded twice. Is there a way to prevent this in CSS, or is this something that can be improved in Firefox? */
+	src:
+		url(/public/fonts/montserrat.woff2) format("woff2"),
+		url(/public/fonts/montserrat-bold.ttf) format("truetype");
 }
 
 @font-face {
 	font-family: "Noto Color Emoji";
 	font-style: normal;
 	font-weight: 400;
-	font-display: swap;
-	src: url(/public/fonts/emoji.ttf) format("truetype");
+	font-display: optional; /* If the network connection is deemed too slow by the browser, don't bother swapping the font. */
+	/* Only provide WOFF2 for the emoji font, as the TrueType version is way too large (like over 20 MB). */
+	src: url(/public/fonts/emoji.woff2) format("woff2");
 }
 
 body {
