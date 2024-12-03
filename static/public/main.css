@@ -25,7 +25,11 @@
 	font-family: "Noto Color Emoji";
 	font-style: normal;
 	font-weight: 400;
-	font-display: optional; /* If the network connection is deemed too slow by the browser, don't bother swapping the font. */
+	/*
+	 * I would've like to use 'optional' here, so that if the network connection is deemed too slow by the browser, don't bother swapping the font.
+	 * Unfortunately, 'optional' is a little too aggressive, and the browser doesn't even bother trying (on Firefox at least).
+	 */
+	font-display: swap;
 	/* Only provide WOFF2 for the emoji font, as the TrueType version is way too large (like over 20 MB). */
 	src: url(/public/fonts/emoji.woff2) format("woff2");
 }
