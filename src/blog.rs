@@ -29,7 +29,7 @@ impl Blog {
 			"@type": "Article",
 			"@id": "{{#}}article",
 			"name": "{}",
-			"author": "Aymeric Wibo",
+			"author": "Aymeric Wibo"
 		}}"#, self.title);
 
 		base(PreEscaped(&schema), html! {
