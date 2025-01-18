@@ -1,8 +1,9 @@
 use maud::{html, Markup, PreEscaped};
-use crate::common::{include_md, include_static_unsafe, Markdown, relative, include_static};
-use crate::base::base;
-use crate::social::social;
 use rocket::route::Outcome;
+
+use crate::base::base;
+use crate::common::{include_md, include_static, include_static_unsafe, relative, Markdown};
+use crate::social::social;
 
 fn blog_tag(key: &str, val: &str) -> Markup {
 	html! {
@@ -24,13 +25,16 @@ pub struct Blog {
 
 impl Blog {
 	fn render(&self) -> Markup {
-		let schema = format!(r#"{{
+		let schema = format!(
+			r#"{{
 			"@context": "http://schema.org",
 			"@type": "Article",
 			"@id": "{{#}}article",
 			"name": "{}",
 			"author": "Aymeric Wibo"
-		}}"#, self.title);
+		}}"#,
+			self.title
+		);
 
 		base(self.title, PreEscaped(&schema), html! {
 			a.go-back href="/" {
@@ -68,7 +72,8 @@ pub const BLOGS: &'static [&'static Blog] = &[
 	&Blog {
 		route: "/s0ix",
 		title: "Modern standby on FreeBSD (S0ix) ⚡",
-		descr: "Overview and notes for implementing S0ix on FreeBSD, a power-saving feature on modern laptops which superseeds the previous ACPI S3 sleep state.",
+		descr: "Overview and notes for implementing S0ix on FreeBSD, a power-saving feature on modern laptops which \
+		        superseeds the previous ACPI S3 sleep state.",
 		reading_time: 6,
 		date: "1/11/2024",
 		content: include_md!("/blog/s0ix.md"),
@@ -76,7 +81,8 @@ pub const BLOGS: &'static [&'static Blog] = &[
 	&Blog {
 		route: "/fprint",
 		title: "Biometric authentication on FreeBSD with fingerprint scanners 🔑",
-		descr: "Guide on setting up fingerprint scanners on FreeBSD as a means of biometric authentication. Goes over the general software architecture and a few use cases.",
+		descr: "Guide on setting up fingerprint scanners on FreeBSD as a means of biometric authentication. Goes over \
+		        the general software architecture and a few use cases.",
 		reading_time: 5,
 		date: "12/10/2024",
 		content: include_md!("/blog/fprint.md"),
@@ -84,11 +90,15 @@ pub const BLOGS: &'static [&'static Blog] = &[
 ];
 
 pub fn blog_routes() -> Vec<rocket::Route> {
-	BLOGS.iter().map(|blog| {
-		let handler = for<'r, 'x> move |req: &'r rocket::Request<'x>, _: rocket::Data<'r>| -> rocket::route::BoxFuture<'r> {
-			Outcome::from(req, blog.render()).pin()
-		};
+	BLOGS
+		.iter()
+		.map(|blog| {
+			let handler =
+				for<'r, 'x> move |req: &'r rocket::Request<'x>, _: rocket::Data<'r>| -> rocket::route::BoxFuture<'r> {
+					Outcome::from(req, blog.render()).pin()
+				};
 
-		rocket::route::Route::new(rocket::http::Method::Get, blog.route, handler)
-	}).collect()
+			rocket::route::Route::new(rocket::http::Method::Get, blog.route, handler)
+		})
+		.collect()
 }

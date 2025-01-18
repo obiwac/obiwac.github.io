@@ -1,6 +1,7 @@
-use maud::{html, DOCTYPE, Markup, PreEscaped};
-use crate::common::{relative, include_static_unsafe, include_css};
-use css_minify::optimizations::{Minifier, Level};
+use css_minify::optimizations::{Level, Minifier};
+use maud::{html, Markup, PreEscaped, DOCTYPE};
+
+use crate::common::{include_css, include_static_unsafe, relative};
 
 pub fn base(title: &str, schema: PreEscaped<&str>, content: Markup) -> Markup {
 	html! {
@@ -42,4 +43,3 @@ pub fn base(title: &str, schema: PreEscaped<&str>, content: Markup) -> Markup {
 		}
 	}
 }
-

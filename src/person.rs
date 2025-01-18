@@ -1,7 +1,15 @@
 use maud::{html, Markup};
 
 pub enum Person {
-	Noa, Alexis, Alex, Drakeerv, Juk, Brichant, Aless, Piwy, Aditya,
+	Noa,
+	Alexis,
+	Alex,
+	Drakeerv,
+	Juk,
+	Brichant,
+	Aless,
+	Piwy,
+	Aditya,
 }
 
 pub fn person(person: Person) -> Markup {

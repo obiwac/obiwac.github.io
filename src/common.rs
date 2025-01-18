@@ -1,31 +1,41 @@
 use maud::{Markup, PreEscaped, Render};
-use pulldown_cmark::{Parser, html};
+use pulldown_cmark::{html, Parser};
 
 macro_rules! relative {
-	($path: expr) => (concat!(env!("CARGO_MANIFEST_DIR"), $path))
+	($path:expr) => {
+		concat!(env!("CARGO_MANIFEST_DIR"), $path)
+	};
 }
 
 macro_rules! include_static_unsafe {
-	($path: expr) => (include_str!(relative!(concat!("/public", $path))))
+	($path:expr) => {
+		include_str!(relative!(concat!("/public", $path)))
+	};
 }
 
 macro_rules! include_static {
-	($path: expr) => (PreEscaped(include_static_unsafe!($path)))
+	($path:expr) => {
+		PreEscaped(include_static_unsafe!($path))
+	};
 }
 
 macro_rules! include_css {
-	($path: expr) => (PreEscaped(Minifier::default().minify(include_static_unsafe!($path), Level::Three).unwrap()))
+	($path:expr) => {
+		PreEscaped(
+			Minifier::default()
+				.minify(include_static_unsafe!($path), Level::Three)
+				.unwrap(),
+		)
+	};
 }
 
 macro_rules! include_md {
-	($path: expr) => (Markdown(include_static_unsafe!($path)))
+	($path:expr) => {
+		Markdown(include_static_unsafe!($path))
+	};
 }
 
-pub(crate) use relative;
-pub(crate) use include_static_unsafe;
-pub(crate) use include_static;
-pub(crate) use include_css;
-pub(crate) use include_md;
+pub(crate) use {include_css, include_md, include_static, include_static_unsafe, relative};
 
 pub struct Markdown<T>(pub T);
 
@@ -48,7 +58,12 @@ impl<T: AsRef<str>> Render for Markdown<T> {
 
 		while let Some(event) = parser.next() {
 			match event {
-				pulldown_cmark::Event::Start(pulldown_cmark::Tag::Link { link_type: _, dest_url, title: _, id: _ }) => {
+				pulldown_cmark::Event::Start(pulldown_cmark::Tag::Link {
+					link_type: _,
+					dest_url,
+					title: _,
+					id: _,
+				}) => {
 					link_url = Some(dest_url);
 					in_link = true;
 				}
@@ -65,10 +80,20 @@ impl<T: AsRef<str>> Render for Markdown<T> {
 					in_link = false;
 
 					let link_text = link_text.clone().unwrap().to_string();
-					let inner_html = if link_code { format!("<code>{}</code>", link_text) } else { link_text };
-					let html = format!("<a class=\"link\" href=\"{}\">{}</a>", link_url.clone().unwrap(), inner_html);
+					let inner_html = if link_code {
+						format!("<code>{}</code>", link_text)
+					} else {
+						link_text
+					};
+					let html = format!(
+						"<a class=\"link\" href=\"{}\">{}</a>",
+						link_url.clone().unwrap(),
+						inner_html
+					);
 
-					new_parser.push(pulldown_cmark::Event::InlineHtml(pulldown_cmark::CowStr::Boxed(html.into())));
+					new_parser.push(pulldown_cmark::Event::InlineHtml(pulldown_cmark::CowStr::Boxed(
+						html.into(),
+					)));
 				}
 				_ => {
 					assert!(!in_link);
@@ -85,7 +110,15 @@ impl<T: AsRef<str>> Render for Markdown<T> {
 
 		let safe = ammonia::Builder::default()
 			.add_allowed_classes("a", &["link"])
-			.add_allowed_classes("span", &["glyph", "literal", "identifier", "special-identifier", "strong-identifier", "keyword", "comment"])
+			.add_allowed_classes("span", &[
+				"glyph",
+				"literal",
+				"identifier",
+				"special-identifier",
+				"strong-identifier",
+				"keyword",
+				"comment",
+			])
 			.clean(&unsafe_html)
 			.to_string();
 

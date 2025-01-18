@@ -2,24 +2,25 @@
 // #![feature(decl_macro)]
 #![feature(closure_lifetime_binder)]
 
-#[macro_use] extern crate rocket;
-extern crate maud;
-extern crate css_minify;
-extern crate pulldown_cmark;
+#[macro_use]
+extern crate rocket;
 extern crate ammonia;
+extern crate css_minify;
+extern crate maud;
+extern crate pulldown_cmark;
 
 use blog::blog_routes;
-use rocket::fs::FileServer;
 use common::relative;
 use project_pages::project_page_routes;
+use rocket::fs::FileServer;
 
-mod common;
-mod social;
-mod person;
-mod index;
-mod project_pages;
 mod base;
 mod blog;
+mod common;
+mod index;
+mod person;
+mod project_pages;
+mod social;
 
 // server stuff
 
