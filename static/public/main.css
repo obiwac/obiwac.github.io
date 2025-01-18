@@ -547,6 +547,15 @@ a {
 	box-sizing: border-box; /* so that min-height includes padding */
 }
 
+.blog-container img {
+	width: 600px;
+	max-width: 100%;
+	margin: auto;
+	margin-block: 32px;
+	display: block;
+	border-radius: var(--border-radius);
+}
+
 .blog-title {
 	font-size: 48px;
 	margin-block: 32px;
