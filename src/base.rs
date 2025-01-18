@@ -3,14 +3,19 @@ use maud::{html, Markup, PreEscaped, DOCTYPE};
 
 use crate::common::{include_css, include_static_unsafe, relative};
 
-pub fn base(title: &str, schema: PreEscaped<&str>, content: Markup) -> Markup {
+pub fn base(title: &str, description: &str, schema: PreEscaped<&str>, content: Markup) -> Markup {
+	assert!(
+		description.len() <= 275,
+		"description is too long, as per Google's 2017 limit on the SERP"
+	);
+
 	html! {
 		(DOCTYPE)
 
 		html lang="en" {
 			head {
 				meta charset="UTF-8"; // must be in the first 1024 bytes of the document
-				meta name="description" content="Personal website for Aymeric Wibo"; // can't be longer than 275 characters as per Google's 2017 limit on the SERP
+				meta name="description" content=(description);
 				meta name="viewport" content="width=device-width,initial-scale=1";
 				meta name="robots" content="index,follow";
 				meta name="google-site-verification" content="fAAF9QVbOi5rD1tThBbfzVtfhyAFbl4iN2LR42G67TI";

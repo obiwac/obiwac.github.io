@@ -36,7 +36,7 @@ impl Blog {
 			self.title
 		);
 
-		base(self.title, PreEscaped(&schema), html! {
+		base(self.title, self.descr, PreEscaped(&schema), html! {
 			a.go-back href="/" {
 				(include_static!("/icons/back.svg"))
 				p { "Main page" }

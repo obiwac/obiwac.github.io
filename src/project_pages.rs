@@ -22,7 +22,11 @@ fn explanation_page(title: &'static str, img_src: &'static str, descr: Markup, e
 		title, img_src
 	);
 
-	base(title, PreEscaped(&schema), html! {
+	// TODO Would be nice to have the main-page descriptions as descriptions.
+
+	let description = format!("Project explanation page for \"{}\"", title);
+
+	base(title, &description, PreEscaped(&schema), html! {
 		a.go-back href="/" {
 			(include_static!("/icons/back.svg"))
 			p { "Main page" }
