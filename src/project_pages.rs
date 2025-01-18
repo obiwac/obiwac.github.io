@@ -15,7 +15,7 @@ fn explanation_page(title: &'static str, img_src: &'static str, descr: Markup, e
 		"image": "{}"
 	}}"#, title, img_src);
 
-	base(PreEscaped(&schema), html! {
+	base(title, PreEscaped(&schema), html! {
 		a.go-back href="/" {
 			(include_static!("/icons/back.svg"))
 			p { "Main page" }

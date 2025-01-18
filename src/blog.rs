@@ -32,7 +32,7 @@ impl Blog {
 			"author": "Aymeric Wibo"
 		}}"#, self.title);
 
-		base(PreEscaped(&schema), html! {
+		base(self.title, PreEscaped(&schema), html! {
 			a.go-back href="/" {
 				(include_static!("/icons/back.svg"))
 				p { "Main page" }

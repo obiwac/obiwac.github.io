@@ -147,7 +147,7 @@ fn articles() -> Markup {
 
 #[get("/")]
 pub fn index() -> Markup {
-	base(include_static!("/schema/me.json"), html! {
+	base("Aymeric Wibo", include_static!("/schema/me.json"), html! {
 		.page-container {
 			header role="banner" {
 				.section-container {

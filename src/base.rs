@@ -2,7 +2,7 @@ use maud::{html, DOCTYPE, Markup, PreEscaped};
 use crate::common::{relative, include_static_unsafe, include_css};
 use css_minify::optimizations::{Minifier, Level};
 
-pub fn base(schema: PreEscaped<&str>, content: Markup) -> Markup {
+pub fn base(title: &str, schema: PreEscaped<&str>, content: Markup) -> Markup {
 	html! {
 		(DOCTYPE)
 
@@ -22,11 +22,11 @@ pub fn base(schema: PreEscaped<&str>, content: Markup) -> Markup {
 
 				meta name="apple-mobile-web-app-capable" content="yes";
 				meta name="apple-mobile-web-app-status-bar-style" content="black-translucent";
-				meta name="apple-mobile-web-app-title" content="Aymeric Wibo";
+				meta name="apple-mobile-web-app-title" content=(title);
 
 				// TODO keywords, apple-touch-startup-image
 
-				title { "Aymeric Wibo" }
+				title { (title) }
 				script type="application/ld+json" { (schema) }
 
 				// link rel="stylesheet" type="text/css" href="/public/main.css";
