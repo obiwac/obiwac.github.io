@@ -95,7 +95,7 @@ pub fn bfm() -> Markup {
 			}
 			p {
 				"I recently got around to implementing "
-				a.link href="https://git@github.com/obiwac/bfm/pulls/1" { "web exporting" }
+				a.link href="https://git@github.com/obiwac/bfm/pull/1" { "web exporting" }
 				" so that you can embed simulation visualizations in a website. You can orbit/pan by left/right clicking, and you can zoom in and out by scrolling."
 			}
 			p {
