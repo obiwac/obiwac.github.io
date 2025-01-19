@@ -16,7 +16,7 @@ pub fn person(person: Person) -> Markup {
 	html! {
 		@match person {
 			Person::Noa => a.link href="https://novation.dev" { "Noa" },
-			Person::Alexis => a.link href="https://github.com/alexisloic21" { "Alexis" },
+			Person::Alexis => a.link href="https://github.com/alexisenglebert" { "Alexis" },
 			Person::Alex => a.link href="https://github.com/alleyezoncode" { "Alex" },
 			Person::Drakeerv => a.link href="https://github.com/drakeerv" { "@drakeerv" },
 			Person::Juk => a.link href="https://github.com/jukitsu" { "@jukitsu" },
