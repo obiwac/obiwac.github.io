@@ -48,7 +48,7 @@ impl<T: AsRef<str>> Render for Markdown<T> {
 
 		let mut parser = cmark_syntax::SyntaxPreprocessor::new(parser);
 
-		// Preprocessor to add the "link" class to anchors.
+		// Preprocessor to add "link" class to anchors.
 
 		let mut in_link = false;
 		let mut link_code = false;
@@ -110,6 +110,10 @@ impl<T: AsRef<str>> Render for Markdown<T> {
 
 		let safe = ammonia::Builder::default()
 			.add_allowed_classes("a", &["link"])
+			.add_tags(vec!["iframe"])
+			.add_tag_attributes(
+				"iframe", &["class", "src", "width", "height", "frameborder"],
+			)
 			.add_allowed_classes("span", &[
 				"glyph",
 				"literal",

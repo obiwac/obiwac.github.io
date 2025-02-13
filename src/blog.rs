@@ -70,6 +70,14 @@ impl Blog {
 
 pub const BLOGS: &'static [&'static Blog] = &[
 	&Blog {
+		route: "/2-os-1-pool",
+		title: "Dualbooting Linux and FreeBSD on the same ZFS pool 🤿",
+		descr: "Guide on setting up a dualboot system with Linux and FreeBSD sharing the same ZFS pool.",
+		reading_time: 4,
+		date: "3/2/2025",
+		content: include_md!("/blog/2-os-1-pool.md"),
+	},
+	&Blog {
 		route: "/s0ix",
 		title: "Modern standby on FreeBSD (S0ix) ⚡",
 		descr: "Overview and notes for implementing S0ix on FreeBSD, a power-saving feature on modern laptops which \

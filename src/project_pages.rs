@@ -87,7 +87,7 @@ pub fn bfm() -> Markup {
 		BFM_IMG_SRC,
 		html! {
 			p {
-				"BFM (aka. Big F***ing Matrix) is a FEM/FEA C library with Python bindings and 3D visualization tool. I wrote this with "
+				"BFM (aka. Big Fucking Matrix) is a FEM/FEA C library with Python bindings and 3D visualization tool. I wrote this with "
 				(person(Person::Alex))
 				" as our final project for the "
 				a.link href="https://perso.uclouvain.be/vincent.legat/zouLab/epl1110.php" { "LEPL1110" }
