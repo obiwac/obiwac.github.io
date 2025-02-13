@@ -162,7 +162,7 @@ checksum = "baf1de4339761588bc0619e3cbc0120ee582ebb74b53b4efbf79117bd2da40fd"
 [[package]]
 name = "cmark-syntax"
 version = "0.5.1"
-source = "git+https://github.com/obiwac/cmark-syntax.git#22960023206285682395418743397aa9712d7e77"
+source = "git+https://github.com/obiwac/cmark-syntax.git?branch=feature%2Fx86asm#e5c7a75e77fd0a3f4098ccf90f595d4167448856"
 dependencies = [
  "latex2mathml",
  "logos",

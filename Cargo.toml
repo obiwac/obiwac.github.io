@@ -13,4 +13,4 @@ maud = { git = "https://github.com/mbr/maud.git", branch = "mbr/rocket-0.5.0-rc.
 css-minify = "0.3.1"
 pulldown-cmark = "0.11.3"
 ammonia = "4.0.0"
-cmark-syntax = { git = "https://github.com/obiwac/cmark-syntax.git" }
+cmark-syntax = { git = "https://github.com/obiwac/cmark-syntax.git", branch = "feature/x86asm" }
