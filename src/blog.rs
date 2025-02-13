@@ -74,7 +74,7 @@ pub const BLOGS: &'static [&'static Blog] = &[
 		title: "Modern standby on FreeBSD (S0ix) ⚡",
 		descr: "Overview and notes for implementing S0ix on FreeBSD, a power-saving feature on modern laptops which \
 		        superseeds the previous ACPI S3 sleep state.",
-		reading_time: 6,
+		reading_time: 12,
 		date: "1/11/2024",
 		content: include_md!("/blog/s0ix.md"),
 	},
