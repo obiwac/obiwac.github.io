@@ -15,7 +15,7 @@ But here's a picture of [Beastie](https://en.wikipedia.org/wiki/BSD_Daemon) snoo
 
 ![Beastie sleeping](/public/blog/zzz.png)
 
-I gave a presentation on this topic at [FOSDEM 2025](https://fosdem.org/2025/), which you can view [here](TODO).
+I gave a presentation on this topic at [FOSDEM 2025](https://fosdem.org/2025/), which you can view [here](https://youtu.be/mBxj_EkAzV0).
 
 ### Does my laptop use S3 or S0ix? And what is s2idle?
 
