@@ -556,6 +556,15 @@ a {
 	border-radius: var(--border-radius);
 }
 
+.blog-container iframe {
+	width: 100%;
+	margin: auto;
+	margin-block: 32px;
+	display: block;
+	border-radius: var(--border-radius);
+	pointer-events: none;
+}
+
 .blog-title {
 	font-size: 48px;
 	margin-block: 32px;
