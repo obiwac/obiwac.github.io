@@ -1,7 +1,7 @@
 ## Background (S3 v. S0ix)
 
 One of the main things still missing in FreeBSD for it to be usable on modern laptops is the ability to go to sleep.
-In the past, this was done using something called ACPI S3, but vendors have been phasing this out in favour of something else called S0ix.
+In the past, this was done using something called ACPI S3, but vendors have slowly been phasing this out in favour of something else called S0ix.
 FreeBSD does not support S0ix as of yet, leaving it without sleep support on these devices.
 
 S3 is one of the global sleep states that ACPI defines (other examples include S0 when in regular operation and S5 when the computer is fully turned off).
@@ -289,14 +289,14 @@ A special thanks to Mario Limonciello ([superm1](https://github.com/superm1)) fr
 
 Hibernation actually has little to do with S0ix.
 Instead of suspending-to-RAM (i.e. keeping it active while the rest of the system is powered off), hibernation swaps all pages in RAM to disk and then completely powers off the system.
-When you want to exit out of hibernation, the bootloader reads the hibernation image from disk and restores the system to its previous state.
+When you want to exit out of hibernation, the bootloader reads back the image from disk to memory to restore the system to its previous state.
 
-Hibernate saves more power than S0ix (actually, in S4 the system consumes no power at all), but the downside is that, naturally, it takes way longer to enter and exit.
+S4 saves more power than S0ix (actually, in S4 the system consumes no power at all), but the downside is that it of course takes way longer to enter and exit.
 
 FreeBSD actually has support for S4BIOS, which was a transitional way of doing hibernation where the BIOS does most of the heavy-lifting intended to ease the adoption of S4.
-This doesn't exit on modern laptops but you can check this through `hw.acpi.s4bios`.
+This doesn't exist on modern laptops, but you can check if yours has it through `hw.acpi.s4bios`.
 
-There is also hybrid suspend, in which the system enters an S3 or S0ix state but still writes the hibernation image to disk.
+There is also hybrid suspend, in which the system enters an S3 or S0ix state but still writes the hibernation image to disk anyway.
 This way, you get the advantages of fast wake times but you don't risk corrupting your filesystem if the battery reaches a critical level and your system suddenly loses power.
 
 ## What's next? 🔮
@@ -307,6 +307,6 @@ Here's a grab-bag of things that still need to be done or would be nice to have:
 - Testing on Intel. At the moment, I don't have access to a modern Intel laptop, though I'm eyeing one of the Ultra Series 1 laptops. In the meantime, do test the patches on your Intel laptop if you have one and send me logs! [obiwac@freebsd.org](mailto:obiwac@freebsd.org)
 - [Powertop](https://en.wikipedia.org/wiki/PowerTOP) equivalent. This would be a good [GSoC](https://summerofcode.withgoogle.com) project, so I've added it to the [SummerOfCodeIdeas](https://wiki.freebsd.org/SummerOfCodeIdeas#Power_profiling_tool) wiki page.
 - [RTC alarm](https://en.wikipedia.org/wiki/Real-time_clock_alarm) wake. This wakes the system from sleep after a given amount of time. This is used by `amd_s2idle.py` to sleep for a consistent amount of time during each test run. It can also be used to hibernate the system if it has been suspended to RAM for over e.g. 5 minutes.
-- Wake on low battery level. Through the `_BLT` ACPI control method on battery devices we can set the battery warning, low, and wake levels. Presumably this also means we can generate a wake interrupt to wake the system when the battery reaches a given threshold. This would be useful to initially wake the screen to notify the user that the battery is low, or gracefully unmount all disks and shut down the system if the battery is critically low.
+- Wake on low battery level. Through the `_BLT` ACPI control method on battery devices we can set the battery warning, low, and wake levels. Perhaps this also means we can ask firmware to emit a wake interrupt to wake the system when the battery reaches a given threshold. This would be useful to wake the device to notify the user that the battery is low, or gracefully unmount all disks and shut down the system if the battery is critically low.
 - Idleness determination. This is a concept in [IOKit on macOS](https://developer.apple.com/library/archive/documentation/DeviceDrivers/Conceptual/IOKitFundamentals/PowerMgmt/PowerMgmt.html). If a device is determined to be idle, power is removed from it. If all of a bus device's children are idle, power is removed from the bus device too.
 - Enable S0ix on the FreeBSD NVIDIA driver. This is being worked on by NVIDIA.
