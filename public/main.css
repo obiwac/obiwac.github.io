@@ -51,7 +51,7 @@ body {
 	--code-background: #eee;
 	--accent-shadow-colour: rgba(183, 0, 255, 0.487);
 	--section-max-width: 950px;
-	--section-x-padding: 24px;
+	--section-x-padding: 20px;
 	--section-y-padding: 24px;
 
 	/* syntax highlighting */
@@ -136,6 +136,12 @@ blockquote {
 	padding-left: 16px;
 	margin-inline: 0;
 	font-style: italic;
+}
+
+.blog-container .table {
+	margin-inline: calc(-1 * var(--section-x-padding));
+	padding-inline: var(--section-x-padding);
+	overflow-x: scroll;
 }
 
 table {

@@ -56,7 +56,7 @@ We'll revisit the SMU later when we talk about the sleep process.
 Rudolf Marek has an interesting CCC talk about "[Matroshka processors](https://media.ccc.de/v/31c3_-_6103_-_en_-_saal_2_-_201412272145_-_amd_x86_smu_firmware_analysis_-_rudolf_marek)" as he calls them.
 
 ![Dieshot of Matroshka processor on an AMD CPU.](/public/blog/s0ix-dieshot.webp)
-*Credit to [Locuza](https://twitter.com/Locuza_/status/1325534004855058432) on Twitter.*
+*Credit to [@Locuza\_](https://twitter.com/Locuza_/status/1325534004855058432) on Twitter.*
 
 One last thing I'd like to touch on regarding debugging on AMD is the [amd_s2idle.py](https://git.kernel.org/pub/scm/linux/kernel/git/superm1/amd-debug-tools.git/tree/amd_s2idle.py) script on Linux, which is very helpful in debugging the myriad reasons why a laptop may not be entering the deep sleep S0i3 state.
 I'd like to write something similar for FreeBSD at some point once S0i3 is actually working.
@@ -83,29 +83,29 @@ On FreeBSD, `acpi_EvaluateDSMTyped` is used to do this for you.
 It seems like the original [Intel spec](https://uefi.org/sites/default/files/resources/Intel_ACPI_Low_Power_S0_Idle.pdf) linked above is not actually used in practice (UUID `c4eb40a0-6cd2-11e2-bcfd-0800200c9a66`), at least not on modern Intel or AMD platforms.
 Instead, there's [Microsoft's](https://learn.microsoft.com/en-us/windows-hardware/design/device-experiences/modern-standby-firmware-notifications) DSM UUID `11e00d56-ce64-47ce-837b-1f898f9aa461`, and thankfully is quite similar to the original DSM's, except with a couple extra "Modern Standby" functions and missing some others:
 
-|Index|Description|Notes|
+|Index|Description|<div style="min-width: 220px">Notes</span>|
 |--|--|--|
-|0|Enumerate functions.||
-|1|Get device constraints.|Only in the Intel spec.|
-|2|Get crash dump device.|Only in the Intel spec.|
-|3|Display off notification.||
-|4|Display on notification.||
-|5|Entry notification.||
-|6|Exit notification.||
-|7|"Modern Standby" entry notification.||
-|8|"Modern Standby" exit notification.||
+|0|Enumerate functions||
+|1|Get device constraints|Only in the Intel spec.|
+|2|Get crash dump device|Only in the Intel spec.|
+|3|Display off notification||
+|4|Display on notification||
+|5|Entry notification||
+|6|Exit notification||
+|7|"Modern Standby" entry notification||
+|8|"Modern Standby" exit notification||
 
 AMD seems to have their own DSM UUID `e3f32452-febc-43ce-9039-932122d37721` along with Microsoft's one, for which I haven't really been able to find any documentation outside of the Linux implementation.
 This is what they look like:
 
-|Index|Description|Notes|
+|Index|Description|<div style="min-width: 280px">Notes</span>|
 |--|--|--|
-|0|Enumerate functions.||
-|1|Get device constraints.||
-|2|Entry notification.|On Framework laptops, this slowly fades the power button led in and out.|
-|3|Exit notification.||
-|4|Display off notification.||
-|5|Display on notification.||
+|0|Enumerate functions||
+|1|Get device constraints||
+|2|Entry notification|On Framework laptops, this slowly fades the power button led in and out.|
+|3|Exit notification||
+|4|Display off notification||
+|5|Display on notification||
 
 A simplified pseudo-code example of calling e.g. the "get device constraints" function on AMD looks like this:
 
