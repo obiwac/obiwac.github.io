@@ -48,16 +48,18 @@ impl<T: AsRef<str>> Render for Markdown<T> {
 
 		let mut parser = cmark_syntax::SyntaxPreprocessor::new(parser);
 
-		// Preprocessor to add the "link" class to anchors.
+		// Custom preprocessing.
 
 		let mut in_link = false;
-		let mut link_code = false;
 		let mut link_url: Option<CowStr> = None;
 		let mut link_text: String = String::new();
 		let mut new_parser: Vec<Event> = Vec::new();
 
+		let mut in_table = false;
+
 		while let Some(event) = parser.next() {
 			match event {
+				// Add the "link" class to anchors.
 				Event::Start(Tag::Link {
 					link_type: _,
 					dest_url,
@@ -68,24 +70,11 @@ impl<T: AsRef<str>> Render for Markdown<T> {
 					in_link = true;
 					link_text = String::new();
 				}
-				Event::Text(ref text) | Event::Code(ref text) => {
-					if in_link {
-						link_code = matches!(event, Event::Code(_));
-						link_text.push_str(text);
-					} else {
-						new_parser.push(event);
-					}
-				}
 				Event::End(TagEnd::Link) => {
 					assert!(in_link);
 					in_link = false;
 
-					let link_text = link_text.clone().to_string();
-					let inner_html = if link_code {
-						format!("<code>{}</code>", link_text)
-					} else {
-						link_text
-					};
+					let inner_html = link_text.clone().to_string();
 					let html = format!(
 						"<a class=\"link\" href=\"{}\">{}</a>",
 						link_url.clone().unwrap(),
@@ -94,9 +83,32 @@ impl<T: AsRef<str>> Render for Markdown<T> {
 
 					new_parser.push(Event::InlineHtml(CowStr::Boxed(html.into())));
 				}
+
+				Event::Text(ref text) if in_link => {
+					link_text.push_str(text);
+				}
+				Event::Code(ref text) if in_link => {
+					link_text.push_str(format!("<code>{}</code>", text).as_str());
+				}
+
+				// Wrap tables with a div.
+				Event::Start(Tag::Table(alignment)) => {
+					assert!(!in_table); // Can't have a table in a table.
+					in_table = true;
+					new_parser.push(Event::Html(CowStr::Borrowed("<div class=\"table\">")));
+					new_parser.push(Event::Start(Tag::Table(alignment)));
+				}
+				Event::End(TagEnd::Table) => {
+					assert!(in_table);
+					in_table = false;
+					new_parser.push(Event::End(TagEnd::Table));
+					new_parser.push(Event::Html(CowStr::Borrowed("</div>")));
+				}
+
+				// Regular events.
 				_ => {
 					assert!(!in_link);
-					new_parser.push(event)
+					new_parser.push(event);
 				}
 			}
 		}
@@ -118,6 +130,8 @@ impl<T: AsRef<str>> Render for Markdown<T> {
 				"keyword",
 				"comment",
 			])
+			.add_allowed_classes("div", &["table"])
+			.add_tag_attributes("div", &["style"])
 			.clean(&unsafe_html)
 			.to_string();
 

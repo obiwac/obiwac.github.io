@@ -83,29 +83,29 @@ On FreeBSD, `acpi_EvaluateDSMTyped` is used to do this for you.
 It seems like the original [Intel spec](https://uefi.org/sites/default/files/resources/Intel_ACPI_Low_Power_S0_Idle.pdf) linked above is not actually used in practice (UUID `c4eb40a0-6cd2-11e2-bcfd-0800200c9a66`), at least not on modern Intel or AMD platforms.
 Instead, there's [Microsoft's](https://learn.microsoft.com/en-us/windows-hardware/design/device-experiences/modern-standby-firmware-notifications) DSM UUID `11e00d56-ce64-47ce-837b-1f898f9aa461`, and thankfully is quite similar to the original DSM's, except with a couple extra "Modern Standby" functions and missing some others:
 
-|Index|Description|Notes|
+|Index|Description|<div style="min-width: 220px">Notes</span>|
 |--|--|--|
-|0|Enumerate functions.||
-|1|Get device constraints.|Only in the Intel spec.|
-|2|Get crash dump device.|Only in the Intel spec.|
-|3|Display off notification.||
-|4|Display on notification.||
-|5|Entry notification.||
-|6|Exit notification.||
-|7|"Modern Standby" entry notification.||
-|8|"Modern Standby" exit notification.||
+|0|Enumerate functions||
+|1|Get device constraints|Only in the Intel spec.|
+|2|Get crash dump device|Only in the Intel spec.|
+|3|Display off notification||
+|4|Display on notification||
+|5|Entry notification||
+|6|Exit notification||
+|7|"Modern Standby" entry notification||
+|8|"Modern Standby" exit notification||
 
 AMD seems to have their own DSM UUID `e3f32452-febc-43ce-9039-932122d37721` along with Microsoft's one, for which I haven't really been able to find any documentation outside of the Linux implementation.
 This is what they look like:
 
-|Index|Description|Notes|
+|Index|Description|<div style="min-width: 280px">Notes</span>|
 |--|--|--|
-|0|Enumerate functions.||
-|1|Get device constraints.||
-|2|Entry notification.|On Framework laptops, this slowly fades the power button led in and out.|
-|3|Exit notification.||
-|4|Display off notification.||
-|5|Display on notification.||
+|0|Enumerate functions||
+|1|Get device constraints||
+|2|Entry notification|On Framework laptops, this slowly fades the power button led in and out.|
+|3|Exit notification||
+|4|Display off notification||
+|5|Display on notification||
 
 A simplified pseudo-code example of calling e.g. the "get device constraints" function on AMD looks like this:
 
