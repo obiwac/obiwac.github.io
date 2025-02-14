@@ -56,7 +56,7 @@ We'll revisit the SMU later when we talk about the sleep process.
 Rudolf Marek has an interesting CCC talk about "[Matroshka processors](https://media.ccc.de/v/31c3_-_6103_-_en_-_saal_2_-_201412272145_-_amd_x86_smu_firmware_analysis_-_rudolf_marek)" as he calls them.
 
 ![Dieshot of Matroshka processor on an AMD CPU.](/public/blog/s0ix-dieshot.webp)
-*Credit to [Locuza](https://twitter.com/Locuza_/status/1325534004855058432) on Twitter.*
+*Credit to [@Locuza\_](https://twitter.com/Locuza_/status/1325534004855058432) on Twitter.*
 
 One last thing I'd like to touch on regarding debugging on AMD is the [amd_s2idle.py](https://git.kernel.org/pub/scm/linux/kernel/git/superm1/amd-debug-tools.git/tree/amd_s2idle.py) script on Linux, which is very helpful in debugging the myriad reasons why a laptop may not be entering the deep sleep S0i3 state.
 I'd like to write something similar for FreeBSD at some point once S0i3 is actually working.

@@ -53,7 +53,7 @@ impl<T: AsRef<str>> Render for Markdown<T> {
 		let mut in_link = false;
 		let mut link_code = false;
 		let mut link_url: Option<CowStr> = None;
-		let mut link_text: Option<CowStr> = None;
+		let mut link_text: String = String::new();
 		let mut new_parser: Vec<Event> = Vec::new();
 
 		while let Some(event) = parser.next() {
@@ -66,11 +66,12 @@ impl<T: AsRef<str>> Render for Markdown<T> {
 				}) => {
 					link_url = Some(dest_url);
 					in_link = true;
+					link_text = String::new();
 				}
 				Event::Text(ref text) | Event::Code(ref text) => {
 					if in_link {
 						link_code = matches!(event, Event::Code(_));
-						link_text = Some(text.clone());
+						link_text.push_str(text);
 					} else {
 						new_parser.push(event);
 					}
@@ -79,7 +80,7 @@ impl<T: AsRef<str>> Render for Markdown<T> {
 					assert!(in_link);
 					in_link = false;
 
-					let link_text = link_text.clone().unwrap().to_string();
+					let link_text = link_text.clone().to_string();
 					let inner_html = if link_code {
 						format!("<code>{}</code>", link_text)
 					} else {
