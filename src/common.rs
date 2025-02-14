@@ -1,5 +1,5 @@
 use maud::{Markup, PreEscaped, Render};
-use pulldown_cmark::{html, Parser};
+use pulldown_cmark::{html, CowStr, Event, Options, Parser, Tag, TagEnd};
 
 macro_rules! relative {
 	($path:expr) => {
@@ -42,7 +42,7 @@ pub struct Markdown<T>(pub T);
 impl<T: AsRef<str>> Render for Markdown<T> {
 	fn render(&self) -> Markup {
 		let mut unsafe_html = String::new();
-		let parser = Parser::new_ext(self.0.as_ref(), pulldown_cmark::Options::ENABLE_TABLES);
+		let parser = Parser::new_ext(self.0.as_ref(), Options::ENABLE_TABLES);
 
 		// Preprocessor to highlight syntax in code blocks.
 
@@ -52,13 +52,13 @@ impl<T: AsRef<str>> Render for Markdown<T> {
 
 		let mut in_link = false;
 		let mut link_code = false;
-		let mut link_url: Option<pulldown_cmark::CowStr> = None;
-		let mut link_text: Option<pulldown_cmark::CowStr> = None;
-		let mut new_parser: Vec<pulldown_cmark::Event> = Vec::new();
+		let mut link_url: Option<CowStr> = None;
+		let mut link_text: Option<CowStr> = None;
+		let mut new_parser: Vec<Event> = Vec::new();
 
 		while let Some(event) = parser.next() {
 			match event {
-				pulldown_cmark::Event::Start(pulldown_cmark::Tag::Link {
+				Event::Start(Tag::Link {
 					link_type: _,
 					dest_url,
 					title: _,
@@ -67,15 +67,15 @@ impl<T: AsRef<str>> Render for Markdown<T> {
 					link_url = Some(dest_url);
 					in_link = true;
 				}
-				pulldown_cmark::Event::Text(ref text) | pulldown_cmark::Event::Code(ref text) => {
+				Event::Text(ref text) | Event::Code(ref text) => {
 					if in_link {
-						link_code = matches!(event, pulldown_cmark::Event::Code(_));
+						link_code = matches!(event, Event::Code(_));
 						link_text = Some(text.clone());
 					} else {
 						new_parser.push(event);
 					}
 				}
-				pulldown_cmark::Event::End(pulldown_cmark::TagEnd::Link) => {
+				Event::End(TagEnd::Link) => {
 					assert!(in_link);
 					in_link = false;
 
@@ -91,9 +91,7 @@ impl<T: AsRef<str>> Render for Markdown<T> {
 						inner_html
 					);
 
-					new_parser.push(pulldown_cmark::Event::InlineHtml(pulldown_cmark::CowStr::Boxed(
-						html.into(),
-					)));
+					new_parser.push(Event::InlineHtml(CowStr::Boxed(html.into())));
 				}
 				_ => {
 					assert!(!in_link);
