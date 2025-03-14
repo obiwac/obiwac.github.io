@@ -162,7 +162,7 @@ pub fn index() -> Markup {
 						.socials {
 							(social("awibo", "https://www.linkedin.com/in/awibo", include_static!("/icons/linkedin.svg")))
 							(social("@obiwac", "https://github.com/obiwac", include_static!("/icons/gh.svg")))
-							(social("obiwac@gmail.com", "mailto:obiwac@gmail.com", include_static!("/icons/email.svg")))
+							(social("me@obiw.ac", "mailto:me@obiw.ac", include_static!("/icons/email.svg")))
 							(social("obiwac@freebsd.org", "mailto:obiwac@freebsd.org", include_static!("/icons/fbsd.svg")))
 							(social("obiwac", "https://youtube.com/obiwac", include_static!("/icons/youtube.svg")))
 							(social("obiwac", "https://discord.com/users/305047157197504522", include_static!("/icons/discord.svg")))
