@@ -19,6 +19,7 @@ END
 
 rm -rf static
 mkdir -p static
+cp -r .well-known static/.well-known
 cp -r public static/public
 cp CNAME static/CNAME
 
