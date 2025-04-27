@@ -25,6 +25,7 @@ To be sure that your machine indeed does support S0ix, you need to check the FAD
 ## What has already been done?
 
 Ben Widawsky from Intel started work on this in 2018 with two patches, [D17675](https://reviews.freebsd.org/D17675) and [D17676](https://reviews.freebsd.org/D17676) (Emulated S3 with s0ix).
+The first patch just implements suspending to idle, which means that the CPU is simply idled when suspending instead of being fully put to sleep.
 This work was never finished, however.
 
 ## The LPIT v. the `_LPI` object
