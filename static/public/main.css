@@ -1,5 +1,42 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&display=swap');
+/* fonts */
+
+@font-face {
+	font-family: "Montserrat";
+	font-style: normal;
+	font-weight: 500;
+	font-display: swap;
+	src:
+		url(/public/fonts/montserrat.woff2) format("woff2"),
+		url(/public/fonts/montserrat-regular.ttf) format("truetype");
+}
+
+@font-face {
+	font-family: "Montserrat";
+	font-style: normal;
+	font-weight: 700;
+	font-display: swap;
+	/* TODO The network tab in Firefox shows the WOFF2 font as being downloaded twice. Is there a way to prevent this in CSS, or is this something that can be improved in Firefox? */
+	src:
+		url(/public/fonts/montserrat.woff2) format("woff2"),
+		url(/public/fonts/montserrat-bold.ttf) format("truetype");
+}
+
+@font-face {
+	font-family: "Noto Color Emoji";
+	font-style: normal;
+	font-weight: 400;
+	/*
+	 * I would've like to use 'optional' here, so that if the network connection is deemed too slow by the browser, don't bother swapping the font.
+	 * Unfortunately, 'optional' is a little too aggressive, and the browser doesn't even bother trying (on Firefox at least).
+	 */
+	font-display: swap;
+	/* Only provide WOFF2 for the emoji font, as the TrueType version is way too large (like over 20 MB). */
+	src: url(/public/fonts/emoji.woff2) format("woff2");
+}
+
+body {
+	--google-font-color-notocoloremoji:none;
+}
 
 /* default is light for the accessibility ting */
 
@@ -14,7 +51,7 @@
 	--code-background: #eee;
 	--accent-shadow-colour: rgba(183, 0, 255, 0.487);
 	--section-max-width: 950px;
-	--section-x-padding: 24px;
+	--section-x-padding: 20px;
 	--section-y-padding: 24px;
 
 	/* syntax highlighting */
@@ -101,6 +138,12 @@ blockquote {
 	font-style: italic;
 }
 
+.blog-container .table {
+	margin-inline: calc(-1 * var(--section-x-padding));
+	padding-inline: var(--section-x-padding);
+	overflow-x: scroll;
+}
+
 table {
 	margin-block: 16px;
 	border-spacing: 0;
@@ -124,6 +167,7 @@ table tr:first-child td {
 
 table td:last-child {
 	width: 100%;
+	white-space: wrap;
 }
 
 .inline-svg svg {
@@ -508,6 +552,23 @@ a {
 	min-height: 100vh;
 	min-height: 100svh;
 	box-sizing: border-box; /* so that min-height includes padding */
+}
+
+.blog-container img {
+	width: 600px;
+	max-width: 100%;
+	margin: auto;
+	margin-block: 32px;
+	display: block;
+	border-radius: var(--border-radius);
+}
+
+.blog-container img + em {
+	display: block;
+	text-align: center;
+	font-size: 16px;
+	margin-top: -16px;
+	color: var(--muted-colour);
 }
 
 .blog-title {

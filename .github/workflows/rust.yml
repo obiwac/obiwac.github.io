@@ -1,0 +1,16 @@
+name: Check formatting (Rust)
+
+on: [push, workflow_dispatch]
+
+jobs:
+  check_formatting:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions-rust-lang/setup-rust-toolchain@v1
+        with:
+          components: rustfmt
+          toolchain: nightly
+      - uses: actions-rust-lang/rustfmt@v1
+        with:
+          manifest-path: Cargo.toml

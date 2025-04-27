@@ -1,9 +1,10 @@
 use maud::{html, Markup, PreEscaped};
-use crate::common::{relative, include_static, include_static_unsafe};
-use crate::social::social;
-use crate::person::{person, Person};
+
 use crate::base::base;
 use crate::blog::BLOGS;
+use crate::common::{include_static, include_static_unsafe, relative};
+use crate::person::{person, Person};
+use crate::social::social;
 
 fn thing(title: &'static str, link: &'static str, magic: bool, img_src: &'static str, descr: Markup) -> Markup {
 	let alt: &str = &(title.to_owned() + " thumbnail");
@@ -32,19 +33,19 @@ fn thing(title: &'static str, link: &'static str, magic: bool, img_src: &'static
 
 // Imagemagick command to resize image to 400x250: `convert -resize 400x250 input.png output.png`
 
-pub const AQUABSD_IMG_SRC:   &str = "/public/thumbnails/aquabsd-small.png";
-pub const MCPY_IMG_SRC:      &str = "/public/thumbnails/mcpy-small.png";
-pub const BFM_IMG_SRC:       &str = "/public/thumbnails/bfm-small.png";
-pub const KARWA_IMG_SRC:     &str = "/public/thumbnails/karwa-small.png";
-pub const MOODLE_IMG_SRC:    &str = "/public/thumbnails/moodle-small.png";
-pub const GDPR_IMG_SRC:      &str = "/public/thumbnails/gdpr-small.png";
-pub const LLN24_IMG_SRC:     &str = "/public/thumbnails/lln24-small.png";
-pub const LLN23_IMG_SRC:     &str = "/public/thumbnails/lln23-small.png";
-pub const LLN22_IMG_SRC:     &str = "/public/thumbnails/lln22-small.png";
-pub const X_IMG_SRC:         &str = "/public/thumbnails/x-small.png";
+pub const AQUABSD_IMG_SRC: &str = "/public/thumbnails/aquabsd-small.png";
+pub const MCPY_IMG_SRC: &str = "/public/thumbnails/mcpy-small.png";
+pub const BFM_IMG_SRC: &str = "/public/thumbnails/bfm-small.png";
+pub const KARWA_IMG_SRC: &str = "/public/thumbnails/karwa-small.png";
+pub const MOODLE_IMG_SRC: &str = "/public/thumbnails/moodle-small.png";
+pub const GDPR_IMG_SRC: &str = "/public/thumbnails/gdpr-small.png";
+pub const LLN24_IMG_SRC: &str = "/public/thumbnails/lln24-small.png";
+pub const LLN23_IMG_SRC: &str = "/public/thumbnails/lln23-small.png";
+pub const LLN22_IMG_SRC: &str = "/public/thumbnails/lln22-small.png";
+pub const X_IMG_SRC: &str = "/public/thumbnails/x-small.png";
 pub const _24H_VELO_IMG_SRC: &str = "/public/thumbnails/24hvelo-small.png";
-pub const DESIGN_IMG_SRC:    &str = "/public/thumbnails/graphic-design-small.webp";
-pub const BATMAN_IMG_SRC:    &str = "/public/thumbnails/batman-small.webp";
+pub const DESIGN_IMG_SRC: &str = "/public/thumbnails/graphic-design-small.webp";
+pub const BATMAN_IMG_SRC: &str = "/public/thumbnails/batman-small.webp";
 
 fn projects() -> Markup {
 	html! {
@@ -147,73 +148,77 @@ fn articles() -> Markup {
 
 #[get("/")]
 pub fn index() -> Markup {
-	base(include_static!("/schema/me.json"), html! {
-		.page-container {
-			header role="banner" {
-				.section-container {
-					center {
-						h1 { "Hey! 👋" }
-					}
-					.socials {
-						(social("awibo", "https://www.linkedin.com/in/awibo", include_static!("/icons/linkedin.svg")))
-						(social("@obiwac", "https://github.com/obiwac", include_static!("/icons/gh.svg")))
-						(social("obiwac@gmail.com", "mailto:obiwac@gmail.com", include_static!("/icons/email.svg")))
-						(social("obiwac@freebsd.org", "mailto:obiwac@freebsd.org", include_static!("/icons/fbsd.svg")))
-						(social("obiwac", "https://youtube.com/obiwac", include_static!("/icons/youtube.svg")))
-						(social("obiwac", "https://discord.com/users/305047157197504522", include_static!("/icons/discord.svg")))
-						(social("Webring", "http://fuz.su", include_static!("/icons/bell.svg")))
-					}
-				}
-			}
-			main role="main" {
-				.section-container {
-					p {
-						"My name is "
-						strong { "Aymeric Wibo" }
-						" (aka "
-						strong { "obiwac" }
-						"). I'm a Belgian open-source enthusiast who likes dogs and beer 🍺 Here are some of my bigger projects - those which have a "
-						span.inline-svg {
-							(include_static!("/icons/magic.svg"))
+	base(
+		"Aymeric Wibo",
+		"Personal website for Aymeric Wibo",
+		include_static!("/schema/me.json"),
+		html! {
+			.page-container {
+				header role="banner" {
+					.section-container {
+						center {
+							h1 { "Hey! 👋" }
 						}
-						" next to their name are interactive experiences."
-					}
-					p style="margin:0" {
-						"My interests programming-wise lie mostly in operating systems and graphics programming, but I'm also a huge public transport nerd."
-					}
-				}
-				.all-my-homies-hate-margin-collapsing {
-					input #projects-tab-input type="radio" name="tab" checked;
-					input #articles-tab-input type="radio" name="tab";
-					.tabs {
-						label #projects-tab-label for="projects-tab-input" { "Projects" }
-						label #articles-tab-label for="articles-tab-input" { "Articles" }
-					}
-					.tab-content {
-						#projects-tab .tab {
-							(projects())
-						}
-						#articles-tab .tab {
-							(articles())
+						.socials {
+							(social("awibo", "https://www.linkedin.com/in/awibo", include_static!("/icons/linkedin.svg")))
+							(social("@obiwac", "https://github.com/obiwac", include_static!("/icons/gh.svg")))
+							(social("me@obiw.ac", "mailto:me@obiw.ac", include_static!("/icons/email.svg")))
+							(social("obiwac@freebsd.org", "mailto:obiwac@freebsd.org", include_static!("/icons/fbsd.svg")))
+							(social("obiwac", "https://youtube.com/obiwac", include_static!("/icons/youtube.svg")))
+							(social("obiwac", "https://discord.com/users/305047157197504522", include_static!("/icons/discord.svg")))
+							(social("Webring", "http://fuz.su", include_static!("/icons/bell.svg")))
 						}
 					}
 				}
-			}
-			footer role="contentinfo" {
-				.section-container {
-					p {
-						"This page was made possible thanks to "
-						a.link href="https://rocket.rs" { "Rocket.rs" }
-						" and "
-						a.link href="https://maud.lambda.xyz" { "Maud" }
-						"! Fun fact: this site's source doesn't have a single line of the godforsaken language known as HTML in it. It does have some JS on some pages though (not this one), so count that as an L if you want."
+				main role="main" {
+					.section-container {
+						p {
+							"My name is "
+							strong { "Aymeric Wibo" }
+							" (aka "
+							strong { "obiwac" }
+							"). I'm a Belgian open-source enthusiast who likes dogs and beer 🍺 Here are some of my bigger projects - those which have a "
+							span.inline-svg {
+								(include_static!("/icons/magic.svg"))
+							}
+							" next to their name are interactive experiences."
+						}
+						p style="margin:0" {
+							"My interests programming-wise lie mostly in operating systems and graphics programming, but I'm also a huge public transport nerd."
+						}
 					}
-					.socials {
-						(social("Source code", "https://github.com/obiwac/obiwac.github.io", include_static!("/icons/gh.svg")))
+					.all-my-homies-hate-margin-collapsing {
+						input #projects-tab-input type="radio" name="tab" checked;
+						input #articles-tab-input type="radio" name="tab";
+						.tabs {
+							label #projects-tab-label for="projects-tab-input" { "Projects" }
+							label #articles-tab-label for="articles-tab-input" { "Articles" }
+						}
+						.tab-content {
+							#projects-tab .tab {
+								(projects())
+							}
+							#articles-tab .tab {
+								(articles())
+							}
+						}
+					}
+				}
+				footer role="contentinfo" {
+					.section-container {
+						p {
+							"This page was made possible thanks to "
+							a.link href="https://rocket.rs" { "Rocket.rs" }
+							" and "
+							a.link href="https://maud.lambda.xyz" { "Maud" }
+							"! Fun fact: this site's source doesn't have a single line of the godforsaken language known as HTML in it. It does have some JS on some pages though (not this one), so count that as an L if you want."
+						}
+						.socials {
+							(social("Source code", "https://github.com/obiwac/obiwac.github.io", include_static!("/icons/gh.svg")))
+						}
 					}
 				}
 			}
-		}
-	})
+		},
+	)
 }
-
