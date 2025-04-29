@@ -388,29 +388,39 @@ a {
 	align-items: center;
 	border-radius: 4px;
 	cursor: pointer;
-	transition: background 0.1s ease-in-out;
+	max-width: 48px;
+	transition: background 0.1s ease-in-out, max-width 0.1s linear;
 }
 
 .social:hover, .social:focus {
+	max-width: 300px;
 	background: var(--text-colour);
 	color: var(--background-colour);
 }
 
 .social p {
+	text-wrap: nowrap;
 	font-weight: bold;
 	background: none;
 	margin: 0;
+	overflow: hidden;
+	color: var(--background-colour);
 }
 
 .social svg {
 	margin-right: 16px;
 	width: 32px;
 	height: 32px;
+	min-width: 32px;
+	min-height: 32px;
 }
 
 .social p, .social svg {
-	color: var(--text-colour);
 	transition: color 0.1s ease-in-out;
+}
+
+.social svg {
+	color: var(--text-colour);
 }
 
 .social:hover p, .social:hover svg,
