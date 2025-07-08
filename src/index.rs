@@ -51,7 +51,7 @@ fn projects() -> Markup {
 	html! {
 		.things {
 			(thing("aquaBSD", "https://github.com/inobulles/aquabsd/releases", false, AQUABSD_IMG_SRC, html! {
-				"OS forked from FreeBSD geared towards general users. Includes a full DE, app distribution system, and network device sharing."
+				"OS based on FreeBSD geared towards general users. Includes a full DE, app distribution system, and network device sharing."
 			}))
 
 			(thing("MCPY", "/mcpy", true, MCPY_IMG_SRC, html! {
