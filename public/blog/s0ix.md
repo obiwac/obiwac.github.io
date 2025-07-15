@@ -1,3 +1,6 @@
+***TODO Put all of this on a wiki page too.***
+***TODO Shoehorn in my BSDCan S0ix graphic?***
+
 ## Background (S3 v. S0ix)
 
 One of the main things still missing in FreeBSD for it to be usable on modern laptops is the ability to go to sleep.
@@ -5,7 +8,7 @@ In the past, this was done using something called ACPI S3.
 But vendors have slowly been phasing this out in favour of something else called S0ix.
 FreeBSD does not support S0ix as of yet, leaving it without sleep support on these devices.
 
-S3 is one of the global sleep states that ACPI defines (other examples include S0 when in regular operation and S5 when the computer is fully turned off).
+S3 is one of a few global sleep states that ACPI defines (other examples include S0 when in regular operation and S5 when the computer is fully turned off).
 When you tell your machine to go into the S3 sleep state, the [`acpi_EnterSleepState()`](TODO) function is called, which eventually tells your ACPI firmware to put your machine to sleep.
 
 With S0ix, the system instead stays in the S0 global state, and the firmware only enters a low-power state when the CPUs are idled and some device power constraints are met, which OSPM (the power management code OS-side) is responsible for ensuring.
@@ -34,7 +37,7 @@ Instead, if everything has been set up correctly, the firmware will enter one of
 
 ### What has already been done?
 
-Ben Widawsky from Intel started work on this in 2018 with two patches, [D17675](https://reviews.freebsd.org/D17675) for suspend-to-idle support and [D17676](https://reviews.freebsd.org/D17676) for emulating S3 with S0ix.
+Ben Widawsky from Intel had started work on this in 2018 with two patches, [D17675](https://reviews.freebsd.org/D17675) for suspend-to-idle support and [D17676](https://reviews.freebsd.org/D17676) for emulating S3 with S0ix.
 This work was never finished, however.
 
 ## Suspend-to-idle (s2idle)
@@ -45,7 +48,7 @@ Before we can convince the platform to enter S0i3, before we can tell it we're g
 
 Conceptually, this is pretty simple.
 The [`acpi_EnterSleepState`](TODO) function already does a lot of the work for us.
-The basic steps are:
+The basic steps are to:
 
 - Stop all userspace processes and suspend all filesystems with `stop_all_proc()` and `suspend_all_fs()`.
 - Suspend the entire device tree with `DEVICE_SUSPEND(root_bus)`.
@@ -57,8 +60,8 @@ When we want to exit out of s2idle, we basically just repeat the same steps but 
 The only remaining step is to actually make sure that all CPUs are idled.
 This entails either convincing or forcing the schedulers to always enter the idle thread for the duration of s2idle.
 
-Currently to prototype things, I just have an `in_s2idle` value in `struct tdq` (the scheduler's state) which I set to `true` on all CPUs if we're entering s2idle and `false` if not.
-Then, in `tdq_choose()` (the function actually responsible for choosing the next thread to run on a CPU), if `in_s2idle` is set, I just return the idle thread.
+Currently, to prototype things, I just have an `in_s2idle` value in `struct tdq` (the scheduler's state) which I set to `true` on all CPUs if we're entering s2idle and `false` if not.
+Then, in `tdq_choose()` (the function actually responsible for choosing the next thread to run on the CPU), if `in_s2idle` is set, I just return the idle thread.
 
 This is a little heavy-handed and inelegant; it would be much nicer if the scheduler would just naturally enter the idle thread somehow.
 An idea would be creating a high-priority idle thread or something of the sorts e.g.
@@ -77,7 +80,7 @@ We'll talk about CPU idle states (C-states) and what they entail later.
 
 ### Interrupts and GPEs 📣
 
-This is a little tricky.
+This part is a little tricky 🙂
 Our `cpu_idle()` call will exit out of idle once the CPU gets an interrupt.
 Lots of things could interrupt the CPU, but the only interrupt we want to wake us is, well, a wake interrupt, such as e.g. when the power button is pressed or the lid is opened.
 
@@ -139,7 +142,7 @@ while (!wake_event) {
 }
 ```
 
-As mentioned previously, we don't have to worry about any of the other CPUs exiting their idle states as only CPU0 receives SCIs (and even if they did exit, the idle threads have a [loop of their own](TODO) to immediately enter the idle state again).
+As mentioned previously, we don't have to worry about any of the other CPUs exiting their idle states as only CPU0 receives SCIs (and even if they did exit, the idle threads have a [loop of their own](TODO) to immediately re-enter the idle state again).
 
 This is a little unfortunate because we'd really like to avoid waking CPUs as much as possible, especially since deep sleep state entry has a lot of overhead, but with the platform SPMC hints we'll see later we only get these battery notification wakeups once a minute instead of once a second so its not too bad; I haven't profiled this yet by changing the EC's battery notification frequency (which you can do because the EC code is [open source](TODO)), but I suspect at once a minute on only one CPU it won't make a huge impact to power consumption.
 
@@ -186,7 +189,7 @@ In practice, you'll know that the EC of a Framework laptop has got the memo by i
 
 ### SPMC (System Power Management Controller) or PEP (Power Engine Plugin)
 
-The SPMC or (u)PEP - as far as I'm aware, these can be used interchangeably - is the device we use for telling the platform we're entering S0ix or "modern standby", as the cool kids call it.
+The SPMC or (u)PEP - as far as I'm aware, these can be used interchangeably - is the device we use for telling the platform we're entering S0ix or "modern standby" as the cool kids call it.
 It uses ACPI ID `PNP0D80` ("Windows-compatible System Power Management Controller").
 For this, I have written a new `acpi_spmc` driver for FreeBSD in [D48387](https://reviews.freebsd.org/D48387).
 
@@ -199,14 +202,12 @@ This is done through DSMs (Device Specific Methods).
 
 #### DSMs (Device Specific Methods)
 
-**TODO** Reduce my usage of the word "seems"!!!!
-
 In ACPI-speak, a DSM (`_DSM` object) is a sort of special multiplexed method for executing, well, device-specific methods.
 When you evaluate a `_DSM` object, you pass it a vendor-specific UUID as its first argument, a revision as its second, a function index as its third, and, finally, an optional package (== a vector in ACPI-speak) of arguments as its fourth.
 On FreeBSD, `acpi_EvaluateDSMTyped` is used to do this for you.
 
 It seems like the original [Intel spec](https://uefi.org/sites/default/files/resources/Intel_ACPI_Low_Power_S0_Idle.pdf) linked above is not actually used in practice (UUID `c4eb40a0-6cd2-11e2-bcfd-0800200c9a66`), at least not on modern Intel or AMD platforms.
-Instead, there's [Microsoft's](https://learn.microsoft.com/en-us/windows-hardware/design/device-experiences/modern-standby-firmware-notifications) DSM UUID `11e00d56-ce64-47ce-837b-1f898f9aa461`, and thankfully is quite similar to the original DSM's, except with a couple extra "Modern Standby" functions and missing some others:
+Instead, there's [Microsoft's](https://learn.microsoft.com/en-us/windows-hardware/design/device-experiences/modern-standby-firmware-notifications) DSM UUID `11e00d56-ce64-47ce-837b-1f898f9aa461` which thankfully is quite similar to the original DSM's, except with a couple extra "Modern Standby" functions and missing some others:
 
 |Index|Description|<div style="min-width: 220px">Notes</span>|
 |--|--|--|
@@ -220,7 +221,7 @@ Instead, there's [Microsoft's](https://learn.microsoft.com/en-us/windows-hardwar
 |7|"Modern Standby" entry notification||
 |8|"Modern Standby" exit notification||
 
-AMD seems to have their own DSM UUID `e3f32452-febc-43ce-9039-932122d37721` along with Microsoft's one, for which I haven't really been able to find any documentation outside of the Linux implementation.
+AMD have their own DSM UUID `e3f32452-febc-43ce-9039-932122d37721` along with Microsoft's one, for which I haven't really been able to find any documentation outside of the Linux implementation.
 This is what they look like:
 
 |Index|Description|<div style="min-width: 280px">Notes</span>|
@@ -245,7 +246,7 @@ call_dsm(spmc_device, Arg0, Arg1, Arg2, Arg3)
 On AMD platforms, we must use the AMD UUID for getting device constraints, which makes sense as Microsoft's DSMs don't have this.
 For some reason, though, the device constraints package returned by the AMD UUID follows a different format for which I couldn't find a spec anywhere 🙃
 
-It seems like we need to use both the Microsoft and AMD UUIDs for the notifications (including the "Modern Standby" ones), though, and the order [might be important](https://github.com/torvalds/linux/commit/f198478cfdc8105a1c8d8945918904f0498d19be).
+It looks like we need to use both the Microsoft and AMD UUIDs for the notifications (including the "Modern Standby" ones), though, and the order [might be important](https://github.com/torvalds/linux/commit/f198478cfdc8105a1c8d8945918904f0498d19be).
 We'll talk more about this later.
 
 I don't know what exactly the situation is like on modern Intel platforms.
@@ -255,52 +256,51 @@ I don't know what exactly the situation is like on modern Intel platforms.
 Now, s2idle is all well and good, and at this point we are able to suspend the system and resume it at the press of a button, but presently its not saving all that much power.
 Since essentially all we're doing is idling the CPUs and telling the platform to flash a LED, this is pretty much consuming almost as much power as if the computer was on but just doing nothing.
 
-To actually save power, we're going to need to enter S0i3 (_\*thunder strikes\*_).
+To actually save power, we're going to need to enter S0i3 _\*thunder strikes\*_.
 And the first step in doing this is actually knowing when we're in S0i3 in the first place.
 
-### Debugging: LPIT, `_LPI`, residency counters, and the AMD SMU 🐛
+### Debugging: Residency counters, LPIT, `_LPI`, and the AMD SMU 🐛
 
-**TOOD** Actually, `_LPI` is measuring this for the CPU. S0ix states don't map to this. I don't know what LPIT is doing.
+So, how do we know if we're entering S0i3 correctly?
+This isn't immediately obvious from looking at your machine, so there are such things as residency counters, which just tell you long the system or a CPU has spent ("resided") in a particular low-power state.
 
-As said in literally the previous sentence, the first step in getting S0i3 working is actually knowing whether or not we're entering S0i3 in the first place, as this is not immediately obvious from just looking at your machine.
+The LPIT (Low Power Idle Table, defined in [this Intel spec](https://uefi.org/sites/default/files/resources/Intel_ACPI_Low_Power_S0_Idle.pdf)) describes the low-power idle states that the CPU supports and also contains residency counters.
 
-This is done through residency counters, which just tell you long the system or a CPU has spent in a particular low-power state.
-
-The LPIT (Low Power Idle Table, defined in [this Intel spec](https://uefi.org/sites/default/files/resources/Intel_ACPI_Low_Power_S0_Idle.pdf)) describes the low-power idle states that the CPU supports.
-These table entries also contain residency counters, which just tell you how long a CPU has spent in a particular low-power state.
-
-[It would seem](https://www.kernel.org/doc/html/v6.4/arm64/acpi_object_usage.html) as though the LPIT has gone out of favour since ACPI 6.0, however.
-It says as much for ARM.
-Indeed, the ACPI spec now makes no mention of LPIT, but it does look like the residency counters once in LPIT are now [intended to be contained within the `_LPI` object](https://uefi.org/specs/ACPI/6.5/08_Processor_Configuration_and_Control.html#lpi-low-power-idle-states).
+[It would seem](https://www.kernel.org/doc/html/v6.4/arm64/acpi_object_usage.html) as though the LPIT has gone out of favour since ACPI 6.0, however (it says as much for ARM).
+Instead, it looks like the residency counters are now [intended to be contained within the `_LPI` object](https://uefi.org/specs/ACPI/6.5/08_Processor_Configuration_and_Control.html#lpi-low-power-idle-states).
 
 It does seem like newer Intel devices still have the LPIT table but no `_LPI` objects however (e.g. the [Dell XPS 15 9570](https://raw.githubusercontent.com/linuxhw/ACPI/master/Notebook/Dell/XPS/XPS%2015%209570/7298D35A1731)), whereas AMD laptops only have `_LPI` objects, which means both have to be supported.
 Unfortunately, ACPI made residency counters for each of these states optional, and it so happens that they are missing on my AMD Framework laptop.
 
-AMD chips have an SMU (System Management Unit, which you'll also see referred to as "MP1") core on-die, which we can ask for residency information instead.
-This is a small [LatticeMico32](https://en.wikipedia.org/wiki/LatticeMico32) microprocessor that runs power management firmware (PMFW) which also serves to actually decide whether or not we enter S0i3 and power goes to the CPU.
+For getting residency, AMD chips instead have an SMU (System Management Unit, which you'll also see referred to as "MP1") core on-die which we can ask.
+This is a small [LatticeMico32](https://en.wikipedia.org/wiki/LatticeMico32) microprocessor that runs power management firmware (PMFW) and also serves to actually decide whether or not we enter S0i3 and power goes to the CPU.
 
 Initial support for this is added with an `amdsmu` driver in [D48683](https://reviews.freebsd.org/D48683), and residency counters are exposed as `sysctl`s in [D48714](https://reviews.freebsd.org/D48714).
-We'll revisit the SMU later when we talk about the sleep process.
+We also need to let it know when we are trying to enter and exit S0i3, because it measures last-sleep residency between these two times.
 Rudolf Marek has an interesting CCC talk about "[Matroshka processors](https://media.ccc.de/v/31c3_-_6103_-_en_-_saal_2_-_201412272145_-_amd_x86_smu_firmware_analysis_-_rudolf_marek)" as he calls them.
 
 ![Dieshot of Matroshka processor on an AMD CPU.](/public/blog/s0ix-dieshot.webp)
 *Credit to [@Locuza\_](https://twitter.com/Locuza_/status/1325534004855058432) on Twitter.*
+
+***TODO Update this because it isn't called this anymore and has moved somewhere else***
 
 One last thing I'd like to touch on regarding debugging on AMD is the [amd_s2idle.py](https://git.kernel.org/pub/scm/linux/kernel/git/superm1/amd-debug-tools.git/tree/amd_s2idle.py) script on Linux, which is very helpful in debugging the myriad reasons why a laptop may not be entering the deep sleep S0i3 state.
 I'd like to write something similar for FreeBSD at some point once S0i3 is actually working.
 
 ### Putting devices to sleep
 
-The first step is to put all the devices attached to the system to sleep themselves.
+As mentioned previously when showing the full sleep process, we must put all attached devices to sleep themselves before our system will want to enter S0i3.
 These devices are things like USB peripherals, the GPU, any NVMe drives, &c.
 At minimum, to enter an LPI state, we must satisfy the device constraints gotten from the SPMC.
-In practice though, if we're going to sleep, we might as well try to save as much power as possible and attempt to put all devices to sleep.
+In practice though, if we're going to sleep, we might as well try to save as much power as possible and attempt to put all devices to sleep (which is what we're already doing with `DEVICE_SUSPEND(root_bus)`).
 
 An ACPI device has <s>four</s> five-ish power states, known as D-states: D0 (fully on), D1, D2, D3hot (off but still powered), and D3cold (off and with power completely removed).
-The distinction between D3hot and D3cold seems to be a relatively new one, and it's unclear which one "D3" refers to in the ACPI spec.
+The distinction between D3hot and D3cold seems to be a relatively new one, and it's unclear which one just "D3" refers to in the ACPI spec.
 See this [PR](https://github.com/acpica/acpica/pull/993) I opened on the ACPICA GitHub repo discussing this, and the (WIP) [D48384](https://reviews.freebsd.org/D48384) revision for adding D3cold support to FreeBSD.
 
 Switching between these states is done through the `acpi_pwr_switch_consumer` function on FreeBSD (a "power consumer" is just a device).
+
+***TODO A graphic similar to the one I presented at BSDCan would make things much clearer.***
 
 To set a device's D-state, one must first get the power resources required for that D-state through the `_PRx` (where `x` is the target D-state) objects ([ACPI 7.3.8 - 7.3.11](https://uefi.org/htmlspecs/ACPI_Spec_6_4_html/07_Power_and_Performance_Mgmt/device-power-management-objects.html?highlight=_psc#pr0-power-resources-for-d0)) and ensure they are all turned on.
 Conversely, the power resources for all higher-power states (i.e. lower-numbered `x`) must be turned off.
@@ -321,7 +321,11 @@ ACPI defines multiple ways of getting the D-state of a device.
 The first and simplest is through the `_PSC` (power state current, [ACPI 7.3.6](https://uefi.org/htmlspecs/ACPI_Spec_6_4_html/07_Power_and_Performance_Mgmt/device-power-management-objects.html?highlight=_psc#psc-power-state-current)) control method, which simply spits out the device's D-state when evaluated.
 `_PSC` isn't implemented for all devices, however:
 
-> This control method is not required if the device state can be inferred by the Power Resource settings. This would be the case when the device does not require a _PS0, _PS1, _PS2, or _PS3 control method.
+***TODO Check rendering of underscores before object names.***
+
+> This control method is not required if the device state can be inferred by the Power Resource settings. This would be the case when the device does not require a \_PS0, \_PS1, \_PS2, or \_PS3 control method.
+
+***TODO Or maybe the graphic should be here?***
 
 The "Power Resource settings" the spec mentions are our friends the `_PRx` objects.
 From these, we can infer the D-state of a device is as follows:
@@ -340,7 +344,45 @@ There isn't much to talk about here.
 We just need to call the display off and sleep entry DSM functions on the SPMC.
 This is done in [D48735](https://reviews.freebsd.org/D48735).
 
-### Idling the CPU (MWAIT)
+### Idling the CPU 💭
+
+***TODO Still gotta figure out why the checks are being made to not enter C3 when suspending***
+***TODO Links to code for all these functions***
+
+When entering s2idle, we're calling `cpu_idle()` to idle the CPU (as a reminder, both on the s2idle thread on CPU0 and on all other CPUs through their idle threads).
+For S0i3, it is important that all the CPUs are in their lowest C-state (CPU power state), which is usually C3.
+
+`cpu_idle()` is already doing this just fine, at least on AMD systems.
+On ACPI systems, if allowed to enter a deeper power state (i.e. `busy = 0`), it will end up calling the `acpi_cpu_idle()` function to put the CPU into that lowest C-state.
+`acpi_cpu_idle()` is provided by the `acpi_cpu` driver, which gets the lowest C-state and entry method through the `_CST` object.
+That object looks something like this:
+
+```c
+Name (_CST Package (0x04) {
+	0x03, // C-state count.
+	Package (0x04) { // C1
+		ResourceTemplate () { // Entry method.
+			Register (FFixedHW, 0x02, 0x02, 0x0000000000000000)
+		},
+		0x01, // C-state type: C1.
+		0x0001, // Entry/exit latency (us).
+		0x00000000, // Power consumption (mW).
+	},
+	// ...
+	Package (0x04) { // C3
+		ResourceTemplate () { // Entry method.
+			Register (SystemIO, 0x08, 0x00, 0x0000000000000414, 0x01)
+		},
+		0x03, // C-state type: C3.
+		0x015E, // Entry/exit latency (us).
+		0x00000000, // Power consumption (mW).
+	}
+})
+```
+
+As you can see, the lowest C-state in this situation is C3, and the shallowest is C1.
+
+The entry method for C1 **TODO**
 
 The final step the OS has to take is to idle the CPUs.
 
@@ -367,6 +409,9 @@ FreeBSD's `cpu_idle()` function will use MWAIT when it's available.
 
 ## Vendor-specific complications: AMD
 
+***TODO Update script here too***
+***TODO Specify what a GPIO interrupt being "serviced" actually means (i.e. which registers gotta be cleared etc)***
+
 On AMD, there are a few extra thing we need to do for the PMFW running on the SMU to actually enter S0i3.
 As mentioned earlier, these conditions can be checked with the [amd_s2idle.py](https://git.kernel.org/pub/scm/linux/kernel/git/superm1/amd-debug-tools.git/tree/amd_s2idle.py) script on Linux:
 
@@ -375,31 +420,39 @@ As mentioned earlier, these conditions can be checked with the [amd_s2idle.py](h
 - All GPIO interrupts must be serviced. Preliminary support for AMD GPIO on FreeBSD is provided by the `amdgpio` driver which was added by [D16865](https://reviews.freebsd.org/D16865). The remaining functionality to be added can be found on Linux in [pinctrl-amd.c](https://elixir.bootlin.com/linux/v6.13.2/source/drivers/pinctrl/pinctrl-amd.c).
 - The `amdgpu` driver (DRM) must be loaded and told to go to sleep. I have not looked into what exactly it is doing when going to sleep, but I image it is just telling the graphics cores to go to sleep. Either way FreeBSD already supports this and I presume the driver is already doing what's needed.
 
-If any of these conditions are unmet, PMFW will refuse to transition to S0i3, and you will get negligible power savings.
+If any of these conditions are unmet, PMFW will refuse to transition to S0i3.
 
 I have built up a [minimal kernel config](/public/blog/s0i3-linux-config) starting from `make tinyconfig` with just enough enabled to actually enter S0i3 for debugging.
 A special thanks to Mario Limonciello ([superm1](https://github.com/superm1)) from AMD for helping me figure this all out.
 
-## What about hibernation (S4)?
+## What about hibernation (S4)? 🐿
 
 Hibernation actually has little to do with S0ix.
-Instead of suspending-to-RAM (i.e. keeping it active while the rest of the system is powered off), hibernation swaps all pages in RAM to disk and then completely powers off the system.
+Instead of suspending-to-RAM (i.e. keeping it active while the rest of the system is powered off), hibernation swaps all pages in RAM to disk and then completely powers off the system (much more in common with S5).
 When you want to exit out of hibernation, the bootloader reads back the image from disk to memory to restore the system to its previous state.
 
 S4 saves more power than S0ix (actually, in S4 the system consumes no power at all), but the downside is that it of course takes way longer to enter and exit.
+To strike a balance between the two, OSs will usually start by putting the system in S0i3, then use the [RTC alarm](https://en.wikipedia.org/wiki/Real-time_clock_alarm) to wake it after a certain amount of time to initiate S4.
+That way, if the user tries to wake the system after say 10 minutes and the alarm is set to go off in 20 minutes, the system will start up quickly, but if they leave it suspended overnight the battery will only drain in S0i3 for 20 minutes.
 
-FreeBSD actually has support for S4BIOS, which was a transitional way of doing hibernation where the BIOS does most of the heavy-lifting intended to ease the adoption of S4.
-This doesn't exist on modern laptops, but you can check if yours has it through `hw.acpi.s4bios`.
+You could even have some curve to map current battery status with what the alarm should be set to, so that you could hibernate more aggressively when the system is low on power and, conversely, afford to allow faster wake times for longer if the system is nearly fully charged.
 
 There is also hybrid suspend, in which the system enters an S3 or S0ix state but still writes the hibernation image to disk anyway.
 This way, you get the advantages of fast wake times but you don't risk corrupting your filesystem if the battery reaches a critical level and your system suddenly loses power.
+You would want to take this strategy if trying to suspend when your battery is already at a pretty low level.
+
+FreeBSD actually has support for S4BIOS, which was a transitional way of doing hibernation where the BIOS did most of the heavy-lifting, intended to ease the adoption of S4.
+This doesn't exist on modern laptops, but you can check if yours has it through `hw.acpi.s4bios`.
+
+Theoretically, S4 wouldn't be too difficult to implement.
+At least, it has way fewer dependencies than S0i3, and a lot of the code paths already exist in FreeBSD.
 
 ## What's next? 🔮
 
 Here's a grab-bag of things that still need to be done or would be nice to have:
 
 - Testing on Intel. At the moment, I don't have access to a modern Intel laptop, though I'm eyeing one of the Ultra Series 1 laptops. In the meantime, do test the patches on your Intel laptop if you have one and send me logs! [obiwac@freebsd.org](mailto:obiwac@freebsd.org) **TODO** Say En-Wei is going to be looking into this.
-- [Powertop](https://en.wikipedia.org/wiki/PowerTOP) equivalent. This would be a good [GSoC](https://summerofcode.withgoogle.com) project, so I've added it to the [SummerOfCodeIdeas](https://wiki.freebsd.org/SummerOfCodeIdeas#Power_profiling_tool) wiki page.
+- [Powertop](https://en.wikipedia.org/wiki/PowerTOP) equivalent. This would be a good [GSoC](https://summerofcode.withgoogle.com) project, so I've added it to the [SummerOfCodeIdeas](https://wiki.freebsd.org/SummerOfCodeIdeas#Power_profiling_tool) wiki page. **TODO** Say Kasyap is working on this.
 - [RTC alarm](https://en.wikipedia.org/wiki/Real-time_clock_alarm) wake. This wakes the system from sleep after a given amount of time. This is used by `amd_s2idle.py` to sleep for a consistent amount of time during each test run. It can also be used to hibernate the system if it has been suspended to RAM for over e.g. 5 minutes.
 - Wake on low battery level. Through the `_BLT` ACPI control method on battery devices we can set the battery warning, low, and wake levels. Perhaps this also means we can ask firmware to emit a wake interrupt to wake the system when the battery reaches a given threshold. This would be useful to wake the device to notify the user that the battery is low, or gracefully unmount all disks and shut down the system if the battery is critically low.
 - Idleness determination. This is a concept in [IOKit on macOS](https://developer.apple.com/library/archive/documentation/DeviceDrivers/Conceptual/IOKitFundamentals/PowerMgmt/PowerMgmt.html). If a device is determined to be idle, power is removed from it. If all of a bus device's children are idle, power is removed from the bus device too.
