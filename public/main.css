@@ -129,6 +129,7 @@ pre {
 	background-color: var(--code-background);
 	padding: 16px;
 	overflow-x: auto;
+	tab-size: 3;
 }
 
 blockquote {
